@@ -49,18 +49,18 @@ import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.CircularGroup;
+import es.eucm.ead.mockup.core.view.ui.buttons.MenuButton;
 
 public class MainMenu extends AbstractScreen {
+	
+	private final float MAIN_MENU_BUTTON_WIDTH_HEIGHT = stageh * .23f;
 
-	private Group optionsGroup, cg;
-	private Button newProject, projectGallery;
-	private Array<Actor> mProjects;
+	private Group optionsGroup;
 	private Dialog exitDialog;
 
 	@Override
@@ -70,19 +70,18 @@ public class MainMenu extends AbstractScreen {
 		super.root = new Group();
 		root.setVisible(false);
 
-		MyClickListener mClickListener = new MyClickListener();
-		newProject = new TextButton("Nuevo Proyecto", skin, "default-thin");
-		newProject.addListener(mClickListener);
-		projectGallery = new TextButton("Galería de Proyectos", skin);
-		projectGallery.addListener(mClickListener);
+		final Button newProject, projectGallery;		
+		newProject = new MenuButton("Nuevo\nproyecto", skin, "ic_newproject",
+		MAIN_MENU_BUTTON_WIDTH_HEIGHT, MAIN_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
+		projectGallery = new MenuButton("Galería de\nproyectos", skin, "ic_gallery",
+				MAIN_MENU_BUTTON_WIDTH_HEIGHT, MAIN_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
 
-		cg = new CircularGroup(halfstageh, 135, 180, true, newProject,
+		CircularGroup cg = new CircularGroup(halfstageh, 135, 180, true, newProject,
 				projectGallery);
 		cg.setX(halfstagew);
 		cg.setY(halfstageh);
-
-		//Scan for projects aviable here...
-
+		
+		//Scan for aviable projects here...
 		Table projectsTable = new Table();
 		//projectsTable.debug();
 		projectsTable.defaults().space(10);
@@ -92,16 +91,48 @@ public class MainMenu extends AbstractScreen {
 		Texture t = new Texture(Gdx.files.internal("mockup/temp/proyecto.png"));
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		final int PROJECTS = 8;
-		mProjects = new Array<Actor>(false, PROJECTS);
+		final Array<Actor> mProjects = new Array<Actor>(false, PROJECTS);
+		
+		// Creating the transition listener
+		ClickListener mTransitionListener = new ClickListener() {
+
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				final Screens next = getNextScreen(event.getListenerActor());
+				if (next == null) {
+					return;
+				}
+				exitAnimation(next);
+			}
+
+			private Screens getNextScreen(Actor target) {
+				Screens next = null;
+				if (target == newProject) {
+					next = Screens.PROJECT_MENU;
+				} else if (target == projectGallery) {
+					next = Screens.PROJECT_GALLERY;
+				} else {
+					for (Actor project : mProjects) {
+						if (target == project) {
+							next = Screens.PROJECT_MENU;
+						}
+					}
+				}
+				return next;
+			}
+		};
 
 		for (int i = 0; i < PROJECTS; ++i) {
 			Image im = new Image(t);
-			im.addListener(mClickListener);
+			im.addListener(mTransitionListener);
 
 			projectsTable.add(im);
 
 			mProjects.add(im);
-		}
+		}		
+		
+		newProject.addListener(mTransitionListener);
+		projectGallery.addListener(mTransitionListener);	
 
 		Image bg = new Image(skin.getRegion("bg"));
 		bg.setTouchable(Touchable.disabled);
@@ -121,34 +152,6 @@ public class MainMenu extends AbstractScreen {
 		}.text("¿Estás seguro?").button("Salir", true).button("¡Todavía no!",
 				false).key(Keys.BACK, false).key(Keys.ENTER, true); // TODO use i18n
 		exitDialog.setMovable(false);
-	}
-
-	private class MyClickListener extends ClickListener {
-
-		@Override
-		public void clicked(InputEvent event, float x, float y) {
-			final Screens next = getNextScreen(event.getListenerActor());
-			if (next == null) {
-				return;
-			}
-			exitAnimation(next);
-		}
-
-		private Screens getNextScreen(Actor target) {
-			Screens next = null;
-			if (target == newProject) {
-				next = Screens.PROJECT_MENU;
-			} else if (target == projectGallery) {
-				next = Screens.PROJECT_GALLERY;
-			} else {
-				for (Actor project : mProjects) {
-					if (target == project) {
-						next = Screens.PROJECT_MENU;
-					}
-				}
-			}
-			return next;
-		}
 	}
 
 	@Override

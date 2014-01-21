@@ -39,14 +39,13 @@ package es.eucm.ead.mockup.core.control.screens;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.listeners.FocusListener;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.CircularGroup;
-import es.eucm.ead.mockup.core.view.ui.MenuButton;
+import es.eucm.ead.mockup.core.view.ui.buttons.MenuButton;
 
 public class ProjectMenu extends AbstractScreen {
 
@@ -62,7 +61,7 @@ public class ProjectMenu extends AbstractScreen {
 		super.root = new Group();
 		root.setVisible(false);
 		
-		final Button scene, element, gallery, play, 
+		final MenuButton scene, element, gallery, play, 
 				takePictureButton, initialSceneButton, recordVideoButton;		
 		scene = new MenuButton("Escena", skin, "ic_editstage",
 				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class

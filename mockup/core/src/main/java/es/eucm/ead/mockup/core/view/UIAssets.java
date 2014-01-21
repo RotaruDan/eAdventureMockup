@@ -47,7 +47,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
-import es.eucm.ead.mockup.core.view.ui.ToolbarButton;
+import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 import es.eucm.ead.mockup.core.view.ui.components.NavigationPanel;
 import es.eucm.ead.mockup.core.view.ui.components.OptionsPanel;
 

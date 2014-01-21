@@ -34,12 +34,15 @@
  *      You should have received a copy of the GNU Lesser General Public License
  *      along with eAdventure.  If not, see <http://www.gnu.org/licenses/>.
  */
-package es.eucm.ead.mockup.core.view.ui;
+package es.eucm.ead.mockup.core.view.ui.buttons;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.esotericsoftware.tablelayout.Cell;
 
 /**
  * A button displayed in the MainMenu and PanelMenu Screens.
@@ -51,6 +54,8 @@ public class MenuButton extends Button {
 						PAD_BOTTOM = 10f, 
 						PAD_RIGHT = 17f;
 
+	private Cell<Actor> icon;
+	
 	public MenuButton(String name, Skin skin, String styleName) {
 		super(skin);
 		setSize(getPrefWidth(), getPrefHeight());
@@ -63,13 +68,20 @@ public class MenuButton extends Button {
 		initialize(name, skin, styleName);
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void initialize(String name, Skin skin, String styleName){
 		pad(PAD_TOP, PAD_LEFT, PAD_BOTTOM, PAD_RIGHT);
 		Image sceneIcon = new Image(skin.getRegion(styleName));
 		Label scene = new Label(name, skin);
+		scene.setAlignment(Align.center);
 		
-		add(sceneIcon).expand();
+		icon = add(sceneIcon).expand();
 		row();
 		add(scene);
 	}
+	
+	public Cell<Actor> getIcon() {
+		return icon;
+	}
+	
 }

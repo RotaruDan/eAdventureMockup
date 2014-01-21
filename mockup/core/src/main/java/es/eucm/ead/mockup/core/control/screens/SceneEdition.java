@@ -43,7 +43,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
-import es.eucm.ead.mockup.core.view.ui.ToolbarButton;
+import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 import es.eucm.ead.mockup.core.view.ui.components.AddComponent;
 import es.eucm.ead.mockup.core.view.ui.components.DrawComponent;
 import es.eucm.ead.mockup.core.view.ui.components.DrawComponent.Type;

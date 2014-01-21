@@ -48,7 +48,7 @@ import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.utils.Constants;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.Panel;
-import es.eucm.ead.mockup.core.view.ui.ToolbarButton;
+import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 
 public class AddComponent {
 
