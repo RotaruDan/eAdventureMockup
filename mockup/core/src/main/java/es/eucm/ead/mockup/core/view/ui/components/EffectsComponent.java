@@ -37,11 +37,12 @@
 package es.eucm.ead.mockup.core.view.ui.components;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
@@ -57,6 +58,7 @@ public class EffectsComponent {
 
 	private EffectsPanel panel;
 	private Button button;
+	private EffectOption effectsOpt;
 
 	public enum Type {
 		BRUSH, RUBBER, TEXT
@@ -65,6 +67,7 @@ public class EffectsComponent {
 	public EffectsComponent( String imageUp,  String name, Skin skin,String description, float width, float height) {
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin);
 		this.panel = new EffectsPanel(skin, "opaque", description, width, height);
+		this.effectsOpt = panel.getOptions();
 		this.button.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -82,6 +85,7 @@ public class EffectsComponent {
 
 		private float width;
 		private float height;
+		private EffectOption effectOpt;
 
 		public EffectsPanel(Skin skin, String styleName, String description, float width, float height) {
 			super(skin, styleName);
@@ -96,26 +100,29 @@ public class EffectsComponent {
 			setModal(false);
 			setColor(Color.DARK_GRAY);
 			
+			effectOpt = new EffectOption(skin, "variante1", "variante2", "variante3");
+			
 			//FIXME *repeated code*
 			Label label = new Label(description, skin, "default-thin-opaque");
 			label.setWrap(true);
 			label.setAlignment(Align.center);
 			label.setFontScale(0.7f);
 					
-			Image backImg1 = new Image(skin.getRegion("icon-blitz")); //edit element img
-			final Button prop1 = new Button(skin, "default");
-			prop1.add(backImg1);
-			prop1.scale(0.2f);
+			Button prop1 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
+			Button prop2 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
+			Button prop3 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
+			Button prop4 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
+			Button prop5 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
+			Button prop6 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
+			Button prop7 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
+			prop1.addListener(optionListener());
+			prop2.addListener(optionListener());
+			prop3.addListener(optionListener());
+			prop4.addListener(optionListener());
+			prop5.addListener(optionListener());
+			prop6.addListener(optionListener());
+			prop7.addListener(optionListener());
 			
-			Image backImg2 = new Image(skin.getRegion("icon-blitz")); //edit element img
-			final Button prop2 = new Button(skin, "default");
-			prop2.add(backImg2);
-			prop2.scale(0.2f);
-			
-			Image backImg3 = new Image(skin.getRegion("icon-blitz")); //edit element img
-			final Button prop3 = new Button(skin, "default");
-			prop3.add(backImg3);
-			prop3.scale(0.2f);
 			//END FIXME
 			
 			Table table = new Table(skin);
@@ -123,22 +130,51 @@ public class EffectsComponent {
 			CheckBox cb1 = new CheckBox("Efecto 1", skin);
 			CheckBox cb2 = new CheckBox("Efecto 2", skin);
 			CheckBox cb3 = new CheckBox("Efecto 3", skin);
+			CheckBox cb4 = new CheckBox("Efecto 4", skin);
+			CheckBox cb5 = new CheckBox("Efecto 5", skin);
+			CheckBox cb6 = new CheckBox("Efecto 6", skin);
+			CheckBox cb7 = new CheckBox("Efecto 7", skin);
+			
+			
+			ScrollPane sp = new ScrollPane(table, skin);
+			sp.setupFadeScrollBars(0f, 0f);
+			sp.setScrollingDisabled(true, false);
 		
 			table.add(prop1).left();
-			table.add(cb1).left().expand().fill();
+			table.add(cb1).left();
 			table.row();
 			table.add(prop2).left();
-			table.add(cb2);
+			table.add(cb2).left();
 			table.row();
 			table.add(prop3).left();
-			table.add(cb3);
-			table.debug();
+			table.add(cb3).left();
+			table.row();
+			table.add(prop4).left();
+			table.add(cb4).left();
+			table.row();
+			table.add(prop5).left();
+			table.add(cb5).left();
+			table.row();
+			table.add(prop6).left();
+			table.add(cb6).left();
+			table.row();
+			table.add(prop7).left();
+			table.add(cb7).left();
+			
+			//table.debug();
 			
 			defaults().fill().expand();
 			add(label);
 			row();
-			add(table);
+			add(sp);
+			//add(table);
 		}
+		
+		
+		public EffectOption getOptions() {
+			return effectOpt;
+		}
+
 
 		/**
 		 * Set the panel'coordinates according to the button's coordinates
@@ -150,6 +186,8 @@ public class EffectsComponent {
 				setX(AbstractScreen.stagew-width-5);
 			}
 				setY(Constants.SCREENH - UIAssets.TOOLBAR_HEIGHT - height - 10);
+			
+			effectOpt.setCoordinates(this.getX(), this.getY());
 		}
 
 		@Override
@@ -161,7 +199,20 @@ public class EffectsComponent {
 		public void hide() {
 			super.hide();
 		}
-
+		
+		public ClickListener optionListener(){
+			return new ClickListener() {
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					event.cancel();
+					if (!effectOpt.isVisible()) {
+						AbstractScreen.mockupController.show(effectOpt);
+					} else {
+						AbstractScreen.mockupController.hide(effectOpt);
+					}
+				}
+			};
+		}
 	}
 
 	public EffectsPanel getPanel() {
@@ -174,5 +225,9 @@ public class EffectsComponent {
 
 	public void actCoordinates() {
 		panel.actCoordinates();
+	}
+
+	public Actor getOpt() {
+		return effectsOpt;
 	}
 }

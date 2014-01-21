@@ -40,6 +40,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
@@ -86,7 +87,7 @@ public class SceneEdition extends AbstractScreen {
 		interac = new InteractiveComponent("ic_select", "ZONAS", skin, 
 				"Añadir zona interactiva", 250, 390);
 		add = new AddComponent("tree_plus", "AÑADIR", skin, "Añadir a la escena:", 250, 390);
-		effect = new EffectsComponent( "ic_effects","EFECTOS", skin,  "Añadir efectos de imagen", 300, 400);
+		effect = new EffectsComponent( "ic_effects","EFECTOS", skin,  "Añadir efectos de imagen", 300, 550);
 
 		Button more = new ToolbarButton(skin.getDrawable("ic_more"),"OTROS", skin);
 
@@ -131,6 +132,7 @@ public class SceneEdition extends AbstractScreen {
 		root.addActor(add.getPanel());
 		add.actCoordinates();
 		root.addActor(effect.getPanel());
+		root.addActor(effect.getOpt());
 		effect.actCoordinates();
 
 		stage.addActor(root);
@@ -152,6 +154,7 @@ public class SceneEdition extends AbstractScreen {
 	@Override
 	public void draw() {
 		stage.draw();
+		Table.drawDebug(stage);
 	}
 
 	@Override
