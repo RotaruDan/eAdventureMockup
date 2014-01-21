@@ -34,14 +34,17 @@
  *      You should have received a copy of the GNU Lesser General Public License
  *      along with eAdventure.  If not, see <http://www.gnu.org/licenses/>.
  */
-package es.eucm.ead.mockup.core.control.screens;
+package es.eucm.ead.mockup.core.control.screens.gallery;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
@@ -50,12 +53,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
+import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
+import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.GridPanel;
 import es.eucm.ead.mockup.core.view.ui.Panel;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
 
-public class Gallery extends AbstractScreen {
+public class ElementGallery extends AbstractScreen {
 
 	private Group navigationGroup;
 	private ToolBar toolBar;
@@ -80,12 +85,6 @@ public class Gallery extends AbstractScreen {
 		SelectBox order = new SelectBox(orders, skin);
 
 		/*filter panel*/
-		CheckBox cbs = new CheckBox("Escenas", skin);
-		cbs.setChecked(true);
-		CheckBox cbe = new CheckBox("Elementos", skin);
-		cbe.setChecked(true);
-		CheckBox cbi = new CheckBox("Imágenes", skin);
-		cbi.setChecked(true);//TODO use i18n!
 		Button applyFilter = new TextButton("Filtrar", skin);
 
 		CheckBox[] tags = new CheckBox[] { new CheckBox("Hospital", skin),
@@ -109,16 +108,12 @@ public class Gallery extends AbstractScreen {
 
 		final Panel filterPanel = new Panel(skin);
 		filterPanel.setVisible(false);
-		final float panelw = stagew * .6f, panelx = stagew - panelw;
-		filterPanel.setBounds(panelx, toolBar.getHeight(), panelw, stageh
-				- toolBar.getHeight() * 2f);
-		filterPanel.add(cbe).expandX();
-		filterPanel.add(cbs).expandX();
-		filterPanel.add(cbi).expandX();
-		filterPanel.row();
+		final float panelw = stagew * .26f, panelx = stagew - panelw;
 		filterPanel.add(tagScroll).fill().colspan(3).left();
 		filterPanel.row();
 		filterPanel.add(applyFilter).colspan(3).expandX();
+		filterPanel.setBounds(panelx, toolBar.getHeight(), panelw, stageh
+				- toolBar.getHeight() * 2f);
 
 		Button filterButton = new TextButton("Filtrar por tags", skin);
 		ClickListener closeFilterListenerTmp = new ClickListener() {
@@ -133,8 +128,8 @@ public class Gallery extends AbstractScreen {
 		};
 		applyFilter.addListener(closeFilterListenerTmp);
 		filterButton.addListener(closeFilterListenerTmp);
-		/*end of filter panel*/
 
+		
 		Label nombre = new Label("Galería", skin);
 
 		toolBar.add(nombre).expandX().left().padLeft(
@@ -143,30 +138,51 @@ public class Gallery extends AbstractScreen {
 		toolBar.add(filterButton);
 		toolBar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
-
-		final int COLS = 3, ROWS = 10;
+		/***/
+		Texture t = new Texture(Gdx.files.internal("mockup/temp/proyecto.png"));//TODO change for scene
+		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		final int COLS = 3, ROWS = 6;
 		GridPanel<Actor> gridPanel = new GridPanel<Actor>(skin, ROWS, COLS,
-				UIAssets.GALLERY_PROJECT_HEIGHT);
-		gridPanel.addItem(new TextButton("AÑADIR", skin), 0, 0);
-		gridPanel.addItem(new TextButton("proyecto 1", skin), 0, 1);
-		ImageButton i1 = new ImageButton(skin);
-		gridPanel.addItem(i1, 0, 2);
-		gridPanel.addItem(new ImageButton(skin), 1, 2);
-		gridPanel.addItem(new ImageButton(skin), 1, 1);
-		gridPanel.addItem(new ImageButton(skin), 2, 2);
-		gridPanel.addItem(new ImageButton(skin), 3, 1);
-		gridPanel.addItem(new ImageButton(skin), 6, 2);
-		gridPanel.addItem(new ImageButton(skin), 7, 1);
-		gridPanel.addItem(new ImageButton(skin), 8, 2);
-		gridPanel.addItem(new ImageButton(skin), 9, 1);
+				UIAssets.GALLERY_PROJECT_HEIGHT * .2f);
+		gridPanel.defaults().fill().uniform();
+		boolean first = true;
+		for (int i = 0; i < ROWS; ++i) {
+			for (int j = 0; j < COLS; ++j) {
+				if (first) {
+					first = false;
+					gridPanel.addItem(new TextButton("NUEVO", skin), 0, 0)
+							.fill();
+				} else {
+					gridPanel.addItem(new Image(t), i, j);
+				}
+			}
+		}
+		gridPanel.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if (event.getListenerActor() instanceof GridPanel) {
+					exitAnimation(Screens.SCENE_EDITION);
+				}
+			}
+		});
 		ScrollPane scrollPane = new ScrollPane(gridPanel);
 		scrollPane.setScrollingDisabled(true, false);
 		scrollPane.setBounds(0, toolBar.getHeight(), stagew, stageh - 2
 				* toolBar.getHeight());
+		final float DEFAULT_ICON_LABEL_SPACE = 10f;
+		final Button picButton = new Button(skin);
+		picButton.defaults().space(DEFAULT_ICON_LABEL_SPACE);
+		Label picLabel = new Label("Nuevo desde cámara", skin);
+		Image picImage = new Image(skin.getDrawable("ic_photocamera"));
+		picButton.add(picImage);
+		picButton.add(picLabel);
 
-		final TextButton pic = new TextButton("Nuevo desde Cámara", skin);
-		//TODO add images/icons...
-		final TextButton vid = new TextButton("Grabar desde Escena", skin);
+		final Button vidButton = new Button(skin);
+		vidButton.defaults().space(DEFAULT_ICON_LABEL_SPACE);
+		Label vidLabel = new Label("Grabar desde Escena", skin);
+		Image vidImage = new Image(skin.getDrawable("ic_videocamera"));
+		vidButton.add(vidImage);
+		vidButton.add(vidLabel);
 		ClickListener mTransitionLIstener = new ClickListener() {
 
 			@Override
@@ -180,21 +196,21 @@ public class Gallery extends AbstractScreen {
 
 			private Screens getNextScreen(Actor target) {
 				Screens next = null;
-				if (target == pic) {
+				if (target == picButton) {
 					next = Screens.PICTURE;
-				} else if (target == vid) {
+				} else if (target == vidButton) {
 					next = Screens.RECORDING;
 				}
 				return next;
 			}
 		};
-		pic.addListener(mTransitionLIstener);
-		vid.addListener(mTransitionLIstener);
+		picButton.addListener(mTransitionLIstener);
+		vidButton.addListener(mTransitionLIstener);
 
 		ToolBar toolBar2 = new ToolBar(skin);
 		toolBar2.setY(0);
-		toolBar2.add(pic).expandX().left();
-		toolBar2.add(vid).expandX().right();
+		toolBar2.add(picButton).expandX().left();
+		toolBar2.add(vidButton).expandX().right();
 
 		root.addActor(toolBar);
 		root.addActor(toolBar2);

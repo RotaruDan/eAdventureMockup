@@ -36,9 +36,13 @@
  */
 package es.eucm.ead.mockup.core.control.screens;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -80,10 +84,12 @@ public class ProjectMenu extends AbstractScreen {
 		Table bottomButtonsTable = new Table();
 		bottomButtonsTable.setBounds(0, 0, stagew, UIAssets.TOOLBAR_HEIGHT * 2f);
 		
-		takePictureButton = new MenuButton("Tomar Foto", skin, "ic_photocamera");
+		takePictureButton = new MenuButton("Tomar Foto", skin, "ic_photocamera");//TODO i18n
 		initialSceneButton = new MenuButton("Aquí empieza el juego", skin, "icon-blitz");
 		recordVideoButton = new MenuButton("Grabar Vídeo", skin, "ic_videocamera");
 		
+		final ImageButton backButton = new ImageButton(skin);
+
 		ClickListener mTransitionListener = new ClickListener() {
 
 			@Override
@@ -98,14 +104,16 @@ public class ProjectMenu extends AbstractScreen {
 			private Screens getNextScreen(Actor target) {
 				Screens next = null;
 				if (target == scene) {
-					next = Screens.SCENE_EDITION;
+					next = Screens.SCENE_GALLERY;
 				} else if (target == gallery) {
 					next = Screens.GALLERY;
 				} else if (target == takePictureButton) {
 					next = Screens.PICTURE;
 				} else if (target == recordVideoButton) {
 					next = Screens.RECORDING;
-				}
+				} else if (target == backButton) {
+					next = Screens.MAIN_MENU;
+				} 
 				return next;
 			}
 		};
@@ -115,11 +123,43 @@ public class ProjectMenu extends AbstractScreen {
 		play.addListener(mTransitionListener);
 		takePictureButton.addListener(mTransitionListener);
 		recordVideoButton.addListener(mTransitionListener);
+		backButton.addListener(mTransitionListener);
 
 		bottomButtonsTable.add(takePictureButton).fill().left();
 		bottomButtonsTable.add(initialSceneButton).height(bottomButtonsTable.getHeight()).expandX();
 		bottomButtonsTable.add(recordVideoButton).fill().right();
+		
+		final Label projectName = new Label("Hospitalizado", skin);
+		projectName.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Gdx.input.getTextInput(new TextInputListener(){
 
+					@Override
+					public void input(String text) {
+						if(text != null && text.length() > 0){
+							projectName.setText(text);
+						}
+					}
+					
+					@Override
+					public void canceled() { }
+					
+				}, String.valueOf(projectName.getText()), "Nuevo nombre del proyecto...");//TODO use i18n
+			}
+		});
+
+		// We create a table with contraints for
+		// GoBackButton and ProjectNameLabel
+		Table topLeftbuttons = new Table();
+		topLeftbuttons.setBounds(0, stageh - UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT, 
+				stagew, UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
+		topLeftbuttons.left();
+		topLeftbuttons.defaults().height(UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
+		topLeftbuttons.add(backButton);
+		topLeftbuttons.add(projectName);
+		
+		root.addActor(topLeftbuttons);
 		root.addActor(bottomButtonsTable);
 		root.addActor(cg);
 

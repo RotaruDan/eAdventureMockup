@@ -45,15 +45,17 @@ import es.eucm.ead.engine.Engine;
 import es.eucm.ead.mockup.core.control.listeners.EventListener;
 import es.eucm.ead.mockup.core.control.listeners.FocusListener;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
-import es.eucm.ead.mockup.core.control.screens.Gallery;
 import es.eucm.ead.mockup.core.control.screens.Loading;
 import es.eucm.ead.mockup.core.control.screens.MainMenu;
 import es.eucm.ead.mockup.core.control.screens.Picture;
-import es.eucm.ead.mockup.core.control.screens.ProjectGallery;
 import es.eucm.ead.mockup.core.control.screens.ProjectMenu;
 import es.eucm.ead.mockup.core.control.screens.Recording;
 import es.eucm.ead.mockup.core.control.screens.SceneEdition;
 import es.eucm.ead.mockup.core.control.screens.Screens;
+import es.eucm.ead.mockup.core.control.screens.gallery.ElementGallery;
+import es.eucm.ead.mockup.core.control.screens.gallery.Gallery;
+import es.eucm.ead.mockup.core.control.screens.gallery.ProjectGallery;
+import es.eucm.ead.mockup.core.control.screens.gallery.SceneGallery;
 
 /**
  * The main controller for Mockup Editor.
@@ -98,6 +100,8 @@ public class MockupController implements EventListener {
 		this.states.put(Screens.PROJECT_GALLERY, new ProjectGallery());
 		this.states.put(Screens.SCENE_EDITION, new SceneEdition());
 		this.states.put(Screens.GALLERY, new Gallery());
+		this.states.put(Screens.SCENE_GALLERY, new SceneGallery());
+		this.states.put(Screens.ELEMENT_GALLERY, new ElementGallery());
 		this.states.put(Screens.RECORDING, new Recording());
 		this.states.put(Screens.PICTURE, new Picture());
 
