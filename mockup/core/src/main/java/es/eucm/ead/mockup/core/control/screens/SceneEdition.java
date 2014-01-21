@@ -38,6 +38,7 @@ package es.eucm.ead.mockup.core.control.screens;
 
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 
 import es.eucm.ead.mockup.core.view.UIAssets;
@@ -92,8 +93,16 @@ public class SceneEdition extends AbstractScreen {
 		Button frames = new ImageButton(skin);
 		frames.setX(AbstractScreen.stagew - frames.getWidth());
 
-		//toolBar.setVisible(false);
-
+		//Radio-button functionality
+		new ButtonGroup(move, 
+				paint.getButton(), 
+				delete.getButton(), 
+				text.getButton(), 
+				interac.getButton(),
+				add.getButton(),
+				effect.getButton(),
+				more);		
+		
 		//toolBar.debug();
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
 		toolBar.add(move);
