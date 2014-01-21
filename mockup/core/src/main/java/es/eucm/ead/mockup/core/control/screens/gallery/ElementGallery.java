@@ -130,10 +130,10 @@ public class ElementGallery extends AbstractScreen {
 		filterButton.addListener(closeFilterListenerTmp);
 
 		
-		Label nombre = new Label("Galería", skin);
+		Label nombre = new Label("Galería de elementos", skin);
 
 		toolBar.add(nombre).expandX().left().padLeft(
-				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT);
+				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f);
 		toolBar.add(order);
 		toolBar.add(filterButton);
 		toolBar.add(searchtf).width(
@@ -177,12 +177,6 @@ public class ElementGallery extends AbstractScreen {
 		picButton.add(picImage);
 		picButton.add(picLabel);
 
-		final Button vidButton = new Button(skin);
-		vidButton.defaults().space(DEFAULT_ICON_LABEL_SPACE);
-		Label vidLabel = new Label("Grabar desde Escena", skin);
-		Image vidImage = new Image(skin.getDrawable("ic_videocamera"));
-		vidButton.add(vidImage);
-		vidButton.add(vidLabel);
 		ClickListener mTransitionLIstener = new ClickListener() {
 
 			@Override
@@ -198,19 +192,15 @@ public class ElementGallery extends AbstractScreen {
 				Screens next = null;
 				if (target == picButton) {
 					next = Screens.PICTURE;
-				} else if (target == vidButton) {
-					next = Screens.RECORDING;
-				}
+				} 
 				return next;
 			}
 		};
 		picButton.addListener(mTransitionLIstener);
-		vidButton.addListener(mTransitionLIstener);
 
 		ToolBar toolBar2 = new ToolBar(skin);
 		toolBar2.setY(0);
 		toolBar2.add(picButton).expandX().left();
-		toolBar2.add(vidButton).expandX().right();
 
 		root.addActor(toolBar);
 		root.addActor(toolBar2);

@@ -41,6 +41,8 @@ import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -88,7 +90,7 @@ public class ProjectMenu extends AbstractScreen {
 		initialSceneButton = new MenuButton("Aquí empieza el juego", skin, "icon-blitz");
 		recordVideoButton = new MenuButton("Grabar Vídeo", skin, "ic_videocamera");
 		
-		final ImageButton backButton = new ImageButton(skin);
+		final ImageButton backButton = new ImageButton(skin, "ic_goback");
 
 		ClickListener mTransitionListener = new ClickListener() {
 
@@ -105,6 +107,8 @@ public class ProjectMenu extends AbstractScreen {
 				Screens next = null;
 				if (target == scene) {
 					next = Screens.SCENE_GALLERY;
+				} else if (target == element) {
+					next = Screens.ELEMENT_GALLERY;
 				} else if (target == gallery) {
 					next = Screens.GALLERY;
 				} else if (target == takePictureButton) {
@@ -129,7 +133,7 @@ public class ProjectMenu extends AbstractScreen {
 		bottomButtonsTable.add(initialSceneButton).height(bottomButtonsTable.getHeight()).expandX();
 		bottomButtonsTable.add(recordVideoButton).fill().right();
 		
-		final Label projectName = new Label("Hospitalizado", skin);
+		final Label projectName = new Label("La casa encantada", skin);
 		projectName.addListener(new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -159,6 +163,11 @@ public class ProjectMenu extends AbstractScreen {
 		topLeftbuttons.add(backButton);
 		topLeftbuttons.add(projectName);
 		
+		Image bg = new Image(skin.getRegion("bg2"));
+		bg.setTouchable(Touchable.disabled);
+		bg.setBounds(0, 0, stagew, stageh);
+
+		root.addActor(bg);
 		root.addActor(topLeftbuttons);
 		root.addActor(bottomButtonsTable);
 		root.addActor(cg);

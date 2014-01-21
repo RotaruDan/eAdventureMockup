@@ -87,10 +87,11 @@ public class ProjectGallery extends AbstractScreen {
 		searchtf.setMaxLength(search.length());
 		String[] orders = new String[] { "Ordenar por ...", "Ordenar por 2..." };//TODO use i18n!
 		SelectBox ordenar = new SelectBox(orders, skin);
+		
 		Label nombre = new Label("Galería de proyectos", skin);
 
 		toolBar.add(nombre).expandX().left().padLeft(
-				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT);
+				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f);
 		toolBar.add(ordenar);
 		toolBar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value

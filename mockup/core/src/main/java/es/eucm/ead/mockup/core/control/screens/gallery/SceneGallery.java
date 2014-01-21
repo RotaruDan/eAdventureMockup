@@ -130,10 +130,10 @@ public class SceneGallery extends AbstractScreen {
 		filterButton.addListener(closeFilterListenerTmp);
 
 		
-		Label nombre = new Label("Galería", skin);
+		Label nombre = new Label("Galería de escenas", skin);
 
 		toolBar.add(nombre).expandX().left().padLeft(
-				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT);
+				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f);
 		toolBar.add(order);
 		toolBar.add(filterButton);
 		toolBar.add(searchtf).width(

@@ -114,7 +114,7 @@ public class Gallery extends AbstractScreen {
 
 		final Panel filterPanel = new Panel(skin);
 		filterPanel.setVisible(false);
-		final float panelw = stagew * .6f, panelx = stagew - panelw;
+		final float panelw = stagew * .45f, panelx = stagew - panelw;
 		filterPanel.setBounds(panelx, toolBar.getHeight(), panelw, stageh
 				- toolBar.getHeight() * 2f);
 		filterPanel.add(cbe).expandX();
@@ -143,12 +143,14 @@ public class Gallery extends AbstractScreen {
 		Label nombre = new Label("Galería", skin);
 
 		toolBar.add(nombre).expandX().left().padLeft(
-				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT);
+				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f);
 		toolBar.add(order);
 		toolBar.add(filterButton);
 		toolBar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
+		
 		/***/
+		//TODO distinguish between elements and scenes
 		Texture t = new Texture(Gdx.files.internal("mockup/temp/proyecto.png"));//TODO change for scene
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		final int COLS = 3, ROWS = 6;
@@ -171,6 +173,7 @@ public class Gallery extends AbstractScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (event.getListenerActor() instanceof GridPanel) {
+					//TODO distinguish between elements and scenes
 					exitAnimation(Screens.SCENE_EDITION);
 				}
 			}
