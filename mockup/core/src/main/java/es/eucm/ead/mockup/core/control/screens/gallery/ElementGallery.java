@@ -161,7 +161,7 @@ public class ElementGallery extends AbstractScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				if (event.getListenerActor() instanceof GridPanel) {
-					exitAnimation(Screens.SCENE_EDITION);
+					exitAnimation(Screens.ELEMENT_EDITION);
 				}
 			}
 		});

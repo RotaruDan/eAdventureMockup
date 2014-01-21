@@ -42,8 +42,8 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
@@ -56,23 +56,14 @@ import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.GridPanel;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
-import es.eucm.ead.mockup.core.view.ui.components.NavigationPanel;
 
 public class ProjectGallery extends AbstractScreen {
 
-	private Group navigationGroup;
 	private ToolBar toolBar;
-	/**
-	 * We need to hide this button since we
-	 * can't go to any project yet.
-	 */
-	private Button navigationPanelProjectButton;
 
 	@Override
 	public void create() {
 		setPreviousScreen(Screens.MAIN_MENU);
-		navigationGroup = UIAssets.getNavigationGroup();
-		navigationPanelProjectButton = ((NavigationPanel)navigationGroup.findActor(UIAssets.NAVIGATION_PANEL_NAME)).getProjectButton();
 
 		super.root = new Group();
 		root.setVisible(false);
@@ -81,6 +72,13 @@ public class ProjectGallery extends AbstractScreen {
 		//toolBar.setVisible(false);
 		toolBar.right();
 
+		final ImageButton backButton = new ImageButton(skin, "ic_goback");
+		backButton.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				exitAnimation(Screens.MAIN_MENU);
+			}
+		});
 		String search = "Buscar por nombre";//TODO use i18n!
 		TextField searchtf = new TextField("", skin);
 		searchtf.setMessageText(search);
@@ -90,8 +88,8 @@ public class ProjectGallery extends AbstractScreen {
 		
 		Label nombre = new Label("Galería de proyectos", skin);
 
-		toolBar.add(nombre).expandX().left().padLeft(
-				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f);
+		toolBar.add(backButton);
+		toolBar.add(nombre).expandX().left().padLeft(5f);
 		toolBar.add(ordenar);
 		toolBar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
@@ -137,9 +135,7 @@ public class ProjectGallery extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-		navigationPanelProjectButton.setVisible(false);
 		root.setVisible(true);
-		navigationGroup.setVisible(true);
 	}
 
 	@Override
@@ -154,8 +150,6 @@ public class ProjectGallery extends AbstractScreen {
 
 	@Override
 	public void hide() {
-		navigationPanelProjectButton.setVisible(true);
 		root.setVisible(false);
-		navigationGroup.setVisible(false);
 	}
 }

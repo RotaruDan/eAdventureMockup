@@ -63,7 +63,7 @@ public class Picture extends AbstractScreen {
 		this.navigationGroup = UIAssets.getNavigationGroup();
 		this.screenController = mockupController.getScreenController();
 
-		takePicButton = new ImageButton(skin);
+		takePicButton = new ImageButton(skin, "ic_photocamera");
 		takePicButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -84,11 +84,10 @@ public class Picture extends AbstractScreen {
 		rootTable.setVisible(false);
 		rootTable.setFillParent(true);
 		rootTable.pad(10f);
-		//rootTable.debug();
 
 		rootTable.add(resolution).right().top();
 		rootTable.row();
-		rootTable.add(takePicButton).bottom().expand();
+		rootTable.add(takePicButton).size(takePicButton.getWidth()*1.3f).bottom().expand().padBottom(5f);
 
 		stage.addActor(rootTable);
 	}
