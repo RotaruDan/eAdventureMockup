@@ -46,9 +46,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
  * A button displayed in the MainMenu and PanelMenu Screens.
  */
 public class ToolbarButton extends ImageButton {
-	private static final float DEFAULT_SCALE_PROGRESSION = 1.8f;	
-	private static final float DEFAULT_FONT_SCALE = .4f;	
-	private static final float IMAGE_PAD_TOP = 5f;
+	private static final float DEFAULT_SCALE_PROGRESSION = 1.4f;	
+	private static final float DEFAULT_FONT_SCALE = 1f;	
+	private static final float IMAGE_PAD_TOP = 3f;
 	private static float LABEL_CELL_HEIGHT;	
 
 	private static Drawable btn_default_pressed;
@@ -99,7 +99,7 @@ public class ToolbarButton extends ImageButton {
 	private void initializeLabel(String name, Skin skin, float fontScale){
 		this.getImageCell().expand().padTop(IMAGE_PAD_TOP);
 		this.row();
-		Label mName = new Label(name, skin);
+		Label mName = new Label(name, skin, "toolbar");
 		mName.setFontScale(fontScale);
 		mName.setAlignment(Align.bottom);		
 		float labelCellHeight = LABEL_CELL_HEIGHT * fontScale * DEFAULT_SCALE_PROGRESSION; 
@@ -126,6 +126,6 @@ public class ToolbarButton extends ImageButton {
 		btn_default_focused = btn_default_pressed;
 		btn_default_disabled = skin.getDrawable("dialogDimObscure");
 		
-		LABEL_CELL_HEIGHT = skin.getFont("default-font").getBounds("A").height;
+		LABEL_CELL_HEIGHT = skin.getFont("toolbar-font").getBounds("A").height;
 	}
 }

@@ -63,6 +63,7 @@ public class NavigationPanel extends Panel {
 	 * The button that triggers the event that opens this panel.
 	 */
 	private Button mActivationButton;
+	private Button projectButton;
 
 	public NavigationPanel(Skin skin, Button mActivationButton) {
 		this(skin, "default", mActivationButton);
@@ -82,7 +83,7 @@ public class NavigationPanel extends Panel {
 		projectLabel.setAlignment(Align.center);
 
 		Image projectImg = new Image(style.backButton); //back project img
-		final Button projectButton = new Button(skin,
+		projectButton = new Button(skin,
 				"navigationPanelProject");
 
 		projectButton.add(projectImg).padLeft(ICON_PAD_LEFT);
@@ -161,6 +162,10 @@ public class NavigationPanel extends Panel {
 		add(galleryButton);
 		row();
 		add(lanuchGameButton);
+	}
+
+	public Button getProjectButton() {
+		return projectButton;
 	}
 
 	@Override

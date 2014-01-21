@@ -98,6 +98,7 @@ public class Recording extends AbstractScreen {
 		//TODO personalize toggle-recording in JSON
 		recImg.setTouchable(Touchable.disabled);
 		recLabel = new Label("", skin);
+		recLabel.setColor(Color.RED);
 		recInfoButton.add(recImg);
 		recInfoButton.add(recLabel);
 
