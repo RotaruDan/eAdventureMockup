@@ -46,16 +46,17 @@ import es.eucm.ead.mockup.core.control.listeners.EventListener;
 import es.eucm.ead.mockup.core.control.listeners.FocusListener;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Loading;
-import es.eucm.ead.mockup.core.control.screens.MainMenu;
-import es.eucm.ead.mockup.core.control.screens.Picture;
-import es.eucm.ead.mockup.core.control.screens.ProjectMenu;
-import es.eucm.ead.mockup.core.control.screens.Recording;
-import es.eucm.ead.mockup.core.control.screens.SceneEdition;
 import es.eucm.ead.mockup.core.control.screens.Screens;
+import es.eucm.ead.mockup.core.control.screens.camara.Picture;
+import es.eucm.ead.mockup.core.control.screens.camara.Recording;
+import es.eucm.ead.mockup.core.control.screens.edition.ElementEdition;
+import es.eucm.ead.mockup.core.control.screens.edition.SceneEdition;
 import es.eucm.ead.mockup.core.control.screens.gallery.ElementGallery;
 import es.eucm.ead.mockup.core.control.screens.gallery.Gallery;
 import es.eucm.ead.mockup.core.control.screens.gallery.ProjectGallery;
 import es.eucm.ead.mockup.core.control.screens.gallery.SceneGallery;
+import es.eucm.ead.mockup.core.control.screens.menu.MainMenu;
+import es.eucm.ead.mockup.core.control.screens.menu.ProjectMenu;
 
 /**
  * The main controller for Mockup Editor.
@@ -95,15 +96,20 @@ public class MockupController implements EventListener {
 		// we make sure those attributes are properly setted.
 		
 		this.states = new IdentityMap<Screens, AbstractScreen>();
+		/*MENUS*/
 		this.states.put(Screens.MAIN_MENU, new MainMenu());
 		this.states.put(Screens.PROJECT_MENU, new ProjectMenu());
-		this.states.put(Screens.PROJECT_GALLERY, new ProjectGallery());
-		this.states.put(Screens.SCENE_EDITION, new SceneEdition());
+		/*GALLERIES*/
 		this.states.put(Screens.GALLERY, new Gallery());
+		this.states.put(Screens.PROJECT_GALLERY, new ProjectGallery());
 		this.states.put(Screens.SCENE_GALLERY, new SceneGallery());
 		this.states.put(Screens.ELEMENT_GALLERY, new ElementGallery());
+		/*CAMARA*/
 		this.states.put(Screens.RECORDING, new Recording());
 		this.states.put(Screens.PICTURE, new Picture());
+		/*EDITION*/
+		this.states.put(Screens.SCENE_EDITION, new SceneEdition());
+		this.states.put(Screens.SCENE_EDITION, new ElementEdition());
 
 		this.screenCtr = new ScreenController();
 
