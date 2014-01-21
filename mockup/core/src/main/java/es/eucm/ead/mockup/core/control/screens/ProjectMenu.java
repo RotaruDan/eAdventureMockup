@@ -141,7 +141,7 @@ public class ProjectMenu extends AbstractScreen {
 
 	@Override
 	public void draw() {
-		stage.draw();
+		stage.draw();Table.drawDebug(stage);
 	}
 
 	@Override

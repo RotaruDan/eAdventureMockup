@@ -68,8 +68,9 @@ public class MenuButton extends Button {
 		Image sceneIcon = new Image(skin.getRegion(styleName));
 		Label scene = new Label(name, skin);
 		
-		add(sceneIcon).expand();
+		add(sceneIcon).expand().fill();
 		row();
 		add(scene);
+		//debug();
 	}
 }
