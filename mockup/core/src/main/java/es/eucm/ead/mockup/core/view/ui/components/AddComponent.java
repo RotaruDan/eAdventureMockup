@@ -45,7 +45,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
-import es.eucm.ead.mockup.core.utils.Constants;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.Panel;
 import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
@@ -135,7 +134,7 @@ public class AddComponent {
 			} else {
 				setX(AbstractScreen.stagew-width-5);
 			}
-				setY(Constants.SCREENH - UIAssets.TOOLBAR_HEIGHT - height - 10);
+				setY(AbstractScreen.stageh - UIAssets.TOOLBAR_HEIGHT - height - 10);
 		}
 
 		@Override

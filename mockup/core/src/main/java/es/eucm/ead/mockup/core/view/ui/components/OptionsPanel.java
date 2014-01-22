@@ -51,6 +51,7 @@ import es.eucm.ead.mockup.core.view.ui.Panel;
 public class OptionsPanel extends Panel {
 
 	private final float x, y;
+	private final float DEFAULT_PAD_BOTTON_AND_TOP = 20f;
 
 	public OptionsPanel(Skin skin) {
 		this(skin, "default");
@@ -87,6 +88,8 @@ public class OptionsPanel extends Panel {
 		new ButtonGroup(cbs8, cbs9, cbs10);
 
 		Table t = new Table();
+		t.padTop(DEFAULT_PAD_BOTTON_AND_TOP);
+		t.padBottom(DEFAULT_PAD_BOTTON_AND_TOP);
 		ScrollPane sp = new ScrollPane(t, skin);
 		sp.setupFadeScrollBars(0f, 0f);
 		sp.setScrollingDisabled(true, false);

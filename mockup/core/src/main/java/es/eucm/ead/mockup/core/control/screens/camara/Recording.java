@@ -49,6 +49,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.ScreenController;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
+import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 
 public class Recording extends AbstractScreen {
@@ -82,8 +83,17 @@ public class Recording extends AbstractScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
 				record();
+				if(!rec){
+					//TODO show panel...
+					if(mockupController.getPreviousScreen() == Screens.PROJECT_MENU){
+						onBackKeyPressed();
+					} else{
+						exitAnimation(Screens.SCENE_EDITION);
+					}
+				}
 			}
 		});
+
 		String[] res = { "480p", "720p", "1080p" };
 		resolution = new SelectBox(res, skin);
 		resolution.addListener(new ClickListener() {

@@ -47,9 +47,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.ScreenController;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
+import es.eucm.ead.mockup.core.control.screens.Screens;
+import es.eucm.ead.mockup.core.control.screens.gallery.Gallery;
 import es.eucm.ead.mockup.core.view.UIAssets;
 
 public class Picture extends AbstractScreen {
+
+	/**
+	 * Fast implementation to know where we go after
+	 * the choice dialog depending on which button we clicked.
+	 * 
+	 */
+	private static Screens nextScreen;
 
 	private Group navigationGroup;
 	private Table rootTable;
@@ -94,6 +103,16 @@ public class Picture extends AbstractScreen {
 
 	private void takePic() {
 		//TODO take picture here
+		onPictureTaken();
+	}
+
+	private void onPictureTaken(){
+		if(nextScreen == null){
+			//We've come from Project menu so we go back
+			onBackKeyPressed();
+		} else {
+			exitAnimation(nextScreen);
+		}
 	}
 
 	@Override
@@ -101,7 +120,24 @@ public class Picture extends AbstractScreen {
 		super.show();
 		previousClearColor.set(this.screenController.getClearColor());
 		this.screenController.changeClearColor(clearColor);
-		setPreviousScreen(mockupController.getPreviousScreen());
+		Screens previousScreen = mockupController.getPreviousScreen();
+		setPreviousScreen(previousScreen);
+		Screens nextScr = null;
+		if(previousScreen == Screens.GALLERY){
+			if(Gallery.SCENE_EDITION) {
+				nextScr = Screens.SCENE_EDITION;
+			} else {
+				nextScr = Screens.ELEMENT_EDITION;
+			}
+		} else if(previousScreen == Screens.ELEMENT_GALLERY){
+			nextScr = Screens.ELEMENT_EDITION;
+		} else if(previousScreen == Screens.SCENE_GALLERY){
+			nextScr = Screens.SCENE_EDITION;
+		} else if(previousScreen == Screens.PROJECT_MENU){
+			// If it's null we go to the previous screen.
+			nextScr = previousScreen;
+		} 
+		setNextScreen(nextScr);
 		rootTable.setVisible(true);
 		navigationGroup.setVisible(true);
 	}
@@ -126,5 +162,16 @@ public class Picture extends AbstractScreen {
 		this.screenController.changeClearColor(previousClearColor);
 		rootTable.setVisible(false);
 		navigationGroup.setVisible(false);
+	}
+
+	/**
+	 * Sets the nextScreen that will be shown after we take the picture.
+	 * Fast implementation to know where we go after
+	 * the choice dialog depending on which button we clicked.
+	 * 
+	 * If nextScreen in null we will go to the previous Screen.
+	 */
+	public static void setNextScreen(Screens nextScreen) {
+		Picture.nextScreen = nextScreen;
 	}
 }

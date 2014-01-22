@@ -62,8 +62,16 @@ import es.eucm.ead.mockup.core.view.ui.ToolBar;
 
 public class Gallery extends AbstractScreen {
 
+	/**
+	 * Fast implementation to know where we go
+	 * when we take a picture if we go to the picture screen.
+	 * If true -> SCENE_EDITION else ELEMENT_EDITION.
+	 */
+	public static boolean SCENE_EDITION;
+	
 	private Group navigationGroup;
 	private ToolBar toolBar;
+	private Panel mDialogPanel;
 
 	@Override
 	public void create() {
@@ -176,8 +184,10 @@ public class Gallery extends AbstractScreen {
 				if (target instanceof Image) {
 					//TODO distinguish between elements and scenes
 					exitAnimation(Screens.SCENE_EDITION);
-				} else if (target instanceof TextButton) { 
-					//TODO ask for choise
+				} else if (target instanceof Label) { 
+					//TODO ask for choise			
+					SCENE_EDITION = true;	
+					showDialog();
 				}
 			}
 		});
@@ -186,19 +196,51 @@ public class Gallery extends AbstractScreen {
 		scrollPane.setBounds(0, toolBar.getHeight(), stagew, stageh - 2
 				* toolBar.getHeight());
 		final float DEFAULT_ICON_LABEL_SPACE = 10f;
-		final Button picButton = new Button(skin);
-		picButton.defaults().space(DEFAULT_ICON_LABEL_SPACE);
-		Label picLabel = new Label("Nuevo desde cámara", skin);
-		Image picImage = new Image(skin.getDrawable("ic_photocamera"));
-		picButton.add(picImage);
-		picButton.add(picLabel);
+		final Button picButton = createButton("Nuevo desde cámara", 
+				"ic_photocamera", 
+				DEFAULT_ICON_LABEL_SPACE, 
+				false);
+		final Button vidButton = createButton("Grabar desde Escena", 
+				"ic_videocamera", 
+				DEFAULT_ICON_LABEL_SPACE, 
+				true);
+		ClickListener showDialogListener = new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {	
+				SCENE_EDITION = false;	
+				showDialog();
+			}
+		};
+		picButton.addListener(showDialogListener);
+		vidButton.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				exitAnimation(Screens.RECORDING);
+			}
+		});
 
-		final Button vidButton = new Button(skin);
-		vidButton.defaults().space(DEFAULT_ICON_LABEL_SPACE);
-		Label vidLabel = new Label("Grabar desde Escena", skin);
-		Image vidImage = new Image(skin.getDrawable("ic_videocamera"));
-		vidButton.add(vidImage);
-		vidButton.add(vidLabel);
+		//Coice dialog panel
+		mDialogPanel = new Panel(skin, "dialog");
+		mDialogPanel.setVisible(false);
+		mDialogPanel.setModal(true);
+		mDialogPanel.pad(DEFAULT_ICON_LABEL_SPACE);
+		mDialogPanel.defaults().space(DEFAULT_ICON_LABEL_SPACE).uniform().expand().fill();
+		final float PANEL_W = stagew*.3f, 
+				PANEL_H = UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT *3f, 
+				PANEL_X = halfstagew - PANEL_W *.5F, 
+				PANEL_Y = halfstageh - PANEL_H *.5f;
+		mDialogPanel.setBounds(PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
+		final Button newElement = createButton("Nuevo elemento", 
+				"ic_editelement", 
+				DEFAULT_ICON_LABEL_SPACE, 
+				false);
+		final Button newScene = createButton("Escena nueva", 
+				"ic_editstage", 
+				DEFAULT_ICON_LABEL_SPACE, 
+				true);
+		mDialogPanel.add(newScene);
+		mDialogPanel.row();
+		mDialogPanel.add(newElement);
 		ClickListener mTransitionLIstener = new ClickListener() {
 
 			@Override
@@ -212,16 +254,28 @@ public class Gallery extends AbstractScreen {
 
 			private Screens getNextScreen(Actor target) {
 				Screens next = null;
-				if (target == picButton) {
+				if(SCENE_EDITION){
+					//We've clicked NewBlankImage 
+					if (target == newElement) {
+						next = Screens.ELEMENT_EDITION;
+						SCENE_EDITION = false;
+					} else if (target == newScene) {
+						next = Screens.SCENE_EDITION;
+					}
+				} else {
+					//We've clicked TakePictureButton 
 					next = Screens.PICTURE;
-				} else if (target == vidButton) {
-					next = Screens.RECORDING;
+					if (target == newElement) {
+						SCENE_EDITION = false;
+					} else if (target == newScene) {
+						SCENE_EDITION = true;
+					}				
 				}
 				return next;
 			}
 		};
-		picButton.addListener(mTransitionLIstener);
-		vidButton.addListener(mTransitionLIstener);
+		newElement.addListener(mTransitionLIstener);
+		newScene.addListener(mTransitionLIstener);
 
 		ToolBar toolBar2 = new ToolBar(skin);
 		toolBar2.setY(0);
@@ -232,8 +286,28 @@ public class Gallery extends AbstractScreen {
 		root.addActor(toolBar2);
 		root.addActor(scrollPane);
 		root.addActor(filterPanel);
+		root.addActor(mDialogPanel);
 
 		stage.addActor(root);
+	}
+
+	private Button createButton(String text, String image, float defaultSpace, boolean left){
+		Button mButton = new Button(skin);
+		mButton.defaults().space(defaultSpace);
+		Label vidLabel = new Label(text, skin);
+		Image vidImage = new Image(skin.getDrawable(image));
+		if(left){
+			mButton.add(vidLabel);
+			mButton.add(vidImage);			
+		} else {
+			mButton.add(vidImage);
+			mButton.add(vidLabel);			
+		}
+		return mButton;
+	}
+
+	private void showDialog(){
+		mockupController.show(mDialogPanel);
 	}
 
 	@Override
