@@ -237,7 +237,7 @@ public class Gallery extends AbstractScreen {
 		final Button newScene = createButton("Escena nueva", 
 				"ic_editstage", 
 				DEFAULT_ICON_LABEL_SPACE, 
-				true);
+				false);
 		mDialogPanel.add(newScene);
 		mDialogPanel.row();
 		mDialogPanel.add(newElement);

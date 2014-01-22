@@ -36,16 +36,14 @@
  */
 package es.eucm.ead.mockup.core.control.screens.menu;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.listeners.FocusListener;
@@ -135,25 +133,9 @@ public class ProjectMenu extends AbstractScreen {
 		bottomButtonsTable.add(initialSceneButton).height(bottomButtonsTable.getHeight()).expandX();
 		bottomButtonsTable.add(recordVideoButton).fill().right();
 		
-		final Label projectName = new Label("La casa encantada", skin);
-		projectName.addListener(new ClickListener(){
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.input.getTextInput(new TextInputListener(){
-
-					@Override
-					public void input(String text) {
-						if(text != null && text.length() > 0){
-							projectName.setText(text);
-						}
-					}
-					
-					@Override
-					public void canceled() { }
-					
-				}, String.valueOf(projectName.getText()), "Nuevo nombre del proyecto...");//TODO use i18n
-			}
-		});
+		final TextField projectName = new TextField("Hospitalizado", skin);
+		final int MAX_NAME_CHARACTERS = 13;
+		projectName.setMaxLength(MAX_NAME_CHARACTERS);
 
 		// We create a table with contraints for
 		// GoBackButton and ProjectNameLabel
@@ -163,7 +145,7 @@ public class ProjectMenu extends AbstractScreen {
 		topLeftbuttons.left();
 		topLeftbuttons.defaults().height(UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
 		topLeftbuttons.add(backButton);
-		topLeftbuttons.add(projectName);
+		topLeftbuttons.add(projectName).width(skin.getFont("default-font").getBounds(projectName.getText()).width*1.35f);
 		
 		Image bg = new Image(skin.getRegion("bg2"));
 		bg.setTouchable(Touchable.disabled);

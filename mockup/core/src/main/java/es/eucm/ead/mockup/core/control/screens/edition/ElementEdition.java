@@ -46,7 +46,6 @@ import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
 import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
-import es.eucm.ead.mockup.core.view.ui.components.AddComponent;
 import es.eucm.ead.mockup.core.view.ui.components.DrawComponent;
 import es.eucm.ead.mockup.core.view.ui.components.DrawComponent.Type;
 import es.eucm.ead.mockup.core.view.ui.components.EffectsComponent;
@@ -69,6 +68,7 @@ public class ElementEdition extends AbstractScreen {
 		setPreviousScreen(Screens.PROJECT_MENU);
 		this.TOOLBAR_ICON_HEIGHT = UIAssets.TOOLBAR_HEIGHT; 
 		this.TOOLBAR_ICON_WIDTH = TOOLBAR_ICON_HEIGHT*1.5f; 
+		
 		super.root = new Group();
 		root.setVisible(false);
 
