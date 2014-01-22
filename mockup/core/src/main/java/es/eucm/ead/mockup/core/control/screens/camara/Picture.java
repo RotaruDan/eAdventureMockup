@@ -49,6 +49,7 @@ import es.eucm.ead.mockup.core.control.ScreenController;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.control.screens.gallery.Gallery;
+import es.eucm.ead.mockup.core.control.screens.menu.ProjectMenu;
 import es.eucm.ead.mockup.core.view.UIAssets;
 
 public class Picture extends AbstractScreen {
@@ -122,21 +123,28 @@ public class Picture extends AbstractScreen {
 		this.screenController.changeClearColor(clearColor);
 		Screens previousScreen = mockupController.getPreviousScreen();
 		setPreviousScreen(previousScreen);
+		
+		//	We implement distincg behaviours 
+		// depending on where we came from
 		Screens nextScr = null;
-		if(previousScreen == Screens.GALLERY){
-			if(Gallery.SCENE_EDITION) {
-				nextScr = Screens.SCENE_EDITION;
-			} else {
+		if(ProjectMenu.getFROM_INITIAL_SCENE()){
+			nextScr = Screens.PROJECT_MENU;
+		} else {
+			if(previousScreen == Screens.GALLERY){
+				if(Gallery.SCENE_EDITION) {
+					nextScr = Screens.SCENE_EDITION;
+				} else {
+					nextScr = Screens.ELEMENT_EDITION;
+				}
+			} else if(previousScreen == Screens.ELEMENT_GALLERY){
 				nextScr = Screens.ELEMENT_EDITION;
-			}
-		} else if(previousScreen == Screens.ELEMENT_GALLERY){
-			nextScr = Screens.ELEMENT_EDITION;
-		} else if(previousScreen == Screens.SCENE_GALLERY){
-			nextScr = Screens.SCENE_EDITION;
-		} else if(previousScreen == Screens.PROJECT_MENU){
-			// If it's null we go to the previous screen.
-			nextScr = previousScreen;
-		} 
+			} else if(previousScreen == Screens.SCENE_GALLERY){
+				nextScr = Screens.SCENE_EDITION;
+			} else if(previousScreen == Screens.PROJECT_MENU){
+				// If it's null we go to the previous screen.
+				nextScr = previousScreen;
+			} 
+		}
 		setNextScreen(nextScr);
 		rootTable.setVisible(true);
 		navigationGroup.setVisible(true);

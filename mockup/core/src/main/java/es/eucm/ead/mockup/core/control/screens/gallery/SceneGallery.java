@@ -55,6 +55,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Screens;
+import es.eucm.ead.mockup.core.control.screens.menu.ProjectMenu;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.GridPanel;
 import es.eucm.ead.mockup.core.view.ui.Panel;
@@ -129,7 +130,7 @@ public class SceneGallery extends AbstractScreen {
 		applyFilter.addListener(closeFilterListenerTmp);
 		filterButton.addListener(closeFilterListenerTmp);
 
-		
+
 		Label nombre = new Label("Galería de escenas", skin);
 
 		toolBar.add(nombre).expandX().left().padLeft(
@@ -151,7 +152,7 @@ public class SceneGallery extends AbstractScreen {
 				if (first) {
 					first = false;
 					gridPanel.addItem(new TextButton("Imagen en blanco", skin), 0, 0)
-							.fill();
+					.fill();
 				} else {
 					gridPanel.addItem(new Image(t), i, j);
 				}
@@ -162,8 +163,14 @@ public class SceneGallery extends AbstractScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				Actor target = event.getTarget();
 				if (target instanceof Image) {
+					if(ProjectMenu.getFROM_INITIAL_SCENE()){
+						exitAnimation(Screens.PROJECT_MENU);
+					} else {
+						exitAnimation(Screens.SCENE_EDITION);
+					}
+				} else if(target instanceof Label){
 					exitAnimation(Screens.SCENE_EDITION);
-				} 				
+				}
 			}
 		});
 		ScrollPane scrollPane = new ScrollPane(gridPanel);

@@ -50,6 +50,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import es.eucm.ead.mockup.core.control.ScreenController;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Screens;
+import es.eucm.ead.mockup.core.control.screens.menu.ProjectMenu;
 import es.eucm.ead.mockup.core.view.UIAssets;
 
 public class Recording extends AbstractScreen {
@@ -85,10 +86,14 @@ public class Recording extends AbstractScreen {
 				record();
 				if(!rec){
 					//TODO show panel...
-					if(mockupController.getPreviousScreen() == Screens.PROJECT_MENU){
-						onBackKeyPressed();
-					} else{
-						exitAnimation(Screens.SCENE_EDITION);
+					if(ProjectMenu.getFROM_INITIAL_SCENE()){
+						exitAnimation(Screens.PROJECT_MENU);
+					} else {
+						if(mockupController.getPreviousScreen() == Screens.PROJECT_MENU){
+							onBackKeyPressed();
+						} else{
+							exitAnimation(Screens.SCENE_EDITION);
+						}
 					}
 				}
 			}

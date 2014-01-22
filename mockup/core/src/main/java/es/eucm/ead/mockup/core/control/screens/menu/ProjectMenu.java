@@ -55,6 +55,12 @@ import es.eucm.ead.mockup.core.view.ui.buttons.MenuButton;
 
 public class ProjectMenu extends AbstractScreen {
 
+	/**
+	 * Fast navigation implementation to know that
+	 * we must come to this Screen if we go to the gallery by clicking { initialSceneButton }
+	 */
+	private static boolean FROM_INITIAL_SCENE;
+	
 	private final float PANEL_MENU_BUTTON_WIDTH_HEIGHT = stageh * .2f;
 	private Group optionsGroup;
 
@@ -117,7 +123,10 @@ public class ProjectMenu extends AbstractScreen {
 					next = Screens.RECORDING;
 				} else if (target == backButton) {
 					next = Screens.MAIN_MENU;
-				} 
+				} else if (target == initialSceneButton){
+					FROM_INITIAL_SCENE = true;
+					next = Screens.SCENE_GALLERY;
+				}
 				return next;
 			}
 		};
@@ -128,6 +137,7 @@ public class ProjectMenu extends AbstractScreen {
 		takePictureButton.addListener(mTransitionListener);
 		recordVideoButton.addListener(mTransitionListener);
 		backButton.addListener(mTransitionListener);
+		initialSceneButton.addListener(mTransitionListener);
 
 		bottomButtonsTable.add(takePictureButton).fill().left();
 		bottomButtonsTable.add(initialSceneButton).height(bottomButtonsTable.getHeight()).expandX();
@@ -162,6 +172,7 @@ public class ProjectMenu extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
+		FROM_INITIAL_SCENE = false;
 		root.setVisible(true);
 		this.optionsGroup.setVisible(true);
 	}
@@ -191,5 +202,14 @@ public class ProjectMenu extends AbstractScreen {
 		} else {
 			super.onBackKeyPressed();
 		}
+	}
+	
+	/**
+	 * Fast navigation implementation to know that
+	 * we must come to this Screen if we go to the gallery by clicking { initialSceneButton }
+	 * if true we pressed initialSceneButton.
+	 */
+	public static boolean getFROM_INITIAL_SCENE(){
+		return FROM_INITIAL_SCENE;
 	}
 }
