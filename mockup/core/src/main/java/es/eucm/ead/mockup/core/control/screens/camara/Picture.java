@@ -34,7 +34,7 @@
  *      You should have received a copy of the GNU Lesser General Public License
  *      along with eAdventure.  If not, see <http://www.gnu.org/licenses/>.
  */
-package es.eucm.ead.mockup.core.control.screens;
+package es.eucm.ead.mockup.core.control.screens.camara;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -46,6 +46,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.ScreenController;
+import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.view.UIAssets;
 
 public class Picture extends AbstractScreen {
@@ -62,7 +63,7 @@ public class Picture extends AbstractScreen {
 		this.navigationGroup = UIAssets.getNavigationGroup();
 		this.screenController = mockupController.getScreenController();
 
-		takePicButton = new ImageButton(skin);
+		takePicButton = new ImageButton(skin, "ic_photocamera");
 		takePicButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -83,11 +84,10 @@ public class Picture extends AbstractScreen {
 		rootTable.setVisible(false);
 		rootTable.setFillParent(true);
 		rootTable.pad(10f);
-		//rootTable.debug();
 
 		rootTable.add(resolution).right().top();
 		rootTable.row();
-		rootTable.add(takePicButton).bottom().expand();
+		rootTable.add(takePicButton).size(takePicButton.getWidth()*1.3f).bottom().expand().padBottom(5f);
 
 		stage.addActor(rootTable);
 	}

@@ -36,7 +36,7 @@
 		opaque: { background: dialogDimMedium }		
 	},
 	es.eucm.ead.mockup.core.view.ui.components.NavigationPanel$NavigationPanelStyle: {
-		default: { background: dialogDim, backButton: icon-blitz, editElement: ic_editelement, editScene: ic_editstage, gallery: ic_galery, launch: ic_playgame}	
+		default: { background: dialogDim, backButton: ic_goback, editElement: ic_editelement, editScene: ic_editstage, gallery: ic_galery, launch: ic_playgame}	
 	},
 	es.eucm.ead.mockup.core.view.ui.GridPanel$GridPanelStyle: {
 		default: {  },
@@ -80,7 +80,6 @@
 		ic_finger: { up: btn_toggle_off_normal, down: btn_toggle_on_pressed, over: btn_toggle_off_focused, checked: btn_toggle_on_normal, checkedOver: btn_toggle_on_focused, disabled: btn_toggle_off_disabled, imageUp: ic_finger, imageDown: ic_finger, imageOver: ic_finger, imageChecked: ic_finger, imageCheckedOver: ic_finger, imageDisabled: ic_finger },
 		ic_galery: { up: btn_toggle_off_normal, down: btn_toggle_on_pressed, over: btn_toggle_off_focused, checked: btn_toggle_on_normal, checkedOver: btn_toggle_on_focused, disabled: btn_toggle_off_disabled, imageUp: ic_galery, imageDown: ic_galery, imageOver: ic_galery, imageChecked: ic_galery, imageCheckedOver: ic_galery, imageDisabled: ic_galery },
 		ic_gallery: { up: btn_toggle_off_normal, down: btn_toggle_on_pressed, over: btn_toggle_off_focused, checked: btn_toggle_on_normal, checkedOver: btn_toggle_on_focused, disabled: btn_toggle_off_disabled, imageUp: ic_gallery, imageDown: ic_gallery, imageOver: ic_gallery, imageChecked: ic_gallery, imageCheckedOver: ic_gallery, imageDisabled: ic_gallery },
-		ic_goback: { up: btn_toggle_off_normal, down: btn_toggle_on_pressed, over: btn_toggle_off_focused, checked: btn_toggle_on_normal, checkedOver: btn_toggle_on_focused, disabled: btn_toggle_off_disabled, imageUp: ic_goback, imageDown: ic_goback, imageOver: ic_goback, imageChecked: ic_goback, imageCheckedOver: ic_goback, imageDisabled: ic_goback },
 		ic_hidescenes: { up: btn_toggle_off_normal, down: btn_toggle_on_pressed, over: btn_toggle_off_focused, checked: btn_toggle_on_normal, checkedOver: btn_toggle_on_focused, disabled: btn_toggle_off_disabled, imageUp: ic_hidescenes, imageDown: ic_hidescenes, imageOver: ic_hidescenes, imageChecked: ic_hidescenes, imageCheckedOver: ic_hidescenes, imageDisabled: ic_hidescenes },
 		ic_importproject: { up: btn_toggle_off_normal, down: btn_toggle_on_pressed, over: btn_toggle_off_focused, checked: btn_toggle_on_normal, checkedOver: btn_toggle_on_focused, disabled: btn_toggle_off_disabled, imageUp: ic_importproject, imageDown: ic_importproject, imageOver: ic_importproject, imageChecked: ic_importproject, imageCheckedOver: ic_importproject, imageDisabled: ic_importproject },
 		ic_logo: { up: btn_toggle_off_normal, down: btn_toggle_on_pressed, over: btn_toggle_off_focused, checked: btn_toggle_on_normal, checkedOver: btn_toggle_on_focused, disabled: btn_toggle_off_disabled, imageUp: ic_logo, imageDown: ic_logo, imageOver: ic_logo, imageChecked: ic_logo, imageCheckedOver: ic_logo, imageDisabled: ic_logo },
@@ -113,6 +112,8 @@
 		ic_undo: { up: btn_toggle_off_normal, down: btn_toggle_on_pressed, over: btn_toggle_off_focused, checked: btn_toggle_on_normal, checkedOver: btn_toggle_on_focused, disabled: btn_toggle_off_disabled, imageUp: ic_undo, imageDown: ic_undo, imageOver: ic_undo, imageChecked: ic_undo, imageCheckedOver: ic_undo, imageDisabled: ic_undo },
 		ic_videocamera: { up: btn_toggle_off_normal, down: btn_toggle_on_pressed, over: btn_toggle_off_focused, checked: btn_toggle_on_normal, checkedOver: btn_toggle_on_focused, disabled: btn_toggle_off_disabled, imageUp: ic_videocamera, imageDown: ic_videocamera, imageOver: ic_videocamera, imageChecked: ic_videocamera, imageCheckedOver: ic_videocamera, imageDisabled: ic_videocamera },
 		
+		ic_photocamera: { up: btn_default_normal, down: btn_default_pressed, over: btn_default_focused, disabled: btn_default_disabled, imageUp: ic_photocamera, imageDown: ic_photocamera, imageOver: ic_photocamera, imageDisabled: ic_photocamera},
+		ic_goback: { up: btn_default_normal, down: btn_default_pressed, over: btn_default_focused, disabled: btn_default_disabled, imageUp: ic_goback, imageDown: ic_goback, imageOver: ic_goback, imageDisabled: ic_goback},
 		ic_settings: { up: btn_default_normal, down: btn_default_pressed, over: btn_default_focused, disabled: btn_default_disabled, imageUp: ic_settings, imageDown: ic_settings, imageOver: ic_settings, imageDisabled: ic_settings},
 		ic_menu: { up: btn_default_normal, down: btn_default_pressed, over: btn_default_focused, disabled: btn_default_disabled, imageUp: ic_menu, imageDown: ic_menu, imageOver: ic_menu, imageDisabled: ic_menu}
 	},

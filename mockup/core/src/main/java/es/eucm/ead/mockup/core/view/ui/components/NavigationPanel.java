@@ -137,9 +137,9 @@ public class NavigationPanel extends Panel {
 				if (target == projectButton) {
 					next = Screens.PROJECT_MENU;
 				} else if (target == editElementButton) {
-					//next = Screens.PROJECT_GALLERY; //Edit Element TODO
+					next = Screens.ELEMENT_GALLERY; //Edit Element TODO
 				} else if (target == editSceneButton) {
-					next = Screens.SCENE_EDITION;
+					next = Screens.SCENE_GALLERY;
 				} else if (target == galleryButton) {
 					next = Screens.GALLERY;
 				}
