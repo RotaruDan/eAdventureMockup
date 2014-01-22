@@ -150,7 +150,7 @@ public class SceneGallery extends AbstractScreen {
 			for (int j = 0; j < COLS; ++j) {
 				if (first) {
 					first = false;
-					gridPanel.addItem(new TextButton("NUEVO", skin), 0, 0)
+					gridPanel.addItem(new TextButton("Imagen en blanco", skin), 0, 0)
 							.fill();
 				} else {
 					gridPanel.addItem(new Image(t), i, j);
@@ -160,9 +160,10 @@ public class SceneGallery extends AbstractScreen {
 		gridPanel.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (event.getListenerActor() instanceof GridPanel) {
+				Actor target = event.getTarget();
+				if (target instanceof Image) {
 					exitAnimation(Screens.SCENE_EDITION);
-				}
+				} 				
 			}
 		});
 		ScrollPane scrollPane = new ScrollPane(gridPanel);

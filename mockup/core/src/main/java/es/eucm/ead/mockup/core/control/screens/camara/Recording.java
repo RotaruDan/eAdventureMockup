@@ -65,6 +65,7 @@ public class Recording extends AbstractScreen {
 	private boolean rec;
 	private float elapsedMilis;
 	private int elapsedSecs;
+	private SelectBox resolution;
 
 	@Override
 	public void create() {
@@ -75,7 +76,7 @@ public class Recording extends AbstractScreen {
 		elapsedMilis = 0f;
 		elapsedSecs = 0;
 
-		recordingButton = new ImageButton(skin, "toggle");
+		recordingButton = new ImageButton(skin, "ic_record");
 		recordingButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -84,7 +85,7 @@ public class Recording extends AbstractScreen {
 			}
 		});
 		String[] res = { "480p", "720p", "1080p" };
-		SelectBox resolution = new SelectBox(res, skin);
+		resolution = new SelectBox(res, skin);
 		resolution.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -95,13 +96,13 @@ public class Recording extends AbstractScreen {
 
 		recInfoButton = new Table();
 		recInfoButton.setVisible(false);
-		Image recImg = new Image(skin.getRegion("icon-blitz"));
+		Image recImg = new Image(skin.getRegion("ic_recordoff"));
 		//TODO personalize toggle-recording in JSON
 		recImg.setTouchable(Touchable.disabled);
 		recLabel = new Label("", skin);
 		recLabel.setColor(Color.RED);
 		recInfoButton.add(recImg);
-		recInfoButton.add(recLabel);
+		recInfoButton.add(recLabel).padLeft(20f);
 
 		rootTable = new Table();
 		rootTable.setVisible(false);
@@ -113,8 +114,7 @@ public class Recording extends AbstractScreen {
 		rootTable.row();
 		rootTable.add(recInfoButton).right().top();
 		rootTable.row();
-		rootTable.add(recordingButton).bottom().expand();
-
+		rootTable.add(recordingButton).bottom().expand().padBottom(10f);
 		stage.addActor(rootTable);
 	}
 
@@ -123,6 +123,7 @@ public class Recording extends AbstractScreen {
 		recordingButton.setChecked(recording);
 		this.rec = recording;
 		recInfoButton.setVisible(recording);
+		resolution.setDisabled(recording);
 		elapsedMilis = 0f;
 		elapsedSecs = 0;
 		recLabel.setText(String.valueOf(elapsedSecs));

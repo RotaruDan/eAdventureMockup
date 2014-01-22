@@ -139,7 +139,7 @@ public class Gallery extends AbstractScreen {
 		applyFilter.addListener(closeFilterListenerTmp);
 		filterButton.addListener(closeFilterListenerTmp);
 
-		
+
 		Label nombre = new Label("Galería", skin);
 
 		toolBar.add(nombre).expandX().left().padLeft(
@@ -148,7 +148,7 @@ public class Gallery extends AbstractScreen {
 		toolBar.add(filterButton);
 		toolBar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
-		
+
 		/***/
 		//TODO distinguish between elements and scenes
 		Texture t = new Texture(Gdx.files.internal("mockup/temp/proyecto.png"));//TODO change for scene
@@ -162,8 +162,8 @@ public class Gallery extends AbstractScreen {
 			for (int j = 0; j < COLS; ++j) {
 				if (first) {
 					first = false;
-					gridPanel.addItem(new TextButton("NUEVO", skin), 0, 0)
-							.fill();
+					gridPanel.addItem(new TextButton("Crear nuevo\nen blanco",skin), 0, 0)
+					.fill();
 				} else {
 					gridPanel.addItem(new Image(t), i, j);
 				}
@@ -172,9 +172,12 @@ public class Gallery extends AbstractScreen {
 		gridPanel.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if (event.getListenerActor() instanceof GridPanel) {
+				Actor target = event.getTarget();
+				if (target instanceof Image) {
 					//TODO distinguish between elements and scenes
 					exitAnimation(Screens.SCENE_EDITION);
+				} else if (target instanceof TextButton) { 
+					//TODO ask for choise
 				}
 			}
 		});

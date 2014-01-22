@@ -109,7 +109,7 @@ public class MockupController implements EventListener {
 		this.states.put(Screens.PICTURE, new Picture());
 		/*EDITION*/
 		this.states.put(Screens.SCENE_EDITION, new SceneEdition());
-		this.states.put(Screens.SCENE_EDITION, new ElementEdition());
+		this.states.put(Screens.ELEMENT_EDITION, new ElementEdition());
 
 		this.screenCtr = new ScreenController();
 
