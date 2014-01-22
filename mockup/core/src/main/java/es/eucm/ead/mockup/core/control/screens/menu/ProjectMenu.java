@@ -36,16 +36,14 @@
  */
 package es.eucm.ead.mockup.core.control.screens.menu;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.TextInputListener;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.listeners.FocusListener;
@@ -57,6 +55,12 @@ import es.eucm.ead.mockup.core.view.ui.buttons.MenuButton;
 
 public class ProjectMenu extends AbstractScreen {
 
+	/**
+	 * Fast navigation implementation to know that
+	 * we must come to this Screen if we go to the gallery by clicking { initialSceneButton }
+	 */
+	private static boolean FROM_INITIAL_SCENE;
+	
 	private final float PANEL_MENU_BUTTON_WIDTH_HEIGHT = stageh * .2f;
 	private Group optionsGroup;
 
@@ -68,8 +72,9 @@ public class ProjectMenu extends AbstractScreen {
 
 		super.root = new Group();
 		root.setVisible(false);
-
-		final MenuButton scene, element, gallery, play, takePictureButton, initialSceneButton, recordVideoButton;
+		
+		final MenuButton scene, element, gallery, play, 
+				takePictureButton, initialSceneButton, recordVideoButton;		
 		scene = new MenuButton("Escena", skin, "ic_editstage",
 				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
 		element = new MenuButton("Elemento", skin, "ic_editelement",
@@ -85,15 +90,12 @@ public class ProjectMenu extends AbstractScreen {
 		cg.setY(halfstageh * 1.1f);
 
 		Table bottomButtonsTable = new Table();
-		bottomButtonsTable
-				.setBounds(0, 0, stagew, UIAssets.TOOLBAR_HEIGHT * 2f);
-
+		bottomButtonsTable.setBounds(0, 0, stagew, UIAssets.TOOLBAR_HEIGHT * 2f);
+		
 		takePictureButton = new MenuButton("Tomar Foto", skin, "ic_photocamera");//TODO i18n
-		initialSceneButton = new MenuButton("Aquí empieza el juego", skin,
-				"icon-blitz");
-		recordVideoButton = new MenuButton("Grabar Vídeo", skin,
-				"ic_videocamera");
-
+		initialSceneButton = new MenuButton("Aquí empieza el juego", skin, "icon-blitz");
+		recordVideoButton = new MenuButton("Grabar Vídeo", skin, "ic_videocamera");
+		
 		final ImageButton backButton = new ImageButton(skin, "ic_goback");
 
 		ClickListener mTransitionListener = new ClickListener() {
@@ -121,6 +123,9 @@ public class ProjectMenu extends AbstractScreen {
 					next = Screens.RECORDING;
 				} else if (target == backButton) {
 					next = Screens.MAIN_MENU;
+				} else if (target == initialSceneButton){
+					FROM_INITIAL_SCENE = true;
+					next = Screens.SCENE_GALLERY;
 				}
 				return next;
 			}
@@ -132,45 +137,26 @@ public class ProjectMenu extends AbstractScreen {
 		takePictureButton.addListener(mTransitionListener);
 		recordVideoButton.addListener(mTransitionListener);
 		backButton.addListener(mTransitionListener);
+		initialSceneButton.addListener(mTransitionListener);
 
 		bottomButtonsTable.add(takePictureButton).fill().left();
-		bottomButtonsTable.add(initialSceneButton).height(
-				bottomButtonsTable.getHeight()).expandX();
+		bottomButtonsTable.add(initialSceneButton).height(bottomButtonsTable.getHeight()).expandX();
 		bottomButtonsTable.add(recordVideoButton).fill().right();
-
-		final Label projectName = new Label("La casa encantada", skin);
-		projectName.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Gdx.input.getTextInput(new TextInputListener() {
-
-					@Override
-					public void input(String text) {
-						if (text != null && text.length() > 0) {
-							projectName.setText(text);
-						}
-					}
-
-					@Override
-					public void canceled() {
-					}
-
-				}, String.valueOf(projectName.getText()),
-						"Nuevo nombre del proyecto...");//TODO use i18n
-			}
-		});
+		
+		final TextField projectName = new TextField("Hospitalizado", skin);
+		final int MAX_NAME_CHARACTERS = 13;
+		projectName.setMaxLength(MAX_NAME_CHARACTERS);
 
 		// We create a table with contraints for
 		// GoBackButton and ProjectNameLabel
 		Table topLeftbuttons = new Table();
-		topLeftbuttons.setBounds(0, stageh
-				- UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT, stagew,
-				UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
+		topLeftbuttons.setBounds(0, stageh - UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT, 
+				stagew, UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
 		topLeftbuttons.left();
 		topLeftbuttons.defaults().height(UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
 		topLeftbuttons.add(backButton);
-		topLeftbuttons.add(projectName);
-
+		topLeftbuttons.add(projectName).width(skin.getFont("default-font").getBounds(projectName.getText()).width*1.35f);
+		
 		Image bg = new Image(skin.getRegion("bg2"));
 		bg.setTouchable(Touchable.disabled);
 		bg.setBounds(0, 0, stagew, stageh);
@@ -186,6 +172,7 @@ public class ProjectMenu extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
+		FROM_INITIAL_SCENE = false;
 		root.setVisible(true);
 		this.optionsGroup.setVisible(true);
 	}
@@ -197,8 +184,7 @@ public class ProjectMenu extends AbstractScreen {
 
 	@Override
 	public void draw() {
-		stage.draw();
-		Table.drawDebug(stage);
+		stage.draw();Table.drawDebug(stage);
 	}
 
 	@Override
@@ -216,5 +202,14 @@ public class ProjectMenu extends AbstractScreen {
 		} else {
 			super.onBackKeyPressed();
 		}
+	}
+	
+	/**
+	 * Fast navigation implementation to know that
+	 * we must come to this Screen if we go to the gallery by clicking { initialSceneButton }
+	 * if true we pressed initialSceneButton.
+	 */
+	public static boolean getFROM_INITIAL_SCENE(){
+		return FROM_INITIAL_SCENE;
 	}
 }
