@@ -42,6 +42,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.TextArea;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -56,9 +57,14 @@ public class OtherComponent {
 	private OtherPanel panel;
 	private Button button;
 
-	public OtherComponent( String imageUp,  String name, Skin skin, float width, float height) {
+	public enum TypeOther {
+		OTHER_ELEMENT, OTHER_SCENE
+	}
+
+	public OtherComponent(String imageUp, String name, Skin skin,
+			TypeOther type, float width, float height) {
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin);
-		this.panel = new OtherPanel(skin, "opaque", width, height);
+		this.panel = new OtherPanel(skin, "opaque", type, width, height);
 		this.button.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -77,71 +83,96 @@ public class OtherComponent {
 		private float width;
 		private float height;
 
-		public OtherPanel(Skin skin, String styleName, float width, float height) {
+		public OtherPanel(Skin skin, String styleName, TypeOther type,
+				float width, float height) {
 			super(skin, styleName);
 
 			this.height = height;
 			this.width = width;
-			
+
 			setHeight(height);
 			setWidth(width);
-			
+
 			setVisible(false);
 			setModal(false);
 			setColor(Color.DARK_GRAY);
-			
+
+			String duplicate = "Duplicar ";
+			String remove = "Eliminar ";
+			if (type == TypeOther.OTHER_SCENE) {
+				duplicate += "escena";
+				remove += "escena";
+			} else {
+				duplicate += "elemento";
+				remove += "elemento";
+			}
+
 			Label label = new Label("default-thin-opaque", skin);
 			label.setWrap(true);
 			label.setAlignment(Align.center);
 			label.setFontScale(0.7f);
-			
+
 			TextField nameField = new TextField("Nombre", skin);
-		
-			//Change for TextArea
-			TextField tags = new TextField("TAGs separados por ','", skin);
-			TextField infoField = new TextField("Información", skin);
-		
-			Label auxLabel1 = new Label("Duplicar escena", skin);
-			auxLabel1.setFontScale(0.7f);			
+			
+			TextArea tags = new TextArea("TAGs separados por ';'", skin);
+			TextArea infoField = new TextArea("Información", skin);
+
+			Label auxLabel1 = new Label(duplicate, skin);
+			auxLabel1.setFontScale(0.7f);
 			Image backImg1 = new Image(skin.getRegion("icon-blitz")); //edit element img
 			final Button clone = new Button(skin, "default");
 			clone.add(backImg1).left().expand();
 			clone.add(auxLabel1).left().expand();
 			clone.scale(0.5f);
-			
-			Label auxLabel2 = new Label("Eliminar escena", skin);
-			auxLabel2.setFontScale(0.7f);			
-			Image backImg2 = new Image(skin.getRegion("icon-blitz")); //edit element img
+
+			Label auxLabel2 = new Label(remove, skin);
+			auxLabel2.setFontScale(0.7f);
+			Image backImg2 = new Image(skin.getRegion("ic_delete"));
 			final Button erase = new Button(skin, "default");
 			erase.add(backImg2).left().expand();
 			erase.add(auxLabel2).left().expand();
 			erase.scale(0.5f);
-			
-			
+
 			//defaults().fill().expand();
-			
 			add(nameField).fill().expand();
 			row();
 			add(tags).fill().expand();
 			row();
 			add(infoField).fill().expand();
 			row();
+			
 			add(clone).expandX().fill();
 			row();
+			if (type == TypeOther.OTHER_ELEMENT) {
+				Label auxLabel3 = new Label("Editar acciones", skin);
+				auxLabel3.setFontScale(0.7f);
+				Image backImg3 = new Image(skin.getRegion("ic_settings")); //edit element img
+				final Button actions = new Button(skin, "default");
+				actions.add(backImg3).left().expand();
+				actions.add(auxLabel3).left().expand();
+				actions.scale(0.5f);
+
+				add(actions).expandX().fill();
+				
+				row();
+			}
+			add(" "); //this add more space between delete and the before button
+			row();
 			add(erase).expandX().fill();
-			
+			//debug();
+
 		}
 
 		/**
 		 * Set the panel'coordinates according to the button's coordinates
 		 */
 		public void actCoordinates() {
-			if((button.getX() + (button.getWidth() / 2) - (width / 2) + width)<AbstractScreen.stagew){
+			if ((button.getX() + (button.getWidth() / 2) - (width / 2) + width) < AbstractScreen.stagew) {
 				setX(button.getX() + (button.getWidth() / 2) - (width / 2));
 			} else {
-				setX(AbstractScreen.stagew-width-5);
+				setX(AbstractScreen.stagew - width - 5);
 			}
-				setY(AbstractScreen.stageh - UIAssets.TOOLBAR_HEIGHT - height - 10);
+			setY(AbstractScreen.stageh - UIAssets.TOOLBAR_HEIGHT - height - 10);
 		}
 
 		@Override
@@ -153,7 +184,7 @@ public class OtherComponent {
 		public void hide() {
 			super.hide();
 		}
-		
+
 	}
 
 	public OtherPanel getPanel() {

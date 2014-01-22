@@ -58,7 +58,8 @@ public class AddComponent {
 		BRUSH, RUBBER, TEXT
 	}
 
-	public AddComponent(String imageUp, String name, Skin skin,String description, float width, float height) {
+	public AddComponent(String imageUp, String name, Skin skin,
+			String description, float width, float height) {
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin);
 		this.panel = new AddPanel(skin, "opaque", description, width, height);
 		this.button.addListener(new ClickListener() {
@@ -79,43 +80,45 @@ public class AddComponent {
 		private float width;
 		private float height;
 
-		public AddPanel(Skin skin, String styleName, String description, float width, float height) {
+		public AddPanel(Skin skin, String styleName, String description,
+				float width, float height) {
 			super(skin, styleName);
 
 			this.height = height;
 			this.width = width;
-			
+
 			setHeight(height);
 			setWidth(width);
-			
+
 			setVisible(false);
 			setModal(false);
 			setColor(Color.DARK_GRAY);
-			
+
 			defaults().fill().expand().space(3).uniform();
-			
+
 			Label label = new Label(description, skin, "default-thin-opaque");
 			label.setWrap(true);
 			label.setAlignment(Align.center);
 			label.setFontScale(0.7f);
-			
+
 			//FIXME *repeated code*
 			Label auxLabel1 = new Label("Último elemento \n editado", skin);
 			auxLabel1.setFontScale(0.7f);
 			final Button touch = new Button(skin, "default");
 			touch.add(auxLabel1).left().expand();
-			
+
 			Label auxLabel2 = new Label("Elemento desde \n galeria", skin);
-			auxLabel2.setFontScale(0.7f);			
+			auxLabel2.setFontScale(0.7f);
 			final Button rec = new Button(skin, "default");
 			rec.add(auxLabel2).left().expand();
-			
-			Label auxLabel3 = new Label("Elemento desde \n nueva fotografía", skin);
-			auxLabel3.setFontScale(0.7f);			
+
+			Label auxLabel3 = new Label("Elemento desde \n nueva fotografía",
+					skin);
+			auxLabel3.setFontScale(0.7f);
 			final Button pol = new Button(skin, "default");
 			pol.add(auxLabel3).left().expand();
 			//END FIXME
-			
+
 			add(label);
 			row();
 			add(touch);
@@ -129,12 +132,12 @@ public class AddComponent {
 		 * Set the panel'coordinates according to the button's coordinates
 		 */
 		public void actCoordinates() {
-			if((button.getX() + (button.getWidth() / 2) - (width / 2) + width)<AbstractScreen.stagew){
+			if ((button.getX() + (button.getWidth() / 2) - (width / 2) + width) < AbstractScreen.stagew) {
 				setX(button.getX() + (button.getWidth() / 2) - (width / 2));
 			} else {
-				setX(AbstractScreen.stagew-width-5);
+				setX(AbstractScreen.stagew - width - 5);
 			}
-				setY(AbstractScreen.stageh - UIAssets.TOOLBAR_HEIGHT - height - 10);
+			setY(AbstractScreen.stageh - UIAssets.TOOLBAR_HEIGHT - height - 10);
 		}
 
 		@Override

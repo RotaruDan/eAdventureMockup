@@ -96,7 +96,8 @@ public class Picture extends AbstractScreen {
 
 		rootTable.add(resolution).right().top();
 		rootTable.row();
-		rootTable.add(takePicButton).size(takePicButton.getWidth()*1.3f).bottom().expand().padBottom(5f);
+		rootTable.add(takePicButton).size(takePicButton.getWidth() * 1.3f)
+				.bottom().expand().padBottom(5f);
 
 		stage.addActor(rootTable);
 	}
@@ -106,8 +107,8 @@ public class Picture extends AbstractScreen {
 		onPictureTaken();
 	}
 
-	private void onPictureTaken(){
-		if(nextScreen == null){
+	private void onPictureTaken() {
+		if (nextScreen == null) {
 			//We've come from Project menu so we go back
 			onBackKeyPressed();
 		} else {
@@ -123,20 +124,20 @@ public class Picture extends AbstractScreen {
 		Screens previousScreen = mockupController.getPreviousScreen();
 		setPreviousScreen(previousScreen);
 		Screens nextScr = null;
-		if(previousScreen == Screens.GALLERY){
-			if(Gallery.SCENE_EDITION) {
+		if (previousScreen == Screens.GALLERY) {
+			if (Gallery.SCENE_EDITION) {
 				nextScr = Screens.SCENE_EDITION;
 			} else {
 				nextScr = Screens.ELEMENT_EDITION;
 			}
-		} else if(previousScreen == Screens.ELEMENT_GALLERY){
+		} else if (previousScreen == Screens.ELEMENT_GALLERY) {
 			nextScr = Screens.ELEMENT_EDITION;
-		} else if(previousScreen == Screens.SCENE_GALLERY){
+		} else if (previousScreen == Screens.SCENE_GALLERY) {
 			nextScr = Screens.SCENE_EDITION;
-		} else if(previousScreen == Screens.PROJECT_MENU){
+		} else if (previousScreen == Screens.PROJECT_MENU) {
 			// If it's null we go to the previous screen.
 			nextScr = previousScreen;
-		} 
+		}
 		setNextScreen(nextScr);
 		rootTable.setVisible(true);
 		navigationGroup.setVisible(true);

@@ -68,9 +68,8 @@ public class ProjectMenu extends AbstractScreen {
 
 		super.root = new Group();
 		root.setVisible(false);
-		
-		final MenuButton scene, element, gallery, play, 
-				takePictureButton, initialSceneButton, recordVideoButton;		
+
+		final MenuButton scene, element, gallery, play, takePictureButton, initialSceneButton, recordVideoButton;
 		scene = new MenuButton("Escena", skin, "ic_editstage",
 				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
 		element = new MenuButton("Elemento", skin, "ic_editelement",
@@ -86,12 +85,15 @@ public class ProjectMenu extends AbstractScreen {
 		cg.setY(halfstageh * 1.1f);
 
 		Table bottomButtonsTable = new Table();
-		bottomButtonsTable.setBounds(0, 0, stagew, UIAssets.TOOLBAR_HEIGHT * 2f);
-		
+		bottomButtonsTable
+				.setBounds(0, 0, stagew, UIAssets.TOOLBAR_HEIGHT * 2f);
+
 		takePictureButton = new MenuButton("Tomar Foto", skin, "ic_photocamera");//TODO i18n
-		initialSceneButton = new MenuButton("Aquí empieza el juego", skin, "icon-blitz");
-		recordVideoButton = new MenuButton("Grabar Vídeo", skin, "ic_videocamera");
-		
+		initialSceneButton = new MenuButton("Aquí empieza el juego", skin,
+				"icon-blitz");
+		recordVideoButton = new MenuButton("Grabar Vídeo", skin,
+				"ic_videocamera");
+
 		final ImageButton backButton = new ImageButton(skin, "ic_goback");
 
 		ClickListener mTransitionListener = new ClickListener() {
@@ -119,7 +121,7 @@ public class ProjectMenu extends AbstractScreen {
 					next = Screens.RECORDING;
 				} else if (target == backButton) {
 					next = Screens.MAIN_MENU;
-				} 
+				}
 				return next;
 			}
 		};
@@ -132,39 +134,43 @@ public class ProjectMenu extends AbstractScreen {
 		backButton.addListener(mTransitionListener);
 
 		bottomButtonsTable.add(takePictureButton).fill().left();
-		bottomButtonsTable.add(initialSceneButton).height(bottomButtonsTable.getHeight()).expandX();
+		bottomButtonsTable.add(initialSceneButton).height(
+				bottomButtonsTable.getHeight()).expandX();
 		bottomButtonsTable.add(recordVideoButton).fill().right();
-		
+
 		final Label projectName = new Label("La casa encantada", skin);
-		projectName.addListener(new ClickListener(){
+		projectName.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				Gdx.input.getTextInput(new TextInputListener(){
+				Gdx.input.getTextInput(new TextInputListener() {
 
 					@Override
 					public void input(String text) {
-						if(text != null && text.length() > 0){
+						if (text != null && text.length() > 0) {
 							projectName.setText(text);
 						}
 					}
-					
+
 					@Override
-					public void canceled() { }
-					
-				}, String.valueOf(projectName.getText()), "Nuevo nombre del proyecto...");//TODO use i18n
+					public void canceled() {
+					}
+
+				}, String.valueOf(projectName.getText()),
+						"Nuevo nombre del proyecto...");//TODO use i18n
 			}
 		});
 
 		// We create a table with contraints for
 		// GoBackButton and ProjectNameLabel
 		Table topLeftbuttons = new Table();
-		topLeftbuttons.setBounds(0, stageh - UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT, 
-				stagew, UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
+		topLeftbuttons.setBounds(0, stageh
+				- UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT, stagew,
+				UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
 		topLeftbuttons.left();
 		topLeftbuttons.defaults().height(UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
 		topLeftbuttons.add(backButton);
 		topLeftbuttons.add(projectName);
-		
+
 		Image bg = new Image(skin.getRegion("bg2"));
 		bg.setTouchable(Touchable.disabled);
 		bg.setBounds(0, 0, stagew, stageh);
@@ -191,7 +197,8 @@ public class ProjectMenu extends AbstractScreen {
 
 	@Override
 	public void draw() {
-		stage.draw();Table.drawDebug(stage);
+		stage.draw();
+		Table.drawDebug(stage);
 	}
 
 	@Override

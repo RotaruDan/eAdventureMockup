@@ -48,40 +48,39 @@ import com.esotericsoftware.tablelayout.Cell;
  * A button displayed in the MainMenu and PanelMenu Screens.
  */
 public class MenuButton extends Button {
-	
-	private final float PAD_TOP = 17f, 
-						PAD_LEFT = 17f, 
-						PAD_BOTTOM = 10f, 
-						PAD_RIGHT = 17f;
+
+	private final float PAD_TOP = 17f, PAD_LEFT = 17f, PAD_BOTTOM = 10f,
+			PAD_RIGHT = 17f;
 
 	private Cell<Actor> icon;
-	
+
 	public MenuButton(String name, Skin skin, String styleName) {
 		super(skin);
 		setSize(getPrefWidth(), getPrefHeight());
 		initialize(name, skin, styleName);
 	}
-	
-	public MenuButton(String name, Skin skin, String styleName, float width, float height) {
+
+	public MenuButton(String name, Skin skin, String styleName, float width,
+			float height) {
 		super(skin);
 		setSize(width, height);
 		initialize(name, skin, styleName);
 	}
-	
+
 	@SuppressWarnings("unchecked")
-	private void initialize(String name, Skin skin, String styleName){
+	private void initialize(String name, Skin skin, String styleName) {
 		pad(PAD_TOP, PAD_LEFT, PAD_BOTTOM, PAD_RIGHT);
 		Image sceneIcon = new Image(skin.getRegion(styleName));
 		Label scene = new Label(name, skin);
 		scene.setAlignment(Align.center);
-		
+
 		icon = add(sceneIcon).expand();
 		row();
 		add(scene);
 	}
-	
+
 	public Cell<Actor> getIcon() {
 		return icon;
 	}
-	
+
 }

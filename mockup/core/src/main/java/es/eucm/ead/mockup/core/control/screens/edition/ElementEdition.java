@@ -40,6 +40,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Screens;
@@ -48,7 +49,9 @@ import es.eucm.ead.mockup.core.view.ui.ToolBar;
 import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 import es.eucm.ead.mockup.core.view.ui.components.AddComponent;
 import es.eucm.ead.mockup.core.view.ui.components.DrawComponent;
+import es.eucm.ead.mockup.core.view.ui.components.OtherComponent;
 import es.eucm.ead.mockup.core.view.ui.components.DrawComponent.Type;
+import es.eucm.ead.mockup.core.view.ui.components.OtherComponent.TypeOther;
 import es.eucm.ead.mockup.core.view.ui.components.EffectsComponent;
 import es.eucm.ead.mockup.core.view.ui.components.InteractiveComponent;
 
@@ -60,15 +63,16 @@ public class ElementEdition extends AbstractScreen {
 	private DrawComponent text;
 	private InteractiveComponent interac;
 	private EffectsComponent effect;
-	
+	private OtherComponent more;
+
 	private float TOOLBAR_ICON_HEIGHT;
 	private float TOOLBAR_ICON_WIDTH;
 
 	@Override
 	public void create() {
 		setPreviousScreen(Screens.PROJECT_MENU);
-		this.TOOLBAR_ICON_HEIGHT = UIAssets.TOOLBAR_HEIGHT; 
-		this.TOOLBAR_ICON_WIDTH = TOOLBAR_ICON_HEIGHT*1.5f; 
+		this.TOOLBAR_ICON_HEIGHT = UIAssets.TOOLBAR_HEIGHT;
+		this.TOOLBAR_ICON_WIDTH = TOOLBAR_ICON_HEIGHT * 1.5f;
 		super.root = new Group();
 		root.setVisible(false);
 
@@ -76,32 +80,30 @@ public class ElementEdition extends AbstractScreen {
 		toolBar.right();
 		//toolBar.setBounds(0, AbstractScreen.stageh * .9f, AbstractScreen.stagew, AbstractScreen.stageh * .1f);
 
-		Button move = new ToolbarButton(skin.getDrawable("ic_move"),"MOVER", skin);
+		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "MOVER",
+				skin);
 
-		paint = new DrawComponent("ic_pencil","PINTAR", skin, "Herramienta de pincel",
-				Type.BRUSH, 350, 550);
-		delete = new DrawComponent("ic_eraser","BORRAR", skin, "Herramienta de goma",
-				Type.RUBBER, 350, 250);
-		text = new DrawComponent("ic_text", "TEXTO", skin, "Herramienta de escribir",
-				Type.TEXT, 350, 550);
-		interac = new InteractiveComponent("ic_select", "SELECCIÓN", skin, 
+		paint = new DrawComponent("ic_pencil", "PINTAR", skin,
+				"Herramienta de pincel", Type.BRUSH, 350, 550);
+		delete = new DrawComponent("ic_eraser", "BORRAR", skin,
+				"Herramienta de goma", Type.RUBBER, 350, 250);
+		text = new DrawComponent("ic_text", "TEXTO", skin,
+				"Herramienta de escribir", Type.TEXT, 350, 550);
+		interac = new InteractiveComponent("ic_select", "SELECCIÓN", skin,
 				"Seleccionar parte a recortar usando", 300, 390);
-		effect = new EffectsComponent( "ic_effects","EFECTOS", skin,  "Añadir efectos de imagen", 300, 550);
-
-		Button more = new ToolbarButton(skin.getDrawable("ic_more"),"OTROS", skin);
+		effect = new EffectsComponent("ic_effects", "EFECTOS", skin,
+				"Añadir efectos de imagen", 300, 600);
+		more = new OtherComponent("ic_more", "Otros", skin,
+				TypeOther.OTHER_ELEMENT, 300, 600);
 
 		Button frames = new ImageButton(skin);
 		frames.setX(AbstractScreen.stagew - frames.getWidth());
 
 		//Radio-button functionality
-		new ButtonGroup(move, 
-				paint.getButton(), 
-				delete.getButton(), 
-				text.getButton(), 
-				interac.getButton(),
-				effect.getButton(),
-				more);		
-		
+		new ButtonGroup(move, paint.getButton(), delete.getButton(), text
+				.getButton(), interac.getButton(), effect.getButton(), more
+				.getButton());
+
 		//toolBar.debug();
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
 		toolBar.add(move);
@@ -110,7 +112,7 @@ public class ElementEdition extends AbstractScreen {
 		toolBar.add(text.getButton());
 		toolBar.add(interac.getButton());
 		toolBar.add(effect.getButton());
-		toolBar.add(more);
+		toolBar.add(more.getButton());
 		/*Does the actors in toolBar update their coordinates*/
 		toolBar.invalidate();
 		toolBar.validate();
@@ -129,7 +131,9 @@ public class ElementEdition extends AbstractScreen {
 		root.addActor(effect.getPanel());
 		root.addActor(effect.getOpt());
 		effect.actCoordinates();
-		
+		root.addActor(more.getPanel());
+		more.actCoordinates();
+
 		stage.addActor(root);
 	}
 
@@ -149,6 +153,7 @@ public class ElementEdition extends AbstractScreen {
 	@Override
 	public void draw() {
 		stage.draw();
+		Table.drawDebug(stage);
 	}
 
 	@Override

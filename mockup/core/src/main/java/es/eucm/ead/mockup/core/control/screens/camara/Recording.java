@@ -83,11 +83,11 @@ public class Recording extends AbstractScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				super.clicked(event, x, y);
 				record();
-				if(!rec){
+				if (!rec) {
 					//TODO show panel...
-					if(mockupController.getPreviousScreen() == Screens.PROJECT_MENU){
+					if (mockupController.getPreviousScreen() == Screens.PROJECT_MENU) {
 						onBackKeyPressed();
-					} else{
+					} else {
 						exitAnimation(Screens.SCENE_EDITION);
 					}
 				}

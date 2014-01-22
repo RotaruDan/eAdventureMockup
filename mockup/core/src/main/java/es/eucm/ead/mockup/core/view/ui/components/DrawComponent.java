@@ -69,8 +69,8 @@ public class DrawComponent {
 		BRUSH, RUBBER, TEXT
 	}
 
-	public DrawComponent(String imageUp, String name, Skin skin, String description, Type type,
-			float width, float height) {
+	public DrawComponent(String imageUp, String name, Skin skin,
+			String description, Type type, float width, float height) {
 		this.color = Color.BLACK;
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin);
 		this.panel = new PaintPanel(skin, "opaque", description, type, width,
@@ -145,33 +145,33 @@ public class DrawComponent {
 				@Override
 				public boolean touchDown(InputEvent event, float x, float y,
 						int pointer, int button) {
-					
+
 					updateDemoColor();
-					
+
 					return true;
 				}
 
 				@Override
 				public void touchDragged(InputEvent event, float x, float y,
 						int pointer) {
-					
-						updateDemoColor();
-					
+
+					updateDemoColor();
+
 				}
 
 				@Override
 				public void touchUp(InputEvent event, float x, float y,
 						int pointer, int button) {
 
-						updateDemoColor();
-					
+					updateDemoColor();
+
 				}
 			});
 
 			createPalette(skin);
 			circleSample = new Pixmap(pixmapWidthHeight, pixmapWidthHeight,
 					Format.RGBA8888);
-			
+
 			Blending b = Pixmap.getBlending();
 			Pixmap.setBlending(Blending.None);
 			circleSample.fill();
@@ -192,21 +192,21 @@ public class DrawComponent {
 			row();
 			add(textSample);
 			row();
-			
-				if (type != Type.TEXT ) {
-					add(cir).align(Align.center).expand(false, false).fill(
-							false).size(60, 60);
-				} else {
-					textSample.setColor(color);
-					add(textSample).align(Align.left).size(60, 60);
-				}
-				if(type != Type.RUBBER){
-					row();
-					add("Colores:");
-					row();
-					add(gridPanel);
-				}
-		
+
+			if (type != Type.TEXT) {
+				add(cir).align(Align.center).expand(false, false).fill(false)
+						.size(60, 60);
+			} else {
+				textSample.setColor(color);
+				add(textSample).align(Align.left).size(60, 60);
+			}
+			if (type != Type.RUBBER) {
+				row();
+				add("Colores:");
+				row();
+				add(gridPanel);
+			}
+
 			//debug();
 
 		}
@@ -227,7 +227,7 @@ public class DrawComponent {
 		@Override
 		public void hide() {
 			super.hide();
-			
+
 		}
 
 		public float getSize() {

@@ -129,11 +129,10 @@ public class SceneGallery extends AbstractScreen {
 		applyFilter.addListener(closeFilterListenerTmp);
 		filterButton.addListener(closeFilterListenerTmp);
 
-		
 		Label nombre = new Label("Galería de escenas", skin);
 
 		toolBar.add(nombre).expandX().left().padLeft(
-				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f);
+				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 1.1f);
 		toolBar.add(order);
 		toolBar.add(filterButton);
 		toolBar.add(searchtf).width(
@@ -150,8 +149,8 @@ public class SceneGallery extends AbstractScreen {
 			for (int j = 0; j < COLS; ++j) {
 				if (first) {
 					first = false;
-					gridPanel.addItem(new TextButton("Imagen en blanco", skin), 0, 0)
-							.fill();
+					gridPanel.addItem(new TextButton("Imagen en blanco", skin),
+							0, 0).fill();
 				} else {
 					gridPanel.addItem(new Image(t), i, j);
 				}
@@ -163,7 +162,7 @@ public class SceneGallery extends AbstractScreen {
 				Actor target = event.getTarget();
 				if (target instanceof Image) {
 					exitAnimation(Screens.SCENE_EDITION);
-				} 				
+				}
 			}
 		});
 		ScrollPane scrollPane = new ScrollPane(gridPanel);

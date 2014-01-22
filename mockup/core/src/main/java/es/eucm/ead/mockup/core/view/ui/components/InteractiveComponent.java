@@ -55,9 +55,11 @@ public class InteractiveComponent {
 	private InteractivePanel panel;
 	private Button button;
 
-	public InteractiveComponent(String imageUp, String name, Skin skin, String description, float width, float height) {
+	public InteractiveComponent(String imageUp, String name, Skin skin,
+			String description, float width, float height) {
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin);
-		this.panel = new InteractivePanel(skin, "opaque", description, width, height);
+		this.panel = new InteractivePanel(skin, "opaque", description, width,
+				height);
 		this.button.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -76,49 +78,51 @@ public class InteractiveComponent {
 		private float width;
 		private float height;
 
-		public InteractivePanel(Skin skin, String styleName, String description, float width, float height) {
+		public InteractivePanel(Skin skin, String styleName,
+				String description, float width, float height) {
 			super(skin, styleName);
 
 			this.height = height;
 			this.width = width;
-			
+
 			setHeight(height);
 			setWidth(width);
-			
+
 			setVisible(false);
 			setModal(false);
 			setColor(Color.DARK_GRAY);
-			
-			defaults().fill().expand().space(3).uniform();;
-			
+
+			defaults().fill().expand().space(3).uniform();
+			;
+
 			Label label = new Label(description, skin, "default-thin-opaque");
 			label.setWrap(true);
 			label.setAlignment(Align.center);
 			label.setFontScale(0.7f);
-			
+
 			//FIXME *repeated code* see NavigationPanel
 			Label auxLabel1 = new Label("Dedo", skin);
-			auxLabel1.setFontScale(0.7f);			
+			auxLabel1.setFontScale(0.7f);
 			Image backImg1 = new Image(skin.getRegion("icon-blitz")); //edit element img
 			final Button touch = new Button(skin, "default");
 			touch.add(backImg1).left().expand();
 			touch.add(auxLabel1).left().expand();
-			
+
 			Label auxLabel2 = new Label("Rectángulo", skin);
-			auxLabel2.setFontScale(0.7f);			
+			auxLabel2.setFontScale(0.7f);
 			Image backImg2 = new Image(skin.getRegion("icon-blitz")); //edit element img
 			final Button rec = new Button(skin, "default");
 			rec.add(backImg2).left().expand();
 			rec.add(auxLabel2).left().expand();
-			
+
 			Label auxLabel3 = new Label("Polígono", skin);
-			auxLabel3.setFontScale(0.7f);			
+			auxLabel3.setFontScale(0.7f);
 			Image backImg3 = new Image(skin.getRegion("icon-blitz")); //edit element img
 			final Button pol = new Button(skin, "default");
 			pol.add(backImg3).left().expand();
 			pol.add(auxLabel3).left().expand();
 			//END FIXME
-			
+
 			add(label);
 			row();
 			add(touch);

@@ -53,6 +53,7 @@ import es.eucm.ead.mockup.core.view.ui.components.DrawComponent.Type;
 import es.eucm.ead.mockup.core.view.ui.components.EffectsComponent;
 import es.eucm.ead.mockup.core.view.ui.components.InteractiveComponent;
 import es.eucm.ead.mockup.core.view.ui.components.OtherComponent;
+import es.eucm.ead.mockup.core.view.ui.components.OtherComponent.TypeOther;
 
 public class SceneEdition extends AbstractScreen {
 
@@ -63,7 +64,7 @@ public class SceneEdition extends AbstractScreen {
 	private InteractiveComponent interac;
 	private AddComponent add;
 	private EffectsComponent effect;
-	
+
 	private float TOOLBAR_ICON_HEIGHT;
 	private float TOOLBAR_ICON_WIDTH;
 	private OtherComponent more;
@@ -71,8 +72,8 @@ public class SceneEdition extends AbstractScreen {
 	@Override
 	public void create() {
 		setPreviousScreen(Screens.PROJECT_MENU);
-		this.TOOLBAR_ICON_HEIGHT = UIAssets.TOOLBAR_HEIGHT; 
-		this.TOOLBAR_ICON_WIDTH = TOOLBAR_ICON_HEIGHT*1.5f; 
+		this.TOOLBAR_ICON_HEIGHT = UIAssets.TOOLBAR_HEIGHT;
+		this.TOOLBAR_ICON_WIDTH = TOOLBAR_ICON_HEIGHT * 1.5f;
 		super.root = new Group();
 		root.setVisible(false);
 
@@ -80,34 +81,33 @@ public class SceneEdition extends AbstractScreen {
 		toolBar.right();
 		//toolBar.setBounds(0, AbstractScreen.stageh * .9f, AbstractScreen.stagew, AbstractScreen.stageh * .1f);
 
-		Button move = new ToolbarButton(skin.getDrawable("ic_move"),"MOVER", skin);
+		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "MOVER",
+				skin);
 
-		paint = new DrawComponent("ic_pencil","PINTAR", skin, "Herramienta de pincel",
-				Type.BRUSH, 300, 550);
-		delete = new DrawComponent("ic_eraser","BORRAR", skin, "Herramienta de goma",
-				Type.RUBBER, 300, 250);
-		text = new DrawComponent("ic_text", "TEXTO", skin, "Herramienta de escribir",
-				Type.TEXT, 300, 550);
+		paint = new DrawComponent("ic_pencil", "PINTAR", skin,
+				"Herramienta de pincel", Type.BRUSH, 300, 550);
+		delete = new DrawComponent("ic_eraser", "BORRAR", skin,
+				"Herramienta de goma", Type.RUBBER, 300, 250);
+		text = new DrawComponent("ic_text", "TEXTO", skin,
+				"Herramienta de escribir", Type.TEXT, 300, 550);
 		//change this ic_select icon
-		interac = new InteractiveComponent("ic_select", "ZONAS", skin, 
+		interac = new InteractiveComponent("ic_select", "ZONAS", skin,
 				"Añadir zona interactiva", 250, 390);
-		add = new AddComponent("tree_plus", "AÑADIR", skin, "Añadir a la escena:", 250, 390);
-		effect = new EffectsComponent( "ic_effects","EFECTOS", skin,  "Añadir efectos de imagen", 300, 550);
-		more = new OtherComponent("ic_more", "Otros", skin, 300, 600);
+		add = new AddComponent("tree_plus", "AÑADIR", skin,
+				"Añadir a la escena:", 250, 390);
+		effect = new EffectsComponent("ic_effects", "EFECTOS", skin,
+				"Añadir efectos de imagen", 300, 600);
+		more = new OtherComponent("ic_more", "Otros", skin,
+				TypeOther.OTHER_SCENE, 300, 600);
 
 		Button frames = new ImageButton(skin);
 		frames.setX(AbstractScreen.stagew - frames.getWidth());
 
 		//Radio-button functionality
-		new ButtonGroup(move, 
-				paint.getButton(), 
-				delete.getButton(), 
-				text.getButton(), 
-				interac.getButton(),
-				add.getButton(),
-				effect.getButton(),
-				more.getButton());		
-		
+		new ButtonGroup(move, paint.getButton(), delete.getButton(), text
+				.getButton(), interac.getButton(), add.getButton(), effect
+				.getButton(), more.getButton());
+
 		//toolBar.debug();
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
 		toolBar.add(move);
@@ -140,7 +140,7 @@ public class SceneEdition extends AbstractScreen {
 		effect.actCoordinates();
 		root.addActor(more.getPanel());
 		more.actCoordinates();
-
+		
 		stage.addActor(root);
 	}
 

@@ -58,7 +58,7 @@ public class NavigationPanel extends Panel {
 	private final float PANEL_PAD = 30f;
 	private final float PANEL_WIDTH = AbstractScreen.stagew * .35f;
 	private final float x = -PANEL_WIDTH, y = UIAssets.TOOLBAR_HEIGHT;
-	
+
 	/**
 	 * The button that triggers the event that opens this panel.
 	 */
@@ -72,7 +72,8 @@ public class NavigationPanel extends Panel {
 	public NavigationPanel(Skin skin, String styleName, Button mActivationButton) {
 		super(skin, styleName);
 		this.mActivationButton = mActivationButton;
-		setBounds(x, y, PANEL_WIDTH, AbstractScreen.stageh - 2 * UIAssets.TOOLBAR_HEIGHT);
+		setBounds(x, y, PANEL_WIDTH, AbstractScreen.stageh - 2
+				* UIAssets.TOOLBAR_HEIGHT);
 		setVisible(false);
 		setModal(true);
 
@@ -83,8 +84,7 @@ public class NavigationPanel extends Panel {
 		projectLabel.setAlignment(Align.center);
 
 		Image projectImg = new Image(style.backButton); //back project img
-		projectButton = new Button(skin,
-				"navigationPanelProject");
+		projectButton = new Button(skin, "navigationPanelProject");
 
 		projectButton.add(projectImg).padLeft(ICON_PAD_LEFT);
 		projectButton.add(projectLabel).expand();
@@ -92,32 +92,28 @@ public class NavigationPanel extends Panel {
 		Label editElementLabel = new Label("Editar Elemento", skin);
 		editElementLabel.setAlignment(Align.center);
 		Image editElementImg = new Image(style.editElement); //edit element img
-		final Button editElementButton = new Button(skin,
-				"navigationPanelRest");
+		final Button editElementButton = new Button(skin, "navigationPanelRest");
 		editElementButton.add(editElementImg).padLeft(ICON_PAD_LEFT);
 		editElementButton.add(editElementLabel).expandX();
 
 		Label editSceneLabel = new Label("Editar Escena", skin);
 		editSceneLabel.setAlignment(Align.center);
 		Image editSceneImg = new Image(style.editScene); //edit scene img
-		final Button editSceneButton = new Button(skin,
-				"navigationPanelRest");
+		final Button editSceneButton = new Button(skin, "navigationPanelRest");
 		editSceneButton.add(editSceneImg).padLeft(ICON_PAD_LEFT);
 		editSceneButton.add(editSceneLabel).expandX();
 
 		Label galleryLabel = new Label("Galería", skin);
 		galleryLabel.setAlignment(Align.center);
 		Image galleryImg = new Image(style.gallery); //gallery img
-		final Button galleryButton = new Button(skin,
-				"navigationPanelRest");
+		final Button galleryButton = new Button(skin, "navigationPanelRest");
 		galleryButton.add(galleryImg).padLeft(ICON_PAD_LEFT);
 		galleryButton.add(galleryLabel).expandX();
 
 		Label lanuchGameLabel = new Label("Lanzar Juego", skin);
 		lanuchGameLabel.setAlignment(Align.center);
 		Image lanuchGameImg = new Image(style.launch); //launch img
-		final Button lanuchGameButton = new Button(skin,
-				"navigationPanelRest");
+		final Button lanuchGameButton = new Button(skin, "navigationPanelRest");
 		lanuchGameButton.add(lanuchGameImg).padLeft(ICON_PAD_LEFT);
 		lanuchGameButton.add(lanuchGameLabel).expandX();
 
@@ -178,7 +174,7 @@ public class NavigationPanel extends Panel {
 	public void hide() {
 		super.hide();
 		addAction(Actions.moveTo(x, y, fadeDuration));
-		if(mActivationButton.isChecked()){
+		if (mActivationButton.isChecked()) {
 			mActivationButton.setChecked(false);
 		}
 	}
@@ -187,7 +183,7 @@ public class NavigationPanel extends Panel {
 	 * Define the style of a {@link NavigationPanelStyle NavigationPanelStyle}.
 	 */
 	static public class NavigationPanelStyle extends PanelStyle {
-		
+
 		public Drawable backButton, editElement, editScene, gallery, launch;
 
 	}
