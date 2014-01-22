@@ -50,6 +50,7 @@ import es.eucm.ead.mockup.core.view.ui.components.DrawComponent;
 import es.eucm.ead.mockup.core.view.ui.components.DrawComponent.Type;
 import es.eucm.ead.mockup.core.view.ui.components.EffectsComponent;
 import es.eucm.ead.mockup.core.view.ui.components.InteractiveComponent;
+import es.eucm.ead.mockup.core.view.ui.components.OtherComponent;
 
 public class SceneEdition extends AbstractScreen {
 
@@ -63,6 +64,7 @@ public class SceneEdition extends AbstractScreen {
 	
 	private float TOOLBAR_ICON_HEIGHT;
 	private float TOOLBAR_ICON_WIDTH;
+	private OtherComponent more;
 
 	@Override
 	public void create() {
@@ -88,8 +90,7 @@ public class SceneEdition extends AbstractScreen {
 				"Añadir zona interactiva", 250, 390);
 		add = new AddComponent("tree_plus", "AÑADIR", skin, "Añadir a la escena:", 250, 390);
 		effect = new EffectsComponent( "ic_effects","EFECTOS", skin,  "Añadir efectos de imagen", 300, 550);
-
-		Button more = new ToolbarButton(skin.getDrawable("ic_more"),"OTROS", skin);
+		more = new OtherComponent("ic_more", "Otros", skin, 300, 600);
 
 		Button frames = new ImageButton(skin);
 		frames.setX(AbstractScreen.stagew - frames.getWidth());
@@ -102,7 +103,7 @@ public class SceneEdition extends AbstractScreen {
 				interac.getButton(),
 				add.getButton(),
 				effect.getButton(),
-				more);		
+				more.getButton());		
 		
 		//toolBar.debug();
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
@@ -113,7 +114,7 @@ public class SceneEdition extends AbstractScreen {
 		toolBar.add(interac.getButton());
 		toolBar.add(add.getButton());
 		toolBar.add(effect.getButton());
-		toolBar.add(more);
+		toolBar.add(more.getButton());
 		/*Does the actors in toolBar update their coordinates*/
 		toolBar.invalidate();
 		toolBar.validate();
@@ -134,6 +135,8 @@ public class SceneEdition extends AbstractScreen {
 		root.addActor(effect.getPanel());
 		root.addActor(effect.getOpt());
 		effect.actCoordinates();
+		root.addActor(more.getPanel());
+		more.actCoordinates();
 
 		stage.addActor(root);
 	}

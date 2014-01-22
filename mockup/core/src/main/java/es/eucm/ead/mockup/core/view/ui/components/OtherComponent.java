@@ -37,14 +37,12 @@
 package es.eucm.ead.mockup.core.view.ui.components;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
@@ -54,16 +52,14 @@ import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.Panel;
 import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 
-public class EffectsComponent {
+public class OtherComponent {
 
-	private EffectsPanel panel;
+	private OtherPanel panel;
 	private Button button;
-	private EffectOption effectsOpt;
 
-	public EffectsComponent( String imageUp,  String name, Skin skin,String description, float width, float height) {
+	public OtherComponent( String imageUp,  String name, Skin skin, float width, float height) {
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin);
-		this.panel = new EffectsPanel(skin, "opaque", description, width, height);
-		this.effectsOpt = panel.getOptions();
+		this.panel = new OtherPanel(skin, "opaque", width, height);
 		this.button.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -77,13 +73,12 @@ public class EffectsComponent {
 		});
 	}
 
-	private class EffectsPanel extends Panel {
+	private class OtherPanel extends Panel {
 
 		private float width;
 		private float height;
-		private EffectOption effectOpt;
 
-		public EffectsPanel(Skin skin, String styleName, String description, float width, float height) {
+		public OtherPanel(Skin skin, String styleName, float width, float height) {
 			super(skin, styleName);
 
 			this.height = height;
@@ -96,81 +91,47 @@ public class EffectsComponent {
 			setModal(false);
 			setColor(Color.DARK_GRAY);
 			
-			effectOpt = new EffectOption(skin, "variante1", "variante2", "variante3");
-			
-			//FIXME *repeated code*
-			Label label = new Label(description, skin, "default-thin-opaque");
+			Label label = new Label("default-thin-opaque", skin);
 			label.setWrap(true);
 			label.setAlignment(Align.center);
 			label.setFontScale(0.7f);
-					
-			Button prop1 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop2 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop3 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop4 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop5 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop6 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop7 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			prop1.addListener(optionListener());
-			prop2.addListener(optionListener());
-			prop3.addListener(optionListener());
-			prop4.addListener(optionListener());
-			prop5.addListener(optionListener());
-			prop6.addListener(optionListener());
-			prop7.addListener(optionListener());
 			
-			//END FIXME
+			TextField nameField = new TextField("Nombre", skin);
 			
-			Table table = new Table(skin);
-			
-			CheckBox cb1 = new CheckBox("Efecto 1", skin);
-			CheckBox cb2 = new CheckBox("Efecto 2", skin);
-			CheckBox cb3 = new CheckBox("Efecto 3", skin);
-			CheckBox cb4 = new CheckBox("Efecto 4", skin);
-			CheckBox cb5 = new CheckBox("Efecto 5", skin);
-			CheckBox cb6 = new CheckBox("Efecto 6", skin);
-			CheckBox cb7 = new CheckBox("Efecto 7", skin);
-			
-			
-			ScrollPane sp = new ScrollPane(table, skin);
-			sp.setupFadeScrollBars(0f, 0f);
-			sp.setScrollingDisabled(true, false);
+			//Change for TextArea
+			TextField tags = new TextField("TAGs separados por ','", skin);
+			TextField infoField = new TextField("Información", skin);
 		
-			table.add(prop1).left();
-			table.add(cb1).left();
-			table.row();
-			table.add(prop2).left();
-			table.add(cb2).left();
-			table.row();
-			table.add(prop3).left();
-			table.add(cb3).left();
-			table.row();
-			table.add(prop4).left();
-			table.add(cb4).left();
-			table.row();
-			table.add(prop5).left();
-			table.add(cb5).left();
-			table.row();
-			table.add(prop6).left();
-			table.add(cb6).left();
-			table.row();
-			table.add(prop7).left();
-			table.add(cb7).left();
+			Label auxLabel1 = new Label("Duplicar escena", skin);
+			auxLabel1.setFontScale(0.7f);			
+			Image backImg1 = new Image(skin.getRegion("icon-blitz")); //edit element img
+			final Button clone = new Button(skin, "default");
+			clone.add(backImg1).left().expand();
+			clone.add(auxLabel1).left().expand();
+			clone.scale(0.5f);
 			
-			//table.debug();
+			Label auxLabel2 = new Label("Eliminar escena", skin);
+			auxLabel2.setFontScale(0.7f);			
+			Image backImg2 = new Image(skin.getRegion("icon-blitz")); //edit element img
+			final Button erase = new Button(skin, "default");
+			erase.add(backImg2).left().expand();
+			erase.add(auxLabel2).left().expand();
+			erase.scale(0.5f);
 			
-			defaults().fill().expand();
-			add(label);
+			
+			//defaults().fill().expand();
+			
+			add(nameField).fill().expand();
 			row();
-			add(sp);
-			//add(table);
+			add(tags).fill().expand();
+			row();
+			add(infoField).fill().expand();
+			row();
+			add(clone).expandX().fill();
+			row();
+			add(erase).expandX().fill();
+			
 		}
-		
-		
-		public EffectOption getOptions() {
-			return effectOpt;
-		}
-
 
 		/**
 		 * Set the panel'coordinates according to the button's coordinates
@@ -182,8 +143,6 @@ public class EffectsComponent {
 				setX(AbstractScreen.stagew-width-5);
 			}
 				setY(Constants.SCREENH - UIAssets.TOOLBAR_HEIGHT - height - 10);
-			
-			effectOpt.setCoordinates(this.getX(), this.getY());
 		}
 
 		@Override
@@ -196,22 +155,9 @@ public class EffectsComponent {
 			super.hide();
 		}
 		
-		public ClickListener optionListener(){
-			return new ClickListener() {
-				@Override
-				public void clicked(InputEvent event, float x, float y) {
-					event.cancel();
-					if (!effectOpt.isVisible()) {
-						AbstractScreen.mockupController.show(effectOpt);
-					} else {
-						AbstractScreen.mockupController.hide(effectOpt);
-					}
-				}
-			};
-		}
 	}
 
-	public EffectsPanel getPanel() {
+	public OtherPanel getPanel() {
 		return panel;
 	}
 
@@ -221,9 +167,5 @@ public class EffectsComponent {
 
 	public void actCoordinates() {
 		panel.actCoordinates();
-	}
-
-	public Actor getOpt() {
-		return effectsOpt;
 	}
 }
