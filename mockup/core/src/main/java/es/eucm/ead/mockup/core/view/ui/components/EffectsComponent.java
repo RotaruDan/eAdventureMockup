@@ -60,9 +60,11 @@ public class EffectsComponent {
 	private Button button;
 	private EffectOption effectsOpt;
 
-	public EffectsComponent( String imageUp,  String name, Skin skin,String description, float width, float height) {
+	public EffectsComponent(String imageUp, String name, Skin skin,
+			String description, float width, float height) {
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin);
-		this.panel = new EffectsPanel(skin, "opaque", description, width, height);
+		this.panel = new EffectsPanel(skin, "opaque", description, width,
+				height);
 		this.effectsOpt = panel.getOptions();
 		this.button.addListener(new ClickListener() {
 			@Override
@@ -83,34 +85,43 @@ public class EffectsComponent {
 		private float height;
 		private EffectOption effectOpt;
 
-		public EffectsPanel(Skin skin, String styleName, String description, float width, float height) {
+		public EffectsPanel(Skin skin, String styleName, String description,
+				float width, float height) {
 			super(skin, styleName);
 
 			this.height = height;
 			this.width = width;
-			
+
 			setHeight(height);
 			setWidth(width);
-			
+
 			setVisible(false);
 			setModal(false);
 			setColor(Color.DARK_GRAY);
-			
-			effectOpt = new EffectOption(skin, "variante1", "variante2", "variante3");
-			
+
+			effectOpt = new EffectOption(skin, "variante1", "variante2",
+					"variante3");
+
 			//FIXME *repeated code*
 			Label label = new Label(description, skin, "default-thin-opaque");
 			label.setWrap(true);
 			label.setAlignment(Align.center);
 			label.setFontScale(0.7f);
-					
-			Button prop1 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop2 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop3 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop4 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop5 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop6 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
-			Button prop7 = new ToolbarButton(skin.getDrawable("ic_settings"), skin);
+
+			Button prop1 = new ToolbarButton(skin.getDrawable("ic_settings"),
+					skin);
+			Button prop2 = new ToolbarButton(skin.getDrawable("ic_settings"),
+					skin);
+			Button prop3 = new ToolbarButton(skin.getDrawable("ic_settings"),
+					skin);
+			Button prop4 = new ToolbarButton(skin.getDrawable("ic_settings"),
+					skin);
+			Button prop5 = new ToolbarButton(skin.getDrawable("ic_settings"),
+					skin);
+			Button prop6 = new ToolbarButton(skin.getDrawable("ic_settings"),
+					skin);
+			Button prop7 = new ToolbarButton(skin.getDrawable("ic_settings"),
+					skin);
 			prop1.addListener(optionListener());
 			prop2.addListener(optionListener());
 			prop3.addListener(optionListener());
@@ -118,18 +129,12 @@ public class EffectsComponent {
 			prop5.addListener(optionListener());
 			prop6.addListener(optionListener());
 			prop7.addListener(optionListener());
-			
-			new ButtonGroup(prop1, 
-							prop2, 
-							prop3, 
-							prop4, 
-							prop5,
-							prop6,
-							prop7);
+
+			new ButtonGroup(prop1, prop2, prop3, prop4, prop5, prop6, prop7);
 			//END FIXME
-			
+
 			Table table = new Table(skin);
-			
+
 			CheckBox cb1 = new CheckBox("Efecto 1", skin);
 			CheckBox cb2 = new CheckBox("Efecto 2", skin);
 			CheckBox cb3 = new CheckBox("Efecto 3", skin);
@@ -137,12 +142,11 @@ public class EffectsComponent {
 			CheckBox cb5 = new CheckBox("Efecto 5", skin);
 			CheckBox cb6 = new CheckBox("Efecto 6", skin);
 			CheckBox cb7 = new CheckBox("Efecto 7", skin);
-			
-			
+
 			ScrollPane sp = new ScrollPane(table, skin);
 			sp.setupFadeScrollBars(0f, 0f);
 			sp.setScrollingDisabled(true, false);
-		
+
 			table.add(prop1).left();
 			table.add(cb1).left();
 			table.row();
@@ -163,33 +167,31 @@ public class EffectsComponent {
 			table.row();
 			table.add(prop7).left();
 			table.add(cb7).left();
-			
+
 			//table.debug();
-			
+
 			defaults().fill().expand();
 			add(label);
 			row();
 			add(sp);
 			//add(table);
 		}
-		
-		
+
 		public EffectOption getOptions() {
 			return effectOpt;
 		}
-
 
 		/**
 		 * Set the panel'coordinates according to the button's coordinates
 		 */
 		public void actCoordinates() {
-			if((button.getX() + (button.getWidth() / 2) - (width / 2) + width)<AbstractScreen.stagew){
+			if ((button.getX() + (button.getWidth() / 2) - (width / 2) + width) < AbstractScreen.stagew) {
 				setX(button.getX() + (button.getWidth() / 2) - (width / 2));
 			} else {
-				setX(AbstractScreen.stagew-width-5);
+				setX(AbstractScreen.stagew - width - 5);
 			}
-				setY(AbstractScreen.stageh - UIAssets.TOOLBAR_HEIGHT - height - 10);
-			
+			setY(AbstractScreen.stageh - UIAssets.TOOLBAR_HEIGHT - height - 10);
+
 			effectOpt.setCoordinates(this.getX(), this.getY());
 		}
 
@@ -202,8 +204,8 @@ public class EffectsComponent {
 		public void hide() {
 			super.hide();
 		}
-		
-		public ClickListener optionListener(){
+
+		public ClickListener optionListener() {
 			return new ClickListener() {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {

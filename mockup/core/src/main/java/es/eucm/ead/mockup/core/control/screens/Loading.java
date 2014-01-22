@@ -83,7 +83,7 @@ public class Loading extends AbstractScreen {
 		stage = new Stage(Constants.SCREENW, Constants.SCREENH, true,
 				Engine.stage.getSpriteBatch());
 		initStage();
-		
+
 		this.sb = stage.getSpriteBatch();
 	}
 
@@ -119,13 +119,13 @@ public class Loading extends AbstractScreen {
 			skin.getFont("default-font").setScale(.7f);
 			ToolbarButton.loadStyle(skin);
 		}
-			
+
 		if (!UIAssets.isCreated()) {
 			UIAssets.create();
 		}
 	}
-	
-	private void initStage(){
+
+	private void initStage() {
 		stage.getRoot().addCaptureListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {

@@ -72,7 +72,7 @@ public class ProjectGallery extends AbstractScreen {
 		toolBar.right();
 
 		final ImageButton backButton = new ImageButton(skin, "ic_goback");
-		backButton.addListener(new ClickListener(){
+		backButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				exitAnimation(Screens.MAIN_MENU);
@@ -84,7 +84,7 @@ public class ProjectGallery extends AbstractScreen {
 		searchtf.setMaxLength(search.length());
 		String[] orders = new String[] { "Ordenar por ...", "Ordenar por 2..." };//TODO use i18n!
 		SelectBox ordenar = new SelectBox(orders, skin);
-		
+
 		Label nombre = new Label("Galería de proyectos", skin);
 
 		toolBar.add(backButton);
@@ -105,8 +105,8 @@ public class ProjectGallery extends AbstractScreen {
 			for (int j = 0; j < COLS; ++j) {
 				if (first) {
 					first = false;
-					gridPanel.addItem(new ImageButton(skin, "ic_newproject"), 0, 0)
-							.fill();
+					gridPanel.addItem(new ImageButton(skin, "ic_newproject"),
+							0, 0).fill();
 				} else {
 					gridPanel.addItem(new Image(t), i, j);
 				}

@@ -99,7 +99,7 @@ public class UIAssets {
 			}
 		});
 		TextureRegion t = AbstractScreen.skin.getRegion("ic_logo");
-		
+
 		Image i = new Image(t);
 		i.setTouchable(Touchable.disabled);
 		i.setX(AbstractScreen.halfstagew - t.getRegionWidth() / 2f);
@@ -114,8 +114,8 @@ public class UIAssets {
 		navigationGroup = new Group();
 		navigationGroup.setVisible(false);
 		Skin skin = AbstractScreen.skin;
-		final ToolbarButton navigation = new ToolbarButton(skin.getDrawable("ic_menu"),
-				skin);
+		final ToolbarButton navigation = new ToolbarButton(skin
+				.getDrawable("ic_menu"), skin);
 		navigation.setBounds(0, AbstractScreen.stageh
 				- NAVIGATION_BUTTON_WIDTH_HEIGHT,
 				NAVIGATION_BUTTON_WIDTH_HEIGHT, NAVIGATION_BUTTON_WIDTH_HEIGHT);

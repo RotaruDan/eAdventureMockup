@@ -94,7 +94,7 @@ public class MockupController implements EventListener {
 		// Must be done before we create the other screens so if we
 		// use variables like stagew, stageh... in their constructor (or final)
 		// we make sure those attributes are properly setted.
-		
+
 		this.states = new IdentityMap<Screens, AbstractScreen>();
 		/*MENUS*/
 		this.states.put(Screens.MAIN_MENU, new MainMenu());

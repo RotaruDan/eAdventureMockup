@@ -59,7 +59,7 @@ import es.eucm.ead.mockup.core.view.ui.CircularGroup;
 import es.eucm.ead.mockup.core.view.ui.buttons.MenuButton;
 
 public class MainMenu extends AbstractScreen {
-	
+
 	private final float MAIN_MENU_BUTTON_WIDTH_HEIGHT = stageh * .23f;
 
 	private Group optionsGroup;
@@ -72,17 +72,18 @@ public class MainMenu extends AbstractScreen {
 		super.root = new Group();
 		root.setVisible(false);
 
-		final Button newProject, projectGallery;		
+		final Button newProject, projectGallery;
 		newProject = new MenuButton("Nuevo\nproyecto", skin, "ic_newproject",
-		MAIN_MENU_BUTTON_WIDTH_HEIGHT, MAIN_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
-		projectGallery = new MenuButton("Galería de\nproyectos", skin, "ic_gallery",
 				MAIN_MENU_BUTTON_WIDTH_HEIGHT, MAIN_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
+		projectGallery = new MenuButton("Galería de\nproyectos", skin,
+				"ic_gallery", MAIN_MENU_BUTTON_WIDTH_HEIGHT,
+				MAIN_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
 
-		CircularGroup cg = new CircularGroup(halfstageh, 135, 180, true, newProject,
-				projectGallery);
+		CircularGroup cg = new CircularGroup(halfstageh, 135, 180, true,
+				newProject, projectGallery);
 		cg.setX(halfstagew);
 		cg.setY(halfstageh);
-		
+
 		//Scan for aviable projects here...
 		Table projectsTable = new Table();
 		//projectsTable.debug();
@@ -94,7 +95,7 @@ public class MainMenu extends AbstractScreen {
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		final int PROJECTS = 8;
 		final Array<Actor> mProjects = new Array<Actor>(false, PROJECTS);
-		
+
 		// Creating the transition listener
 		ClickListener mTransitionListener = new ClickListener() {
 
@@ -131,10 +132,10 @@ public class MainMenu extends AbstractScreen {
 			projectsTable.add(im);
 
 			mProjects.add(im);
-		}		
-		
+		}
+
 		newProject.addListener(mTransitionListener);
-		projectGallery.addListener(mTransitionListener);	
+		projectGallery.addListener(mTransitionListener);
 
 		Image bg = new Image(skin.getRegion("bg"));
 		bg.setTouchable(Touchable.disabled);

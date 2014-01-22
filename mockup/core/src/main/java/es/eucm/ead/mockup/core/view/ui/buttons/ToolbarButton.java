@@ -46,10 +46,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
  * A button displayed in the MainMenu and PanelMenu Screens.
  */
 public class ToolbarButton extends ImageButton {
-	private static final float DEFAULT_SCALE_PROGRESSION = 1.4f;	
-	private static final float DEFAULT_FONT_SCALE = 1f;	
+	private static final float DEFAULT_SCALE_PROGRESSION = 1.4f;
+	private static final float DEFAULT_FONT_SCALE = 1f;
 	private static final float IMAGE_PAD_TOP = 3f;
-	private static float LABEL_CELL_HEIGHT;	
+	private static float LABEL_CELL_HEIGHT;
 
 	private static Drawable btn_default_pressed;
 	private static Drawable btn_default_focused;
@@ -59,19 +59,20 @@ public class ToolbarButton extends ImageButton {
 		super(imageUp);
 		initialize(skin);
 	}
-	
+
 	public ToolbarButton(Drawable imageUp, String name, Skin skin) {
 		super(imageUp);
 		initializeLabel(name, skin, DEFAULT_FONT_SCALE);
 		initialize(skin);
 	}
-	
-	public ToolbarButton(Drawable imageUp, String name, Skin skin, float fontScale) {
+
+	public ToolbarButton(Drawable imageUp, String name, Skin skin,
+			float fontScale) {
 		super(imageUp);
 		initializeLabel(name, skin, fontScale);
 		initialize(skin);
 	}
-	
+
 	/**
 	 * Experimental constructor, draws the label under the cell.
 	 * Usage: toolbar specific icons.
@@ -83,8 +84,9 @@ public class ToolbarButton extends ImageButton {
 	 * @param skin
 	 * @param fontScale
 	 */
-	public ToolbarButton(Drawable imageUp, String name, Skin skin, float fontScale, int experimental) {
-		super(imageUp);		
+	public ToolbarButton(Drawable imageUp, String name, Skin skin,
+			float fontScale, int experimental) {
+		super(imageUp);
 		this.row();
 		Label mName = new Label(name, skin);
 		mName.setFontScale(fontScale);
@@ -95,19 +97,20 @@ public class ToolbarButton extends ImageButton {
 		//getImageCell().size(getPrefWidth(), getPrefHeight());
 		//debug();
 	}
-	
-	private void initializeLabel(String name, Skin skin, float fontScale){
+
+	private void initializeLabel(String name, Skin skin, float fontScale) {
 		this.getImageCell().expand().padTop(IMAGE_PAD_TOP);
 		this.row();
 		Label mName = new Label(name, skin, "toolbar");
 		mName.setFontScale(fontScale);
-		mName.setAlignment(Align.bottom);		
-		float labelCellHeight = LABEL_CELL_HEIGHT * fontScale * DEFAULT_SCALE_PROGRESSION; 
+		mName.setAlignment(Align.bottom);
+		float labelCellHeight = LABEL_CELL_HEIGHT * fontScale
+				* DEFAULT_SCALE_PROGRESSION;
 		this.add(mName).height(labelCellHeight).bottom();
 	}
 
-	private void initialize(Skin skin){
-		ImageButtonStyle mStyle = getStyle();	
+	private void initialize(Skin skin) {
+		ImageButtonStyle mStyle = getStyle();
 
 		mStyle.down = btn_default_pressed;
 		mStyle.over = btn_default_focused;
@@ -121,11 +124,11 @@ public class ToolbarButton extends ImageButton {
 	 * This method should be called right after the skin was loaded 
 	 * and initialized.
 	 */
-	public static void loadStyle(Skin skin){
+	public static void loadStyle(Skin skin) {
 		btn_default_pressed = skin.getDrawable("blueBlackMedium");
 		btn_default_focused = btn_default_pressed;
 		btn_default_disabled = skin.getDrawable("dialogDimObscure");
-		
+
 		LABEL_CELL_HEIGHT = skin.getFont("toolbar-font").getBounds("A").height;
 	}
 }
