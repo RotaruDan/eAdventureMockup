@@ -83,11 +83,12 @@ public class SceneEdition extends AbstractScreen {
 		Button move = new ToolbarButton(skin.getDrawable("ic_move"),"MOVER", skin);
 
 		paint = new DrawComponent("ic_pencil","PINTAR", skin, "Herramienta de pincel",
-				Type.BRUSH, 350, 550);
+				Type.BRUSH, 300, 550);
 		delete = new DrawComponent("ic_eraser","BORRAR", skin, "Herramienta de goma",
-				Type.RUBBER, 350, 250);
+				Type.RUBBER, 300, 250);
 		text = new DrawComponent("ic_text", "TEXTO", skin, "Herramienta de escribir",
-				Type.TEXT, 350, 550);
+				Type.TEXT, 300, 550);
+		//change this ic_select icon
 		interac = new InteractiveComponent("ic_select", "ZONAS", skin, 
 				"Añadir zona interactiva", 250, 390);
 		add = new AddComponent("tree_plus", "AÑADIR", skin, "Añadir a la escena:", 250, 390);

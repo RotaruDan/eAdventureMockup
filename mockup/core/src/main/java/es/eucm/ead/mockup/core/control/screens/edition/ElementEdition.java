@@ -59,7 +59,6 @@ public class ElementEdition extends AbstractScreen {
 	private DrawComponent delete;
 	private DrawComponent text;
 	private InteractiveComponent interac;
-	private AddComponent add;
 	private EffectsComponent effect;
 	
 	private float TOOLBAR_ICON_HEIGHT;
@@ -85,10 +84,9 @@ public class ElementEdition extends AbstractScreen {
 				Type.RUBBER, 350, 250);
 		text = new DrawComponent("ic_text", "TEXTO", skin, "Herramienta de escribir",
 				Type.TEXT, 350, 550);
-		interac = new InteractiveComponent("ic_select", "ZONAS", skin, 
-				"Añadir zona interactiva", 250, 390);
-		add = new AddComponent("tree_plus", "AÑADIR", skin, "Añadir a la escena:", 250, 390);
-		effect = new EffectsComponent( "ic_effects","EFECTOS", skin,  "Añadir efectos de imagen", 300, 400);
+		interac = new InteractiveComponent("ic_select", "SELECCIÓN", skin, 
+				"Seleccionar parte a recortar usando", 300, 390);
+		effect = new EffectsComponent( "ic_effects","EFECTOS", skin,  "Añadir efectos de imagen", 300, 550);
 
 		Button more = new ToolbarButton(skin.getDrawable("ic_more"),"OTROS", skin);
 
@@ -101,7 +99,6 @@ public class ElementEdition extends AbstractScreen {
 				delete.getButton(), 
 				text.getButton(), 
 				interac.getButton(),
-				add.getButton(),
 				effect.getButton(),
 				more);		
 		
@@ -112,7 +109,6 @@ public class ElementEdition extends AbstractScreen {
 		toolBar.add(delete.getButton());
 		toolBar.add(text.getButton());
 		toolBar.add(interac.getButton());
-		toolBar.add(add.getButton());
 		toolBar.add(effect.getButton());
 		toolBar.add(more);
 		/*Does the actors in toolBar update their coordinates*/
@@ -130,11 +126,10 @@ public class ElementEdition extends AbstractScreen {
 		text.actCoordinates();
 		root.addActor(interac.getPanel());
 		interac.actCoordinates();
-		root.addActor(add.getPanel());
-		add.actCoordinates();
 		root.addActor(effect.getPanel());
+		root.addActor(effect.getOpt());
 		effect.actCoordinates();
-
+		
 		stage.addActor(root);
 	}
 

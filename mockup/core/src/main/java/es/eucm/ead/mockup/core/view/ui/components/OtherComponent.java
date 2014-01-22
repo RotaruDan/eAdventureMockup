@@ -96,7 +96,7 @@ public class OtherComponent {
 			label.setFontScale(0.7f);
 			
 			TextField nameField = new TextField("Nombre", skin);
-			
+		
 			//Change for TextArea
 			TextField tags = new TextField("TAGs separados por ','", skin);
 			TextField infoField = new TextField("Información", skin);

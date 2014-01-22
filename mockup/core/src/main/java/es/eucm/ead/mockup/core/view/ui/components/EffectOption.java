@@ -43,7 +43,7 @@ public class EffectOption extends Panel{
 		add("Intensidad");
 		row();
 		add(slider);
-		debug();
+		//debug();
 	}
 	
 	public void setCoordinates(float x, float y){

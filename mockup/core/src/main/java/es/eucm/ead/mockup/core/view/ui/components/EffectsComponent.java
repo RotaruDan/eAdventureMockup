@@ -40,6 +40,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -118,6 +119,13 @@ public class EffectsComponent {
 			prop6.addListener(optionListener());
 			prop7.addListener(optionListener());
 			
+			new ButtonGroup(prop1, 
+							prop2, 
+							prop3, 
+							prop4, 
+							prop5,
+							prop6,
+							prop7);
 			//END FIXME
 			
 			Table table = new Table(skin);
