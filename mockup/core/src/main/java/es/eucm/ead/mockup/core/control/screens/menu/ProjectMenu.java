@@ -56,6 +56,7 @@ import es.eucm.ead.mockup.core.view.ui.buttons.MenuButton;
 public class ProjectMenu extends AbstractScreen {
 
 	/**
+	 * TODO: when refactoring change this way of navigation...
 	 * Fast navigation implementation to know that
 	 * we must come to this Screen if we go to the gallery by clicking { initialSceneButton }
 	 */

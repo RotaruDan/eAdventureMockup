@@ -184,7 +184,8 @@ public class Gallery extends AbstractScreen {
 				if (target instanceof Image) {
 					//TODO distinguish between elements and scenes
 					exitAnimation(Screens.SCENE_EDITION);
-				} else if (target instanceof Label) { 
+				} else if (target instanceof Label) {
+					// We've clicked new from blank page...
 					//TODO ask for choise			
 					SCENE_EDITION = true;	
 					showDialog();
@@ -208,7 +209,8 @@ public class Gallery extends AbstractScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {	
 				SCENE_EDITION = false;	
-				showDialog();
+				//showDialog();
+				exitAnimation(Screens.PICTURE);
 			}
 		};
 		picButton.addListener(showDialogListener);
@@ -262,14 +264,6 @@ public class Gallery extends AbstractScreen {
 					} else if (target == newScene) {
 						next = Screens.SCENE_EDITION;
 					}
-				} else {
-					//We've clicked TakePictureButton 
-					next = Screens.PICTURE;
-					if (target == newElement) {
-						SCENE_EDITION = false;
-					} else if (target == newScene) {
-						SCENE_EDITION = true;
-					}				
 				}
 				return next;
 			}

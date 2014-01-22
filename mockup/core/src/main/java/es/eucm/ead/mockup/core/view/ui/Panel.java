@@ -62,6 +62,7 @@ public class Panel extends Table implements FocusListener {
 	private PanelStyle style;
 	private Vector2 temp;
 	private boolean isModal;
+	private boolean hideOnOutterTouch;
 
 	/**
 	 * Create a {@link Panel panel} with default style.
@@ -81,6 +82,7 @@ public class Panel extends Table implements FocusListener {
 	public Panel(Skin skin, String styleName) {
 		super(skin);
 		this.temp = new Vector2();
+		hideOnOutterTouch = true;
 		setStyle(skin.get(styleName, PanelStyle.class));
 		setTouchable(Touchable.enabled);
 
@@ -93,7 +95,8 @@ public class Panel extends Table implements FocusListener {
 				localToStageCoordinates(/* in/out */temp.set(x, y));
 				rtmp.set(getX(), getY(), getWidth(), getHeight());
 				if (!rtmp.contains(temp.x, temp.y)) {
-					hide();
+					if(hideOnOutterTouch)
+						hide();
 				}
 				return isModal;
 			}
@@ -187,6 +190,10 @@ public class Panel extends Table implements FocusListener {
 			addAction(Actions.sequence(Actions.fadeOut(fadeDuration,
 					Interpolation.fade), Actions.visible(false)));
 		}
+	}
+	
+	public void setHideOnOutterTouch(boolean hideOnOutterTouch) {
+		this.hideOnOutterTouch = hideOnOutterTouch;
 	}
 
 	/**

@@ -37,10 +37,13 @@
 package es.eucm.ead.mockup.core.control.screens.camara;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -48,9 +51,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import es.eucm.ead.mockup.core.control.ScreenController;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Screens;
-import es.eucm.ead.mockup.core.control.screens.gallery.Gallery;
 import es.eucm.ead.mockup.core.control.screens.menu.ProjectMenu;
 import es.eucm.ead.mockup.core.view.UIAssets;
+import es.eucm.ead.mockup.core.view.ui.Panel;
 
 public class Picture extends AbstractScreen {
 
@@ -67,6 +70,13 @@ public class Picture extends AbstractScreen {
 	private ScreenController screenController;
 	private Color previousClearColor = new Color(), clearColor = new Color(0f,
 			0f, 0f, 0f);
+
+	/**
+	 *  Asks if we must the user want an element or 
+	 *  an scene after he takes the picture.
+	 */
+	private Panel mDialogPanel;
+	private final float DEFAULT_ICON_LABEL_SPACE = 10f;
 
 	@Override
 	public void create() {
@@ -99,7 +109,71 @@ public class Picture extends AbstractScreen {
 		rootTable.row();
 		rootTable.add(takePicButton).size(takePicButton.getWidth()*1.3f).bottom().expand().padBottom(5f);
 
+		//Coice dialog panel
+		mDialogPanel = new Panel(skin, "dialog");
+		mDialogPanel.setVisible(false);
+		mDialogPanel.setModal(true);
+		mDialogPanel.setHideOnOutterTouch(false);
+		mDialogPanel.pad(DEFAULT_ICON_LABEL_SPACE);
+		mDialogPanel.defaults().space(DEFAULT_ICON_LABEL_SPACE).uniform().expand().fill();
+		final float PANEL_W = stagew*.3f, 
+				PANEL_H = UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT *3f, 
+				PANEL_X = halfstagew - PANEL_W *.5F, 
+				PANEL_Y = halfstageh - PANEL_H *.5f;
+		mDialogPanel.setBounds(PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
+		final Button newElement = createButton("Nuevo elemento", 
+				"ic_editelement", 
+				DEFAULT_ICON_LABEL_SPACE, 
+				false);
+		final Button newScene = createButton("Escena nueva", 
+				"ic_editstage", 
+				DEFAULT_ICON_LABEL_SPACE, 
+				false);
+		mDialogPanel.add(newScene);
+		mDialogPanel.row();
+		mDialogPanel.add(newElement);
+		ClickListener mTransitionLIstener = new ClickListener() {
+
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				final Screens next = getNextScreen(event.getListenerActor());
+				if (next == null) {
+					return;
+				}
+				mockupController.hide(mDialogPanel);
+				exitAnimation(next);
+			}
+
+			private Screens getNextScreen(Actor target) {
+				Screens next = null;
+				if (target == newElement) {
+					next = Screens.ELEMENT_EDITION;
+				} else if (target == newScene) {
+					next = Screens.SCENE_EDITION;
+				}
+				return next;
+			}
+		};
+		newElement.addListener(mTransitionLIstener);
+		newScene.addListener(mTransitionLIstener);
+
 		stage.addActor(rootTable);
+		stage.addActor(mDialogPanel);
+	}
+
+	private Button createButton(String text, String image, float defaultSpace, boolean left){
+		Button mButton = new Button(skin);
+		mButton.defaults().space(defaultSpace);
+		Label vidLabel = new Label(text, skin);
+		Image vidImage = new Image(skin.getDrawable(image));
+		if(left){
+			mButton.add(vidLabel);
+			mButton.add(vidImage);			
+		} else {
+			mButton.add(vidImage);
+			mButton.add(vidLabel);			
+		}
+		return mButton;
 	}
 
 	private void takePic() {
@@ -109,8 +183,14 @@ public class Picture extends AbstractScreen {
 
 	private void onPictureTaken(){
 		if(nextScreen == null){
-			//We've come from Project menu so we go back
-			onBackKeyPressed();
+			if(mockupController.getPreviousScreen() == Screens.GALLERY){
+				//  We've came from Gallery 
+				// so we must ask if he want an element or an scene
+				mockupController.show(mDialogPanel);
+			} else {
+				//We've came from Project menu so we go back
+				onBackKeyPressed();
+			}
 		} else {
 			exitAnimation(nextScreen);
 		}
@@ -123,20 +203,14 @@ public class Picture extends AbstractScreen {
 		this.screenController.changeClearColor(clearColor);
 		Screens previousScreen = mockupController.getPreviousScreen();
 		setPreviousScreen(previousScreen);
-		
+
 		//	We implement distincg behaviours 
 		// depending on where we came from
 		Screens nextScr = null;
 		if(ProjectMenu.getFROM_INITIAL_SCENE()){
 			nextScr = Screens.PROJECT_MENU;
 		} else {
-			if(previousScreen == Screens.GALLERY){
-				if(Gallery.SCENE_EDITION) {
-					nextScr = Screens.SCENE_EDITION;
-				} else {
-					nextScr = Screens.ELEMENT_EDITION;
-				}
-			} else if(previousScreen == Screens.ELEMENT_GALLERY){
+			if(previousScreen == Screens.ELEMENT_GALLERY){
 				nextScr = Screens.ELEMENT_EDITION;
 			} else if(previousScreen == Screens.SCENE_GALLERY){
 				nextScr = Screens.SCENE_EDITION;
