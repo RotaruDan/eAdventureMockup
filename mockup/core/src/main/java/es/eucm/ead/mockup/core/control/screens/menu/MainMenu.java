@@ -60,6 +60,8 @@ import es.eucm.ead.mockup.core.view.ui.buttons.MenuButton;
 
 public class MainMenu extends AbstractScreen {
 
+	private static final float DEFAULT_DIALOG_PADDING_BOTTON_TOP = 20f;
+
 	private final float MAIN_MENU_BUTTON_WIDTH_HEIGHT = stageh * .23f;
 
 	private Group optionsGroup;
@@ -152,9 +154,11 @@ public class MainMenu extends AbstractScreen {
 					Gdx.app.exit();
 				}
 			}
-		}.text("¿Estás seguro?").button("Salir", true).button("¡Todavía no!",
-				false).key(Keys.BACK, false).key(Keys.ENTER, true); // TODO use i18n
+		}.text("¿Estás seguro?").button("¡Todavía no!", false)
+		.button("Salir", true).key(Keys.ENTER, true); // TODO use i18n
 		exitDialog.setMovable(false);
+		exitDialog.padLeft(DEFAULT_DIALOG_PADDING_BOTTON_TOP);
+		exitDialog.padRight(DEFAULT_DIALOG_PADDING_BOTTON_TOP);
 	}
 
 	@Override

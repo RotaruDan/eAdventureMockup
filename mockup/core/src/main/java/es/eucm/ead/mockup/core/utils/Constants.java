@@ -66,7 +66,6 @@ public class Constants {
 		"mockup/temp/elements/Cama2.jpg",
 		"mockup/temp/elements/enfermera.jpg",
 		"mockup/temp/elements/enfermera2.jpg",
-		"mockup/temp/elements/estetoscopio-recortado.png",
 		"mockup/temp/elements/estetoscopio.jpg",
 		"mockup/temp/elements/lampara.jpg",
 		"mockup/temp/elements/medico-de-ambulancia.jpg"
@@ -87,41 +86,25 @@ public class Constants {
 	 * Fast implementation to display some thumbnail
 	 * elements...
 	 */
-	public static final String[] demoElementsThumbnail = {
-		/*
+	public static final String[] demoElementsThumbnail = {		
 		"mockup/temp/elements/thumbnail/cama-quirofano_thumb.jpg",
 		"mockup/temp/elements/thumbnail/Cama2_thumb.jpg",
 		"mockup/temp/elements/thumbnail/enfermera_thumb.jpg",
 		"mockup/temp/elements/thumbnail/enfermera2_thumb.jpg",
-		"mockup/temp/elements/thumbnail/estetoscopio-recortado_thumb.png",
 		"mockup/temp/elements/thumbnail/estetoscopio_thumb.jpg",
 		"mockup/temp/elements/thumbnail/lampara_thumb.jpg",
 		"mockup/temp/elements/thumbnail/medico-de-ambulancia_thumb.jpg"
-		*/
-		"mockup/temp/elements/thumbnail/Elemento1.jpg",
-		"mockup/temp/elements/thumbnail/Elemento1.jpg",
-		"mockup/temp/elements/thumbnail/Elemento1.jpg",
-		"mockup/temp/elements/thumbnail/Elemento1.jpg",
-		"mockup/temp/elements/thumbnail/Elemento1.jpg",
-		"mockup/temp/elements/thumbnail/Elemento1.jpg",
-		"mockup/temp/elements/thumbnail/Elemento1.jpg",
-		"mockup/temp/elements/thumbnail/Elemento1.jpg",
+		
 	};
 	
 	/**
 	 * Fast implementation to display some thumbnail
 	 * scenes...
 	 */
-	public static final String[] demoScenesThumbnail = {
-		/*
+	public static final String[] demoScenesThumbnail = {		
 		"mockup/temp/scenes/thumbnail/sala-de-estar_thumb.jpg", //Initial scene
 		"mockup/temp/scenes/thumbnail/ambulancia_thumb.jpg",
 		"mockup/temp/scenes/thumbnail/pacientes_thumb.jpg",
 		"mockup/temp/scenes/thumbnail/quirofano_thumb.jpg"
-		*/
-		"mockup/temp/scenes/thumbnail/Elemento1.jpg",
-		"mockup/temp/scenes/thumbnail/Elemento1.jpg",
-		"mockup/temp/scenes/thumbnail/Elemento1.jpg",
-		"mockup/temp/scenes/thumbnail/Elemento1.jpg"
 	};
 }
