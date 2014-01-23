@@ -49,6 +49,11 @@ public abstract class GalleryGrid<T extends Actor> extends GridPanel<T> {
 	 * Just a label showing how many entities we've selected in the topToolBar.
 	 */
 	private Label numSelectedEntities;
+	
+	/**
+	 * The button that will allow us to delete our selected entities.
+	 */
+	private ToolbarButton deleteButton;
 
 	public GalleryGrid(Skin skin, int rows, int cols, Group root, Actor ...actorsToHide) {
 		super(skin, rows, cols, UIAssets.GALLERY_PROJECT_HEIGHT * .2f);
@@ -70,7 +75,6 @@ public abstract class GalleryGrid<T extends Actor> extends GridPanel<T> {
 			public void touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 
-				super.touchDown(event, x, y, pointer, button);
 				Actor targ = event.getTarget();
 				if(targ instanceof GalleryEntity){
 
@@ -85,6 +89,7 @@ public abstract class GalleryGrid<T extends Actor> extends GridPanel<T> {
 						}
 					}
 				} 
+				super.touchDown(event, x, y, pointer, button);
 			}
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
@@ -104,13 +109,21 @@ public abstract class GalleryGrid<T extends Actor> extends GridPanel<T> {
 			}
 
 			private void addSelectedEntry(GalleryEntity entity){
+				if(selectedEntities.size == 0){
+					deleteButton.setVisible(true);
+				}
 				selectedEntities.add(entity);
 				numSelectedEntities.setText(String.valueOf(selectedEntities.size));
+
 			}
 			
 			private void removeSelectedEntry(GalleryEntity entity){
 				selectedEntities.removeValue(entity, true);
-				numSelectedEntities.setText(String.valueOf(selectedEntities.size));
+				int entitiesCount = selectedEntities.size;
+				numSelectedEntities.setText(String.valueOf(entitiesCount));
+				if(entitiesCount == 0){
+					deleteButton.setVisible(false);
+				}
 			}
 			
 			private void startSelecting(){
@@ -122,6 +135,10 @@ public abstract class GalleryGrid<T extends Actor> extends GridPanel<T> {
 
 		});
 
+		initializeTopToolBar(skin, root);
+	}
+
+	private void initializeTopToolBar(Skin skin, Group root) {
 		final Dialog confirmDialog = new Dialog("Eliminar elementos", skin, "exit-dialog") {
 			protected void result(Object object) {
 				onHide();
@@ -134,9 +151,9 @@ public abstract class GalleryGrid<T extends Actor> extends GridPanel<T> {
 		confirmDialog.setMovable(false);
 		topToolbar = new ToolBar(skin);
 		topToolbar.setVisible(false);
-		final ToolbarButton 
-		deleteButton = new ToolbarButton(skin.getDrawable("ic_delete"), "Borrar", skin, false), //TODO i18n
-		backButton = new ToolbarButton(skin.getDrawable("ic_goback"), "Atrás", skin, false); //TODO i18n
+		
+		deleteButton = new ToolbarButton(skin.getDrawable("ic_delete"), "Borrar", skin, false); //TODO i18n
+		final ToolbarButton backButton = new ToolbarButton(skin.getDrawable("ic_goback"), "Atrás", skin, false); //TODO i18n
 		ClickListener mListener = new ClickListener(){
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
@@ -159,10 +176,11 @@ public abstract class GalleryGrid<T extends Actor> extends GridPanel<T> {
 		backButton.addListener(mListener);		
 
 		numSelectedEntities = new Label("1", skin);
-		topToolbar.defaults().height(topToolbar.getHeight()).space(DEFAULT_ICON_SPACE);
-		topToolbar.add(backButton).padLeft(UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT + DEFAULT_ICON_SPACE);
+		topToolbar.defaults().size(topToolbar.getHeight()).space(DEFAULT_ICON_SPACE);
+		boolean hadLeftPadding = UIAssets.getNavigationGroup().isVisible();
+		topToolbar.add(backButton).padLeft((hadLeftPadding ? UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT : 0) + DEFAULT_ICON_SPACE);
 		topToolbar.add(numSelectedEntities).left().expandX();
-		topToolbar.add(deleteButton).padRight(DEFAULT_ICON_SPACE);
+		topToolbar.add(deleteButton);
 		
 		root.addActor(topToolbar);
 	}

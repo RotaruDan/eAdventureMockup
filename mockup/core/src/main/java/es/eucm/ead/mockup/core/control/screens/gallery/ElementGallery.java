@@ -146,7 +146,7 @@ public class ElementGallery extends AbstractScreen {
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		final int COLS = 4, ROWS = 6;
 		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS,
-				 root, new ToolBar[] { topToolbar, bottomToolbar}){
+				root, new ToolBar[] { topToolbar, bottomToolbar}){
 			@Override
 			protected void entityClicked(InputEvent event) {
 				Actor target = event.getTarget();
@@ -174,7 +174,7 @@ public class ElementGallery extends AbstractScreen {
 				}
 			}
 		}		
-		
+
 		ScrollPane scrollPane = new ScrollPane(gridPanel);
 		scrollPane.setScrollingDisabled(true, false);
 		scrollPane.setBounds(0, topToolbar.getHeight(), stagew, stageh - 2
@@ -235,19 +235,21 @@ public class ElementGallery extends AbstractScreen {
 	public void draw() {
 		stage.draw();Table.drawDebug(stage);
 	}
-	
+
 	@Override
 	public void onBackKeyPressed() {
 		if(gridPanel.isSelecting()){
 			gridPanel.onHide();
 		} else {
-		super.onBackKeyPressed();
+			super.onBackKeyPressed();
 		}
 	}
 
 	@Override
 	public void hide() {
-		gridPanel.onHide();
+		if(gridPanel.isSelecting()){
+			gridPanel.onHide();
+		}
 		root.setVisible(false);
 		navigationGroup.setVisible(false);
 	}

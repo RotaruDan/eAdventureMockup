@@ -7,6 +7,9 @@ import com.badlogic.gdx.utils.Scaling;
 
 import es.eucm.ead.mockup.core.control.listeners.SelectListener;
 
+/**
+ * Represents a selectable entry for the GalleryGrid by implementing SelectListener interface.
+ */
 public class GalleryEntity extends Image implements SelectListener{
 
 	private boolean selected;

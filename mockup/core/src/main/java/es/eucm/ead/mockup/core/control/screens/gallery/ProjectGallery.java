@@ -41,7 +41,6 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
@@ -51,13 +50,15 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Screens;
-import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.GridPanel;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
+import es.eucm.ead.mockup.core.view.ui.components.GalleryEntity;
+import es.eucm.ead.mockup.core.view.ui.components.GalleryGrid;
 
 public class ProjectGallery extends AbstractScreen {
 
-	private ToolBar toolBar;
+	private ToolBar topToolBar;
+	private GalleryGrid<Actor> gridPanel;
 
 	@Override
 	public void create() {
@@ -66,9 +67,8 @@ public class ProjectGallery extends AbstractScreen {
 		super.root = new Group();
 		root.setVisible(false);
 
-		toolBar = new ToolBar(skin);
-		//toolBar.setVisible(false);
-		toolBar.right();
+		topToolBar = new ToolBar(skin);
+		topToolBar.right();
 
 		final ImageButton backButton = new ImageButton(skin, "ic_goback");
 		backButton.addListener(new ClickListener() {
@@ -86,19 +86,25 @@ public class ProjectGallery extends AbstractScreen {
 
 		Label nombre = new Label("Galería de proyectos", skin);
 
-		toolBar.add(backButton);
-		toolBar.add(nombre).expandX().left().padLeft(5f);
-		toolBar.add(ordenar);
-		toolBar.add(searchtf).width(
+		topToolBar.add(backButton);
+		topToolBar.add(nombre).expandX().left().padLeft(5f);
+		topToolBar.add(ordenar);
+		topToolBar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
 		//toolBar.debug();
 
 		Texture t = am.get("mockup/temp/proyecto.png", Texture.class);
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		final int COLS = 3, ROWS = 6;
-		GridPanel<Actor> gridPanel = new GridPanel<Actor>(skin, ROWS, COLS,
-				UIAssets.GALLERY_PROJECT_HEIGHT * .2f);
-		gridPanel.defaults().fill().uniform();
+		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS,
+				root, new ToolBar[] {topToolBar}){
+			@Override
+			protected void entityClicked(InputEvent event) {
+				if (event.getListenerActor() instanceof GridPanel) {
+					exitAnimation(Screens.PROJECT_MENU);
+				}
+			}			
+		};
 		boolean first = true;
 		for (int i = 0; i < ROWS; ++i) {
 			for (int j = 0; j < COLS; ++j) {
@@ -107,24 +113,17 @@ public class ProjectGallery extends AbstractScreen {
 					gridPanel.addItem(new ImageButton(skin, "ic_newproject"),
 							0, 0).fill();
 				} else {
-					gridPanel.addItem(new Image(t), i, j);
+					GalleryEntity auxImg = new GalleryEntity(t);
+					gridPanel.addItem(auxImg, i, j);
 				}
 			}
 		}
-		//gridPanel.debug();
+
 		ScrollPane scrollPane = new ScrollPane(gridPanel);
 		scrollPane.setScrollingDisabled(true, false);
-		scrollPane.setBounds(0, 0, stagew, stageh - toolBar.getHeight());
+		scrollPane.setBounds(0, 0, stagew, stageh - topToolBar.getHeight());
 
-		gridPanel.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				if (event.getListenerActor() instanceof GridPanel) {
-					exitAnimation(Screens.PROJECT_MENU);
-				}
-			}
-		});
-		root.addActor(toolBar);
+		root.addActor(topToolBar);
 		root.addActor(scrollPane);
 
 		stage.addActor(root);
@@ -148,6 +147,18 @@ public class ProjectGallery extends AbstractScreen {
 
 	@Override
 	public void hide() {
+		if(gridPanel.isSelecting()){
+			gridPanel.onHide();
+		}
 		root.setVisible(false);
+	}
+	
+	@Override
+	public void onBackKeyPressed() {
+		if(gridPanel.isSelecting()){
+			gridPanel.onHide();
+		} else {
+			super.onBackKeyPressed();
+		}
 	}
 }
