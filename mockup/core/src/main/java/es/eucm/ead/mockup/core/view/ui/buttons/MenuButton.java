@@ -85,7 +85,7 @@ public class MenuButton extends Button {
 		Label scene = new Label(name, skin);
 		scene.setAlignment(Align.center);
 
-		icon = add(sceneIcon);
+		icon = add(sceneIcon).expand();
 		row();
 		add(scene);
 	}

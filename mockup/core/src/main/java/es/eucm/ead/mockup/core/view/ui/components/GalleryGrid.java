@@ -54,6 +54,16 @@ public abstract class GalleryGrid<T extends Actor> extends GridPanel<T> {
 	 * The button that will allow us to delete our selected entities.
 	 */
 	private ToolbarButton deleteButton;
+	
+	/**
+	 * We need to know if this panel it's visible so we leave left padding or not.
+	 */
+	private Actor navigationPanelGroup;
+	
+	/**
+	 * The cell that will have leftPadding or not.
+	 */
+	private Cell<?> backButtonCell;
 
 	public GalleryGrid(Skin skin, int rows, int cols, Group root, Actor ...actorsToHide) {
 		super(skin, rows, cols, UIAssets.GALLERY_PROJECT_HEIGHT * .2f);
@@ -61,6 +71,7 @@ public abstract class GalleryGrid<T extends Actor> extends GridPanel<T> {
 			throw new IllegalArgumentException("actorsToHide can't be null.");
 		}
 		this.actorsToHide = actorsToHide;
+		this.navigationPanelGroup = UIAssets.getNavigationGroup();
 		defaults().expand().fill().uniform();
 		selectedEntities = new Array<GalleryEntity>();
 		selecting = false;		
@@ -175,10 +186,9 @@ public abstract class GalleryGrid<T extends Actor> extends GridPanel<T> {
 		deleteButton.addListener(mListener);
 		backButton.addListener(mListener);		
 
-		numSelectedEntities = new Label("1", skin);
+		numSelectedEntities = new Label("", skin);
 		topToolbar.defaults().size(topToolbar.getHeight()).space(DEFAULT_ICON_SPACE);
-		boolean hadLeftPadding = UIAssets.getNavigationGroup().isVisible();
-		topToolbar.add(backButton).padLeft((hadLeftPadding ? UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT : 0) + DEFAULT_ICON_SPACE);
+		backButtonCell = topToolbar.add(backButton);
 		topToolbar.add(numSelectedEntities).left().expandX();
 		topToolbar.add(deleteButton);
 		
@@ -191,17 +201,13 @@ public abstract class GalleryGrid<T extends Actor> extends GridPanel<T> {
 			actorsToHide[i].setVisible(visible);
 		}
 		topToolbar.setVisible(!visible);
+		backButtonCell.padLeft((navigationPanelGroup.isVisible() ? UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT : 0) + DEFAULT_ICON_SPACE);
 	}
 
 	/**
 	 * Called when this Actor was clicked if we're not in Selecting Mode.
 	 */
 	protected abstract void entityClicked(InputEvent event);
-
-	@Override
-	public Cell<?> addItem(T t, int row, int col) {
-		return super.addItem(t, row, col);
-	}
 
 	/**
 	 * Resets previous visibility changes to actors.

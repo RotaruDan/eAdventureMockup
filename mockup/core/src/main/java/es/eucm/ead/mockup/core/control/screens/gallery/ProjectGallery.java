@@ -91,7 +91,6 @@ public class ProjectGallery extends AbstractScreen {
 		topToolBar.add(ordenar);
 		topToolBar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
-		//toolBar.debug();
 
 		Texture t = am.get("mockup/temp/proyecto.png", Texture.class);
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);

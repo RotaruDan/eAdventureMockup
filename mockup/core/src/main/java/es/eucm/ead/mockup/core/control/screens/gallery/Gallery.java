@@ -37,7 +37,6 @@
 package es.eucm.ead.mockup.core.control.screens.gallery;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -52,7 +51,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Scaling;
 
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Loading;
@@ -60,9 +58,10 @@ import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.control.screens.edition.ElementEdition;
 import es.eucm.ead.mockup.core.control.screens.edition.SceneEdition;
 import es.eucm.ead.mockup.core.view.UIAssets;
-import es.eucm.ead.mockup.core.view.ui.GridPanel;
 import es.eucm.ead.mockup.core.view.ui.Panel;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
+import es.eucm.ead.mockup.core.view.ui.components.GalleryEntity;
+import es.eucm.ead.mockup.core.view.ui.components.GalleryGrid;
 
 public class Gallery extends AbstractScreen {
 
@@ -72,9 +71,10 @@ public class Gallery extends AbstractScreen {
 	 * If true -> SCENE_EDITION else ELEMENT_EDITION.
 	 */
 	public static boolean SCENE_EDITION;
-	
+
+	private GalleryGrid<Actor> gridPanel;
 	private Group navigationGroup;
-	private ToolBar toolBar;
+	private ToolBar topToolbar;
 	private Panel mDialogPanel;
 
 	@Override
@@ -85,9 +85,9 @@ public class Gallery extends AbstractScreen {
 		super.root = new Group();
 		root.setVisible(false);
 
-		toolBar = new ToolBar(skin);
-		//toolBar.setVisible(false);
-		toolBar.right();
+		topToolbar = new ToolBar(skin);
+		ToolBar bottomToolbar = new ToolBar(skin);
+		topToolbar.right();
 
 		String search = "Buscar por ...";//TODO use i18n!
 		TextField searchtf = new TextField("", skin);
@@ -127,8 +127,8 @@ public class Gallery extends AbstractScreen {
 		final Panel filterPanel = new Panel(skin);
 		filterPanel.setVisible(false);
 		final float panelw = stagew * .45f, panelx = stagew - panelw;
-		filterPanel.setBounds(panelx, toolBar.getHeight(), panelw, stageh
-				- toolBar.getHeight() * 2f);
+		filterPanel.setBounds(panelx, topToolbar.getHeight(), panelw, stageh
+				- topToolbar.getHeight() * 2f);
 		filterPanel.add(cbe).expandX();
 		filterPanel.add(cbs).expandX();
 		filterPanel.add(cbi).expandX();
@@ -154,21 +154,40 @@ public class Gallery extends AbstractScreen {
 
 		Label nombre = new Label("Galería", skin);
 
-		toolBar.add(nombre).expandX().left().padLeft(
+		topToolbar.add(nombre).expandX().left().padLeft(
 				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f);
-		toolBar.add(order);
-		toolBar.add(filterButton);
-		toolBar.add(searchtf).width(
+		topToolbar.add(order);
+		topToolbar.add(filterButton);
+		topToolbar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
 
 		/***/
-		//TODO distinguish between elements and scenes
-		Texture t = am.get("mockup/temp/proyecto.png", Texture.class);//TODO change for scene
-		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+
 		final int COLS = 4, ROWS = 6;
-		GridPanel<Actor> gridPanel = new GridPanel<Actor>(skin, ROWS, COLS,
-				UIAssets.GALLERY_PROJECT_HEIGHT * .2f);
-		gridPanel.defaults().fill().uniform();
+		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS,
+				root, new ToolBar[] { topToolbar, bottomToolbar}){
+			@Override
+			protected void entityClicked(InputEvent event) {
+				Actor target = event.getTarget();
+				if (target instanceof Image) {
+					//TODO distinguish between elements and scenes
+					String[] auxAttr = String.valueOf(target.getUserObject()).split(" ");
+					Integer index = Integer.valueOf(auxAttr[0]);
+					if(Boolean.valueOf(auxAttr[1])){ //isElement
+						ElementEdition.setELEMENT_INDEX(index);
+						exitAnimation(Screens.ELEMENT_EDITION);
+					} else {
+						SceneEdition.setSCENE_INDEX(index);
+						exitAnimation(Screens.SCENE_EDITION);
+					}
+				} else if (target instanceof Label) {
+					// We've clicked new from blank page...
+					//TODO ask for choise			
+					SCENE_EDITION = true;	
+					showDialog();
+				}
+			}
+		};
 		boolean first = true;
 		for (int i = 0; i < ROWS; ++i) {
 			for (int j = 0; j < COLS; ++j) {
@@ -189,40 +208,17 @@ public class Gallery extends AbstractScreen {
 						rand = MathUtils.random(Loading.demoElementsThumbnail.length-1);
 						tex = Loading.demoElementsThumbnail[rand];						
 					}
-					Image auxImg = new Image(tex);
-					auxImg.setScaling(Scaling.fit);
+					GalleryEntity auxImg = new GalleryEntity(tex);
 					auxImg.setUserObject(rand + " " + isElement);
 					gridPanel.addItem(auxImg, i, j);
 				}
 			}
 		}
-		gridPanel.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				Actor target = event.getTarget();
-				if (target instanceof Image) {
-					//TODO distinguish between elements and scenes
-					String[] auxAttr = String.valueOf(target.getUserObject()).split(" ");
-					Integer index = Integer.valueOf(auxAttr[0]);
-					if(Boolean.valueOf(auxAttr[1])){ //isElement
-						ElementEdition.setELEMENT_INDEX(index);
-						exitAnimation(Screens.ELEMENT_EDITION);
-					} else {
-						SceneEdition.setSCENE_INDEX(index);
-						exitAnimation(Screens.SCENE_EDITION);
-					}
-				} else if (target instanceof Label) {
-					// We've clicked new from blank page...
-					//TODO ask for choise			
-					SCENE_EDITION = true;	
-					showDialog();
-				}
-			}
-		});
+
 		ScrollPane scrollPane = new ScrollPane(gridPanel);
 		scrollPane.setScrollingDisabled(true, false);
-		scrollPane.setBounds(0, toolBar.getHeight(), stagew, stageh - 2
-				* toolBar.getHeight());
+		scrollPane.setBounds(0, topToolbar.getHeight(), stagew, stageh - 2
+				* topToolbar.getHeight());
 		final float DEFAULT_ICON_LABEL_SPACE = 10f;
 		final Button picButton = createButton("Nuevo desde cámara", 
 				"ic_photocamera", 
@@ -297,13 +293,12 @@ public class Gallery extends AbstractScreen {
 		newElement.addListener(mTransitionLIstener);
 		newScene.addListener(mTransitionLIstener);
 
-		ToolBar toolBar2 = new ToolBar(skin);
-		toolBar2.setY(0);
-		toolBar2.add(picButton).expandX().left();
-		toolBar2.add(vidButton).expandX().right();
+		bottomToolbar.setY(0);
+		bottomToolbar.add(picButton).expandX().left();
+		bottomToolbar.add(vidButton).expandX().right();
 
-		root.addActor(toolBar);
-		root.addActor(toolBar2);
+		root.addActor(topToolbar);
+		root.addActor(bottomToolbar);
 		root.addActor(scrollPane);
 		root.addActor(filterPanel);
 		root.addActor(mDialogPanel);
@@ -349,7 +344,19 @@ public class Gallery extends AbstractScreen {
 
 	@Override
 	public void hide() {
+		if(gridPanel.isSelecting()){
+			gridPanel.onHide();
+		}
 		root.setVisible(false);
 		navigationGroup.setVisible(false);
+	}
+
+	@Override
+	public void onBackKeyPressed() {
+		if(gridPanel.isSelecting()){
+			gridPanel.onHide();
+		} else {
+			super.onBackKeyPressed();
+		}
 	}
 }

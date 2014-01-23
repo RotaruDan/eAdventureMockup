@@ -36,7 +36,7 @@
 		opaque: { background: dialogDimMedium }		
 	},
 	es.eucm.ead.mockup.core.view.ui.components.NavigationPanel$NavigationPanelStyle: {
-		default: { background: dialogDim, backButton: icon-blitz, editElement: ic_editelement, editScene: ic_editstage, gallery: ic_galery, launch: ic_playgame}	
+		default: { background: dialogDim, backButton: ic_goback, editElement: ic_editelement, editScene: ic_editstage, gallery: ic_galery, launch: ic_playgame}	
 	},
 	es.eucm.ead.mockup.core.view.ui.GridPanel$GridPanelStyle: {
 		default: {  },

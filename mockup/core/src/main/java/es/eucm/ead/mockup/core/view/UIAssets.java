@@ -114,17 +114,17 @@ public class UIAssets {
 		navigationGroup = new Group();
 		navigationGroup.setVisible(false);
 		Skin skin = AbstractScreen.skin;
-		final ToolbarButton navigation = new ToolbarButton(skin
+		final ToolbarButton navigationButton = new ToolbarButton(skin
 				.getDrawable("ic_menu"), skin);
-		navigation.setBounds(0, AbstractScreen.stageh
+		navigationButton.setBounds(0, AbstractScreen.stageh
 				- NAVIGATION_BUTTON_WIDTH_HEIGHT,
 				NAVIGATION_BUTTON_WIDTH_HEIGHT, NAVIGATION_BUTTON_WIDTH_HEIGHT);
 
 		final NavigationPanel p = new NavigationPanel(AbstractScreen.skin,
-				"default", navigation);
+				"default", navigationButton);
 		p.setName(NAVIGATION_PANEL_NAME);
 		p.setModal(false);
-		navigation.addListener(new ClickListener() {
+		navigationButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				//event.cancel();
@@ -137,7 +137,7 @@ public class UIAssets {
 		});
 
 		navigationGroup.addActor(p);
-		navigationGroup.addActor(navigation);
+		navigationGroup.addActor(navigationButton);
 	}
 
 	public static void addActors() {

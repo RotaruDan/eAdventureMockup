@@ -36,8 +36,6 @@
  */
 package es.eucm.ead.mockup.core.control.screens.gallery;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
@@ -142,8 +140,7 @@ public class ElementGallery extends AbstractScreen {
 		topToolbar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
 		/***/
-		Texture t = am.get("mockup/temp/proyecto.png", Texture.class);//TODO change for scene
-		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+		
 		final int COLS = 4, ROWS = 6;
 		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS,
 				root, new ToolBar[] { topToolbar, bottomToolbar}){
@@ -233,7 +230,7 @@ public class ElementGallery extends AbstractScreen {
 
 	@Override
 	public void draw() {
-		stage.draw();Table.drawDebug(stage);
+		stage.draw();
 	}
 
 	@Override
