@@ -57,6 +57,7 @@ import com.badlogic.gdx.utils.Scaling;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Loading;
 import es.eucm.ead.mockup.core.control.screens.Screens;
+import es.eucm.ead.mockup.core.control.screens.edition.SceneEdition;
 import es.eucm.ead.mockup.core.control.screens.menu.ProjectMenu;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.GridPanel;
@@ -67,6 +68,7 @@ public class SceneGallery extends AbstractScreen {
 
 	private Group navigationGroup;
 	private ToolBar toolBar;
+	private Label name;
 
 	@Override
 	public void create() {
@@ -133,9 +135,9 @@ public class SceneGallery extends AbstractScreen {
 		filterButton.addListener(closeFilterListenerTmp);
 
 
-		Label nombre = new Label("Galería de escenas", skin);
+		name = new Label("Galería de escenas", skin);
 
-		toolBar.add(nombre).expandX().left().padLeft(
+		toolBar.add(name).expandX().left().padLeft(
 				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f);
 		toolBar.add(order);
 		toolBar.add(filterButton);
@@ -148,7 +150,6 @@ public class SceneGallery extends AbstractScreen {
 		GridPanel<Actor> gridPanel = new GridPanel<Actor>(skin, ROWS, COLS,
 				UIAssets.GALLERY_PROJECT_HEIGHT * .2f);
 		gridPanel.defaults().fill().uniform();
-		final float auxWidth = stagew / COLS, auxHeight = (stageh - 2* UIAssets.TOOLBAR_HEIGHT)/ROWS;
 		boolean first = true;
 		for (int i = 0; i < ROWS; ++i) {
 			for (int j = 0; j < COLS; ++j) {
@@ -157,9 +158,11 @@ public class SceneGallery extends AbstractScreen {
 					gridPanel.addItem(new TextButton("Imagen en blanco", skin), 0, 0)
 					.fill();
 				} else {
-					Image auxImg = new Image(am.get(Loading.demoScenes[MathUtils.random(Loading.demoScenes.length-1)], Texture.class));
+					int rand = MathUtils.random(Loading.demoScenesThumbnail.length-1);
+					Image auxImg = new Image(Loading.demoScenesThumbnail[rand]);
 					auxImg.setScaling(Scaling.fit);
-					gridPanel.addItem(auxImg, i, j).size(auxWidth, auxHeight);
+					auxImg.setUserObject(Integer.valueOf(rand));
+					gridPanel.addItem(auxImg, i, j);
 				}
 			}
 		}
@@ -171,9 +174,11 @@ public class SceneGallery extends AbstractScreen {
 					if(ProjectMenu.getFROM_INITIAL_SCENE()){
 						exitAnimation(Screens.PROJECT_MENU);
 					} else {
+						SceneEdition.setSCENE_INDEX((Integer)target.getUserObject());
 						exitAnimation(Screens.SCENE_EDITION);
 					}
 				} else if(target instanceof Label){
+					SceneEdition.setSCENE_INDEX(null);
 					exitAnimation(Screens.SCENE_EDITION);
 				}
 			}
@@ -236,6 +241,11 @@ public class SceneGallery extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
+		if(ProjectMenu.getFROM_INITIAL_SCENE()){
+			name.setText("Elige tu escena inicial");
+		} else {
+			name.setText("Galería de escenas");
+		}
 		root.setVisible(true);
 		navigationGroup.setVisible(true);
 	}

@@ -57,6 +57,8 @@ import com.badlogic.gdx.utils.Scaling;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Loading;
 import es.eucm.ead.mockup.core.control.screens.Screens;
+import es.eucm.ead.mockup.core.control.screens.edition.ElementEdition;
+import es.eucm.ead.mockup.core.control.screens.edition.SceneEdition;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.GridPanel;
 import es.eucm.ead.mockup.core.view.ui.Panel;
@@ -163,11 +165,10 @@ public class Gallery extends AbstractScreen {
 		//TODO distinguish between elements and scenes
 		Texture t = am.get("mockup/temp/proyecto.png", Texture.class);//TODO change for scene
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		final int COLS = 3, ROWS = 6;
+		final int COLS = 4, ROWS = 6;
 		GridPanel<Actor> gridPanel = new GridPanel<Actor>(skin, ROWS, COLS,
 				UIAssets.GALLERY_PROJECT_HEIGHT * .2f);
 		gridPanel.defaults().fill().uniform();
-		final float auxWidth = stagew / COLS, auxHeight = (stageh - 2* UIAssets.TOOLBAR_HEIGHT)/ROWS;
 		boolean first = true;
 		for (int i = 0; i < ROWS; ++i) {
 			for (int j = 0; j < COLS; ++j) {
@@ -177,14 +178,21 @@ public class Gallery extends AbstractScreen {
 					.fill();
 				} else {
 					Texture tex;
+					int rand;
+					boolean isElement;
 					if(MathUtils.randomBoolean()){
-						tex = am.get(Loading.demoScenes[MathUtils.random(Loading.demoScenes.length-1)], Texture.class);
+						isElement = false;
+						rand = MathUtils.random(Loading.demoScenesThumbnail.length-1);
+						tex = Loading.demoScenesThumbnail[rand];
 					} else {
-						tex = am.get(Loading.demoElements[MathUtils.random(Loading.demoElements.length-1)], Texture.class);						
+						isElement = true;
+						rand = MathUtils.random(Loading.demoElementsThumbnail.length-1);
+						tex = Loading.demoElementsThumbnail[rand];						
 					}
 					Image auxImg = new Image(tex);
 					auxImg.setScaling(Scaling.fit);
-					gridPanel.addItem(auxImg, i, j).size(auxWidth, auxHeight);
+					auxImg.setUserObject(rand + " " + isElement);
+					gridPanel.addItem(auxImg, i, j);
 				}
 			}
 		}
@@ -194,7 +202,15 @@ public class Gallery extends AbstractScreen {
 				Actor target = event.getTarget();
 				if (target instanceof Image) {
 					//TODO distinguish between elements and scenes
-					exitAnimation(Screens.SCENE_EDITION);
+					String[] auxAttr = String.valueOf(target.getUserObject()).split(" ");
+					Integer index = Integer.valueOf(auxAttr[0]);
+					if(Boolean.valueOf(auxAttr[1])){ //isElement
+						ElementEdition.setELEMENT_INDEX(index);
+						exitAnimation(Screens.ELEMENT_EDITION);
+					} else {
+						SceneEdition.setSCENE_INDEX(index);
+						exitAnimation(Screens.SCENE_EDITION);
+					}
 				} else if (target instanceof Label) {
 					// We've clicked new from blank page...
 					//TODO ask for choise			
@@ -220,7 +236,6 @@ public class Gallery extends AbstractScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {	
 				SCENE_EDITION = false;	
-				//showDialog();
 				exitAnimation(Screens.PICTURE);
 			}
 		};

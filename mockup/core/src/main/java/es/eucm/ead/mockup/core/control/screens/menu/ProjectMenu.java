@@ -48,8 +48,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.listeners.FocusListener;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
-import es.eucm.ead.mockup.core.control.screens.Loading;
 import es.eucm.ead.mockup.core.control.screens.Screens;
+import es.eucm.ead.mockup.core.utils.Constants;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.CircularGroup;
 import es.eucm.ead.mockup.core.view.ui.buttons.MenuButton;
@@ -97,7 +97,7 @@ public class ProjectMenu extends AbstractScreen {
 		bottomButtonsTable.setBounds(0, 0, stagew, UIAssets.TOOLBAR_HEIGHT * 2f);
 		
 		takePictureButton = new MenuButton("Tomar Foto", skin, "ic_photocamera");//TODO i18n
-		initialSceneButton = new MenuButton("Aquí empieza el juego", skin, am,  Loading.demoScenes[0]);
+		initialSceneButton = new MenuButton("Aquí empieza el juego", skin, am,  Constants.demoScenes[0]);
 		recordVideoButton = new MenuButton("Grabar Vídeo", skin, "ic_videocamera");
 		
 		final ImageButton backButton = new ImageButton(skin, "ic_goback");

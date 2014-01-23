@@ -61,37 +61,45 @@ public class Loading extends AbstractScreen {
 	private TextureAtlas atlas;
 	private float xBar, yBar, wBar, hBar;
 	private Batch sb;
+	
+	/**
+	 * Fast implementation to cache some demo Textures of
+	 * elements and scenes...
+	 */
+	public static Texture[] demoElements, demoScenes;
 
-	public static final String[] demoElements = {
-		"mockup/temp/elements/cama-quirofano.jpg",
-		"mockup/temp/elements/Cama2.jpg",
-		"mockup/temp/elements/enfermera.jpg",
-		"mockup/temp/elements/enfermera2.jpg",
-		"mockup/temp/elements/estetoscopio-recortado.png",
-		"mockup/temp/elements/estetoscopio.jpg",
-		"mockup/temp/elements/lampara.jpg",
-		"mockup/temp/elements/medico-de-ambulancia.jpg",
-		"mockup/temp/elements/Elemento1.jpg"
-	};
-
-	public static final String[] demoScenes = {
-		"mockup/temp/scenes/sala-de-estar.jpg", //Initial scene
-		"mockup/temp/scenes/ambulancia.jpg",
-		"mockup/temp/scenes/pacientes.jpg",
-		"mockup/temp/scenes/quirofano.jpg"
-	};
+	/**
+	 * Fast implementation to cache some demo Thumbnail Textures of
+	 * elements and scenes...
+	 */
+	public static Texture[] demoElementsThumbnail, demoScenesThumbnail;
+	
 	@Override
 	public void create() {
 		
+		/*DEMO*/
 		int i;
-		for(i = 0; i < demoElements.length; ++i){
-			am.load(demoElements[i], Texture.class);			
+		for(i = 0; i < Constants.demoElements.length; ++i){
+			am.load(Constants.demoElements[i], Texture.class);			
 		}
-		for(i = 0; i < demoScenes.length; ++i){
-			am.load(demoScenes[i], Texture.class);			
+		demoElements = new Texture[Constants.demoElements.length];
+		for(i = 0; i < Constants.demoScenes.length; ++i){
+			am.load(Constants.demoScenes[i], Texture.class);			
 		}
-		am.load(Constants.SKIN_SRC, Skin.class);
+		demoScenes = new Texture[Constants.demoScenes.length];
+		
+		for(i = 0; i < Constants.demoElementsThumbnail.length; ++i){
+			am.load(Constants.demoElementsThumbnail[i], Texture.class);			
+		}
+		demoElementsThumbnail = new Texture[Constants.demoElementsThumbnail.length];
+		for(i = 0; i < Constants.demoScenesThumbnail.length; ++i){
+			am.load(Constants.demoScenesThumbnail[i], Texture.class);			
+		}
+		demoScenesThumbnail = new Texture[Constants.demoScenesThumbnail.length];
+		
 		am.load("mockup/temp/proyecto.png", Texture.class);
+		/*--*/
+		am.load(Constants.SKIN_SRC, Skin.class);
 
 		float hh = Gdx.graphics.getHeight() / 2f, hw = Gdx.graphics.getWidth() / 2f;
 		this.wBar = hw * 1.5f;
@@ -117,15 +125,35 @@ public class Loading extends AbstractScreen {
 
 	@Override
 	public void act(float delta) {
-		if (am.update()) {
-			initStatics();
+		if (am.update()) {			
+			/*DEMO*/
 			int i;
-			for(i = 0; i < demoElements.length; ++i){
-				am.get(demoElements[i], Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);		
+			Texture auxTex = null;
+			for(i = 0; i < Constants.demoElements.length; ++i){				
+				auxTex = am.get(Constants.demoElements[i], Texture.class);
+				auxTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+				demoElements[i] = auxTex;
 			}
-			for(i = 0; i < demoScenes.length; ++i){
-				am.get(demoScenes[i], Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);			
+			for(i = 0; i < Constants.demoScenes.length; ++i){
+				auxTex = am.get(Constants.demoScenes[i], Texture.class);
+				auxTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+				demoScenes[i] = auxTex;			
 			}
+			
+			for(i = 0; i < Constants.demoElementsThumbnail.length; ++i){				
+				auxTex = am.get(Constants.demoElementsThumbnail[i], Texture.class);
+				auxTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+				demoElementsThumbnail[i] = auxTex;
+			}
+			for(i = 0; i < Constants.demoScenesThumbnail.length; ++i){
+				auxTex = am.get(Constants.demoScenesThumbnail[i], Texture.class);
+				auxTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
+				demoScenesThumbnail[i] = auxTex;			
+			}
+			
+			/*--*/
+			
+			initStatics();
 
 			mockupController.create();
 

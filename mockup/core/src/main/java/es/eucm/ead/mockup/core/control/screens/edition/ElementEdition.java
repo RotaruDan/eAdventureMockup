@@ -36,7 +36,6 @@
  */
 package es.eucm.ead.mockup.core.control.screens.edition;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -48,6 +47,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
+import es.eucm.ead.mockup.core.control.screens.Loading;
 import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
@@ -76,8 +76,11 @@ public class ElementEdition extends AbstractScreen {
 	 * Fast implementation to know what element
 	 * we shall display (edit).
 	 */
-	private static String ELEMENT_PATH;	
+	private static Integer ELEMENT_INDEX;	
 	
+	/**
+	 * Shows the element that we're editing.
+	 */
 	private Image editingElement;
 
 	@Override
@@ -131,6 +134,8 @@ public class ElementEdition extends AbstractScreen {
 
 		editingElement = new Image();
 		editingElement.setScaling(Scaling.fit);
+		editingElement.setBounds(0, 0, stagew, stageh - UIAssets.TOOLBAR_HEIGHT);
+		
 		root.addActor(editingElement);
 		root.addActor(toolBar);
 		root.addActor(frames);
@@ -155,10 +160,11 @@ public class ElementEdition extends AbstractScreen {
 	public void show() {
 		super.show();
 		root.setVisible(true);
-		editingElement.setDrawable(new TextureRegionDrawable(new TextureRegion(am.get(ELEMENT_PATH, Texture.class))));
-		editingElement.setBounds(halfstagew - editingElement.getPrefWidth()*.5f, halfstageh - editingElement.getPrefHeight()*.5f, 
-				editingElement.getPrefWidth(), editingElement.getPrefHeight());
-		//toolBar.show();
+		if(ELEMENT_INDEX != null){
+			editingElement.setDrawable(new TextureRegionDrawable(new TextureRegion(Loading.demoElements[ELEMENT_INDEX])));
+		}else {
+			editingElement.setDrawable(null);
+		}
 		UIAssets.getNavigationGroup().setVisible(true);
 	}
 
@@ -182,8 +188,9 @@ public class ElementEdition extends AbstractScreen {
 	/**
 	 * Fast implementation to know what element
 	 * we shall display (edit).
+	 * if ELEMENT_IDX == null  no image will be shown.
 	 */
-	public static void setELEMENT_PATH(String eLEMENT_PATH) {
-		ELEMENT_PATH = eLEMENT_PATH;
+	public static void setELEMENT_INDEX(Integer ELEMENT_IDX) {
+		ELEMENT_INDEX = ELEMENT_IDX;
 	}
 }

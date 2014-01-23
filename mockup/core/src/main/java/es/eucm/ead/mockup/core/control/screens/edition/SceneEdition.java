@@ -36,13 +36,18 @@
  */
 package es.eucm.ead.mockup.core.control.screens.edition;
 
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
+import es.eucm.ead.mockup.core.control.screens.Loading;
 import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
@@ -69,6 +74,18 @@ public class SceneEdition extends AbstractScreen {
 	private float TOOLBAR_ICON_WIDTH;
 	private OtherComponent more;
 
+	
+	/**
+	 * Fast implementation to know what SCENE
+	 * we shall display (edit).
+	 */
+	private static Integer SCENE_INDEX;
+	
+	/**
+	 * Shows the element that we're editing.
+	 */
+	private Image editingScene;
+	
 	@Override
 	public void create() {
 		setPreviousScreen(Screens.PROJECT_MENU);
@@ -122,6 +139,11 @@ public class SceneEdition extends AbstractScreen {
 		toolBar.invalidate();
 		toolBar.validate();
 
+		editingScene = new Image();
+		editingScene.setScaling(Scaling.fit);
+		editingScene.setBounds(0, 0, stagew, stageh - UIAssets.TOOLBAR_HEIGHT);
+		
+		root.addActor(editingScene);
 		root.addActor(toolBar);
 		root.addActor(frames);
 
@@ -148,7 +170,11 @@ public class SceneEdition extends AbstractScreen {
 	public void show() {
 		super.show();
 		root.setVisible(true);
-		//toolBar.show();
+		if(SCENE_INDEX != null){
+			editingScene.setDrawable(new TextureRegionDrawable(new TextureRegion(Loading.demoScenes[SCENE_INDEX])));
+		} else {
+			editingScene.setDrawable(null);
+		}
 		UIAssets.getNavigationGroup().setVisible(true);
 	}
 
@@ -167,5 +193,14 @@ public class SceneEdition extends AbstractScreen {
 	public void hide() {
 		root.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
+	}
+	
+	/**
+	 * Fast implementation to know what scene
+	 * we shall display (edit).
+	 * if sCENE_INDEX == null no image will be shown.
+	 */
+	public static void setSCENE_INDEX(Integer sCENE_INDEX) {
+		SCENE_INDEX = sCENE_INDEX;
 	}
 }

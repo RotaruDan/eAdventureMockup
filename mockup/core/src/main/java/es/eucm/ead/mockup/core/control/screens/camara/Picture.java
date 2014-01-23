@@ -51,6 +51,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import es.eucm.ead.mockup.core.control.ScreenController;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Screens;
+import es.eucm.ead.mockup.core.control.screens.edition.ElementEdition;
+import es.eucm.ead.mockup.core.control.screens.edition.SceneEdition;
 import es.eucm.ead.mockup.core.control.screens.menu.ProjectMenu;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.Panel;
@@ -140,7 +142,6 @@ public class Picture extends AbstractScreen {
 				if (next == null) {
 					return;
 				}
-				mockupController.hide(mDialogPanel);
 				exitAnimation(next);
 			}
 
@@ -148,8 +149,10 @@ public class Picture extends AbstractScreen {
 				Screens next = null;
 				if (target == newElement) {
 					next = Screens.ELEMENT_EDITION;
+					ElementEdition.setELEMENT_INDEX(null);
 				} else if (target == newScene) {
 					next = Screens.SCENE_EDITION;
+					SceneEdition.setSCENE_INDEX(null);
 				}
 				return next;
 			}
@@ -178,6 +181,7 @@ public class Picture extends AbstractScreen {
 
 	private void takePic() {
 		//TODO take picture here
+		
 		onPictureTaken();
 	}
 
@@ -185,7 +189,7 @@ public class Picture extends AbstractScreen {
 		if(nextScreen == null){
 			if(mockupController.getPreviousScreen() == Screens.GALLERY){
 				//  We've came from Gallery 
-				// so we must ask if he want an element or an scene
+				// so we must ask if he want an element or a scene
 				mockupController.show(mDialogPanel);
 			} else {
 				//We've came from Project menu so we go back
@@ -212,8 +216,10 @@ public class Picture extends AbstractScreen {
 		} else {
 			if(previousScreen == Screens.ELEMENT_GALLERY){
 				nextScr = Screens.ELEMENT_EDITION;
+				ElementEdition.setELEMENT_INDEX(null);
 			} else if(previousScreen == Screens.SCENE_GALLERY){
 				nextScr = Screens.SCENE_EDITION;
+				SceneEdition.setSCENE_INDEX(null);
 			} else if(previousScreen == Screens.PROJECT_MENU){
 				// If it's null we go to the previous screen.
 				nextScr = previousScreen;
@@ -241,6 +247,9 @@ public class Picture extends AbstractScreen {
 
 	@Override
 	public void hide() {
+		if(mDialogPanel.isVisible()){
+			mDialogPanel.setVisible(false);
+		}
 		this.screenController.changeClearColor(previousClearColor);
 		rootTable.setVisible(false);
 		navigationGroup.setVisible(false);

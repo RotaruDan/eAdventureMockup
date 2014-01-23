@@ -38,6 +38,7 @@ package es.eucm.ead.mockup.core.control.screens.gallery;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -155,10 +156,10 @@ public class ElementGallery extends AbstractScreen {
 					gridPanel.addItem(new TextButton("Imagen en blanco", skin),
 							0, 0).fill();
 				} else {
-					String path = Loading.demoElements[Loading.demoElements.length-1];
-					Image auxImg = new Image(am.get(path, Texture.class));
-					//auxImg.setScaling(Scaling.fit);
-					auxImg.setUserObject(path);
+					int rand = MathUtils.random(Loading.demoElementsThumbnail.length - 1);
+					Image auxImg = new Image(Loading.demoElementsThumbnail[rand]);
+					auxImg.setUserObject(Integer.valueOf(rand));
+					auxImg.setScaling(Scaling.fit);
 					gridPanel.addItem(auxImg, i, j);//.size(auxWidth, auxHeight);
 				}
 			}
@@ -168,7 +169,10 @@ public class ElementGallery extends AbstractScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				Actor target = event.getTarget();
 				if (target instanceof Image) {
-					ElementEdition.setELEMENT_PATH(target.getUserObject().toString());
+					ElementEdition.setELEMENT_INDEX((Integer)target.getUserObject());
+					exitAnimation(Screens.ELEMENT_EDITION);
+				} else if(target instanceof Label){
+					ElementEdition.setELEMENT_INDEX(null);
 					exitAnimation(Screens.ELEMENT_EDITION);
 				}
 			}
