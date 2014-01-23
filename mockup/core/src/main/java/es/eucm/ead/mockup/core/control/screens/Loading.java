@@ -37,6 +37,8 @@
 package es.eucm.ead.mockup.core.control.screens;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -60,10 +62,36 @@ public class Loading extends AbstractScreen {
 	private float xBar, yBar, wBar, hBar;
 	private Batch sb;
 
+	public static final String[] demoElements = {
+		"mockup/temp/elements/cama-quirofano.jpg",
+		"mockup/temp/elements/Cama2.jpg",
+		"mockup/temp/elements/enfermera.jpg",
+		"mockup/temp/elements/enfermera2.jpg",
+		"mockup/temp/elements/estetoscopio-recortado.png",
+		"mockup/temp/elements/estetoscopio.jpg",
+		"mockup/temp/elements/lampara.jpg",
+		"mockup/temp/elements/medico-de-ambulancia.jpg",
+		"mockup/temp/elements/Elemento1.jpg"
+	};
+
+	public static final String[] demoScenes = {
+		"mockup/temp/scenes/sala-de-estar.jpg", //Initial scene
+		"mockup/temp/scenes/ambulancia.jpg",
+		"mockup/temp/scenes/pacientes.jpg",
+		"mockup/temp/scenes/quirofano.jpg"
+	};
 	@Override
 	public void create() {
-
+		
+		int i;
+		for(i = 0; i < demoElements.length; ++i){
+			am.load(demoElements[i], Texture.class);			
+		}
+		for(i = 0; i < demoScenes.length; ++i){
+			am.load(demoScenes[i], Texture.class);			
+		}
 		am.load(Constants.SKIN_SRC, Skin.class);
+		am.load("mockup/temp/proyecto.png", Texture.class);
 
 		float hh = Gdx.graphics.getHeight() / 2f, hw = Gdx.graphics.getWidth() / 2f;
 		this.wBar = hw * 1.5f;
@@ -91,6 +119,13 @@ public class Loading extends AbstractScreen {
 	public void act(float delta) {
 		if (am.update()) {
 			initStatics();
+			int i;
+			for(i = 0; i < demoElements.length; ++i){
+				am.get(demoElements[i], Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);		
+			}
+			for(i = 0; i < demoScenes.length; ++i){
+				am.get(demoScenes[i], Texture.class).setFilter(TextureFilter.Linear, TextureFilter.Linear);			
+			}
 
 			mockupController.create();
 

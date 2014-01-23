@@ -91,7 +91,7 @@ public class MainMenu extends AbstractScreen {
 		ScrollPane sp = new ScrollPane(projectsTable);
 		sp.setBounds(stagew * .1f, 10, stagew * .8f, stageh * .2f);
 		sp.setScrollingDisabled(false, true);
-		Texture t = new Texture(Gdx.files.internal("mockup/temp/proyecto.png"));
+		Texture t = am.get("mockup/temp/proyecto.png", Texture.class);
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		final int PROJECTS = 8;
 		final Array<Actor> mProjects = new Array<Actor>(false, PROJECTS);

@@ -36,7 +36,6 @@
  */
 package es.eucm.ead.mockup.core.control.screens.gallery;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -52,9 +51,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Scaling;
 
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
+import es.eucm.ead.mockup.core.control.screens.Loading;
 import es.eucm.ead.mockup.core.control.screens.Screens;
+import es.eucm.ead.mockup.core.control.screens.edition.ElementEdition;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.GridPanel;
 import es.eucm.ead.mockup.core.view.ui.Panel;
@@ -138,12 +140,13 @@ public class ElementGallery extends AbstractScreen {
 		toolBar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
 		/***/
-		Texture t = new Texture(Gdx.files.internal("mockup/temp/proyecto.png"));//TODO change for scene
+		Texture t = am.get("mockup/temp/proyecto.png", Texture.class);//TODO change for scene
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		final int COLS = 3, ROWS = 6;
+		final int COLS = 4, ROWS = 6;
 		GridPanel<Actor> gridPanel = new GridPanel<Actor>(skin, ROWS, COLS,
 				UIAssets.GALLERY_PROJECT_HEIGHT * .2f);
 		gridPanel.defaults().fill().uniform();
+		//final float auxWidth = stagew / COLS, auxHeight = (stageh - 2* UIAssets.TOOLBAR_HEIGHT)/ROWS;
 		boolean first = true;
 		for (int i = 0; i < ROWS; ++i) {
 			for (int j = 0; j < COLS; ++j) {
@@ -152,7 +155,11 @@ public class ElementGallery extends AbstractScreen {
 					gridPanel.addItem(new TextButton("Imagen en blanco", skin),
 							0, 0).fill();
 				} else {
-					gridPanel.addItem(new Image(t), i, j);
+					String path = Loading.demoElements[Loading.demoElements.length-1];
+					Image auxImg = new Image(am.get(path, Texture.class));
+					//auxImg.setScaling(Scaling.fit);
+					auxImg.setUserObject(path);
+					gridPanel.addItem(auxImg, i, j);//.size(auxWidth, auxHeight);
 				}
 			}
 		}
@@ -161,6 +168,7 @@ public class ElementGallery extends AbstractScreen {
 			public void clicked(InputEvent event, float x, float y) {
 				Actor target = event.getTarget();
 				if (target instanceof Image) {
+					ElementEdition.setELEMENT_PATH(target.getUserObject().toString());
 					exitAnimation(Screens.ELEMENT_EDITION);
 				}
 			}

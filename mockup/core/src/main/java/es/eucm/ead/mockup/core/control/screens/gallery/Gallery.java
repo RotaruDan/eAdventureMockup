@@ -36,9 +36,9 @@
  */
 package es.eucm.ead.mockup.core.control.screens.gallery;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -52,8 +52,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Scaling;
 
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
+import es.eucm.ead.mockup.core.control.screens.Loading;
 import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.GridPanel;
@@ -159,12 +161,13 @@ public class Gallery extends AbstractScreen {
 
 		/***/
 		//TODO distinguish between elements and scenes
-		Texture t = new Texture(Gdx.files.internal("mockup/temp/proyecto.png"));//TODO change for scene
+		Texture t = am.get("mockup/temp/proyecto.png", Texture.class);//TODO change for scene
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		final int COLS = 3, ROWS = 6;
 		GridPanel<Actor> gridPanel = new GridPanel<Actor>(skin, ROWS, COLS,
 				UIAssets.GALLERY_PROJECT_HEIGHT * .2f);
 		gridPanel.defaults().fill().uniform();
+		final float auxWidth = stagew / COLS, auxHeight = (stageh - 2* UIAssets.TOOLBAR_HEIGHT)/ROWS;
 		boolean first = true;
 		for (int i = 0; i < ROWS; ++i) {
 			for (int j = 0; j < COLS; ++j) {
@@ -173,7 +176,15 @@ public class Gallery extends AbstractScreen {
 					gridPanel.addItem(new TextButton("Crear nuevo\nen blanco",skin), 0, 0)
 					.fill();
 				} else {
-					gridPanel.addItem(new Image(t), i, j);
+					Texture tex;
+					if(MathUtils.randomBoolean()){
+						tex = am.get(Loading.demoScenes[MathUtils.random(Loading.demoScenes.length-1)], Texture.class);
+					} else {
+						tex = am.get(Loading.demoElements[MathUtils.random(Loading.demoElements.length-1)], Texture.class);						
+					}
+					Image auxImg = new Image(tex);
+					auxImg.setScaling(Scaling.fit);
+					gridPanel.addItem(auxImg, i, j).size(auxWidth, auxHeight);
 				}
 			}
 		}

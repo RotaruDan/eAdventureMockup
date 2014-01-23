@@ -36,24 +36,28 @@
  */
 package es.eucm.ead.mockup.core.control.screens.edition;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Scaling;
 
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
 import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
-import es.eucm.ead.mockup.core.view.ui.components.AddComponent;
 import es.eucm.ead.mockup.core.view.ui.components.DrawComponent;
-import es.eucm.ead.mockup.core.view.ui.components.OtherComponent;
 import es.eucm.ead.mockup.core.view.ui.components.DrawComponent.Type;
-import es.eucm.ead.mockup.core.view.ui.components.OtherComponent.TypeOther;
 import es.eucm.ead.mockup.core.view.ui.components.EffectsComponent;
 import es.eucm.ead.mockup.core.view.ui.components.InteractiveComponent;
+import es.eucm.ead.mockup.core.view.ui.components.OtherComponent;
+import es.eucm.ead.mockup.core.view.ui.components.OtherComponent.TypeOther;
 
 public class ElementEdition extends AbstractScreen {
 
@@ -67,6 +71,14 @@ public class ElementEdition extends AbstractScreen {
 
 	private float TOOLBAR_ICON_HEIGHT;
 	private float TOOLBAR_ICON_WIDTH;
+	
+	/**
+	 * Fast implementation to know what element
+	 * we shall display (edit).
+	 */
+	private static String ELEMENT_PATH;	
+	
+	private Image editingElement;
 
 	@Override
 	public void create() {
@@ -93,7 +105,7 @@ public class ElementEdition extends AbstractScreen {
 				"Seleccionar parte a recortar usando", 300, 390);
 		effect = new EffectsComponent("ic_effects", "EFECTOS", skin,
 				"Añadir efectos de imagen", 300, 600);
-		more = new OtherComponent("ic_more", "Otros", skin,
+		more = new OtherComponent("ic_more", "OTROS", skin,
 				TypeOther.OTHER_ELEMENT, 300, 600);
 
 		Button frames = new ImageButton(skin);
@@ -117,6 +129,9 @@ public class ElementEdition extends AbstractScreen {
 		toolBar.invalidate();
 		toolBar.validate();
 
+		editingElement = new Image();
+		editingElement.setScaling(Scaling.fit);
+		root.addActor(editingElement);
 		root.addActor(toolBar);
 		root.addActor(frames);
 
@@ -132,8 +147,7 @@ public class ElementEdition extends AbstractScreen {
 		root.addActor(effect.getOpt());
 		effect.actCoordinates();
 		root.addActor(more.getPanel());
-		more.actCoordinates();
-
+		more.actCoordinates();		
 		stage.addActor(root);
 	}
 
@@ -141,6 +155,9 @@ public class ElementEdition extends AbstractScreen {
 	public void show() {
 		super.show();
 		root.setVisible(true);
+		editingElement.setDrawable(new TextureRegionDrawable(new TextureRegion(am.get(ELEMENT_PATH, Texture.class))));
+		editingElement.setBounds(halfstagew - editingElement.getPrefWidth()*.5f, halfstageh - editingElement.getPrefHeight()*.5f, 
+				editingElement.getPrefWidth(), editingElement.getPrefHeight());
 		//toolBar.show();
 		UIAssets.getNavigationGroup().setVisible(true);
 	}
@@ -160,5 +177,13 @@ public class ElementEdition extends AbstractScreen {
 	public void hide() {
 		root.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
+	}
+	
+	/**
+	 * Fast implementation to know what element
+	 * we shall display (edit).
+	 */
+	public static void setELEMENT_PATH(String eLEMENT_PATH) {
+		ELEMENT_PATH = eLEMENT_PATH;
 	}
 }

@@ -97,7 +97,7 @@ public class SceneEdition extends AbstractScreen {
 				"Añadir a la escena:", 250, 390);
 		effect = new EffectsComponent("ic_effects", "EFECTOS", skin,
 				"Añadir efectos de imagen", 300, 600);
-		more = new OtherComponent("ic_more", "Otros", skin,
+		more = new OtherComponent("ic_more", "OTROS", skin,
 				TypeOther.OTHER_SCENE, 300, 600);
 
 		Button frames = new ImageButton(skin);

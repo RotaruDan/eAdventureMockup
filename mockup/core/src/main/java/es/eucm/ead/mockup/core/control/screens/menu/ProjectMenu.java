@@ -48,6 +48,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 import es.eucm.ead.mockup.core.control.listeners.FocusListener;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
+import es.eucm.ead.mockup.core.control.screens.Loading;
 import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.CircularGroup;
@@ -65,6 +66,8 @@ public class ProjectMenu extends AbstractScreen {
 	private final float PANEL_MENU_BUTTON_WIDTH_HEIGHT = stageh * .2f;
 	private Group optionsGroup;
 
+	private String project_name = "Hospitalizado";
+	
 	@Override
 	public void create() {
 		setPreviousScreen(Screens.MAIN_MENU);
@@ -94,7 +97,7 @@ public class ProjectMenu extends AbstractScreen {
 		bottomButtonsTable.setBounds(0, 0, stagew, UIAssets.TOOLBAR_HEIGHT * 2f);
 		
 		takePictureButton = new MenuButton("Tomar Foto", skin, "ic_photocamera");//TODO i18n
-		initialSceneButton = new MenuButton("Aquí empieza el juego", skin, "icon-blitz");
+		initialSceneButton = new MenuButton("Aquí empieza el juego", skin, am,  Loading.demoScenes[0]);
 		recordVideoButton = new MenuButton("Grabar Vídeo", skin, "ic_videocamera");
 		
 		final ImageButton backButton = new ImageButton(skin, "ic_goback");
@@ -141,11 +144,11 @@ public class ProjectMenu extends AbstractScreen {
 		initialSceneButton.addListener(mTransitionListener);
 
 		bottomButtonsTable.add(takePictureButton).fill().left();
-		bottomButtonsTable.add(initialSceneButton).height(bottomButtonsTable.getHeight()).expandX();
+		bottomButtonsTable.add(initialSceneButton).height(bottomButtonsTable.getHeight()).width(250f).expandX();
 		bottomButtonsTable.add(recordVideoButton).fill().right();
 		
-		final TextField projectName = new TextField("Hospitalizado", skin);
-		final int MAX_NAME_CHARACTERS = 13;
+		final TextField projectName = new TextField(project_name, skin);
+		final int MAX_NAME_CHARACTERS = project_name.length();
 		projectName.setMaxLength(MAX_NAME_CHARACTERS);
 
 		// We create a table with contraints for
