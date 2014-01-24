@@ -82,13 +82,18 @@ public class MockupController implements EventListener {
 	 * Used if we want to go to he previous screen.
 	 */
 	private Screens previousScreen, actualScreen;
+	
+	/**
+	 * The loading Screen.
+	 */
+	private Loading loading;
 
 	public MockupController() {
 		AbstractScreen.mockupController = this;
 		AbstractScreen.am = new AssetManager();
 		Gdx.input.setCatchBackKey(true);
 
-		Loading loading = new Loading();
+		loading = new Loading();
 		loading.create();
 		// { loading.create(); }
 		// Must be done before we create the other screens so if we
@@ -166,6 +171,8 @@ public class MockupController implements EventListener {
 	}
 
 	public void dispose() {
+		loading.dispose();
+		
 		AbstractScreen.stage.dispose();
 		AbstractScreen.stage = null;
 

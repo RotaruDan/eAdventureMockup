@@ -58,6 +58,7 @@ import es.eucm.ead.mockup.core.view.ui.components.edition.EffectsComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.InteractiveComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent.TypeOther;
+import es.eucm.ead.mockup.core.view.ui.components.edition.RectangleSelector;
 
 public class ElementEdition extends AbstractScreen {
 
@@ -82,7 +83,11 @@ public class ElementEdition extends AbstractScreen {
 	 * Shows the element that we're editing.
 	 */
 	private Image editingElement;
-
+	
+	/**
+	 * Used to tdaw the rectangle selection.
+	 */
+	private RectangleSelector rectSel;
 	@Override
 	public void create() {
 		setPreviousScreen(Screens.PROJECT_MENU);
@@ -104,7 +109,10 @@ public class ElementEdition extends AbstractScreen {
 				"Herramienta de goma", Type.RUBBER, 350, 250);
 		text = new DrawComponent("ic_text", "Texto", skin,
 				"Herramienta de escribir", Type.TEXT, 350, 550);
-		interac = new InteractiveComponent("ic_select", "Selección", skin,
+		
+		rectSel = new RectangleSelector();
+		rectSel.setVisible(false);
+		interac = new InteractiveComponent(rectSel, "ic_select", "Selección", skin,
 				"Seleccionar parte a recortar usando", 300, 390);
 		effect = new EffectsComponent("ic_effects", "Efectos", skin,
 				"Añadir efectos de imagen", 300, 600);
@@ -119,7 +127,6 @@ public class ElementEdition extends AbstractScreen {
 				.getButton(), interac.getButton(), effect.getButton(), more
 				.getButton());
 
-		//toolBar.debug();
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
 		toolBar.add(move);
 		toolBar.add(paint.getButton());
@@ -137,6 +144,7 @@ public class ElementEdition extends AbstractScreen {
 		editingElement.setBounds(0, 0, stagew, stageh - UIAssets.TOOLBAR_HEIGHT);
 		
 		root.addActor(editingElement);
+		root.addActor(rectSel);
 		root.addActor(toolBar);
 		root.addActor(frames);
 
@@ -161,6 +169,12 @@ public class ElementEdition extends AbstractScreen {
 	public void show() {
 		super.show();
 		root.setVisible(true);
+		float x,y,w,h;
+		x= 0;
+		y= 0;
+		w= stagew;
+		h = stageh - UIAssets.TOOLBAR_HEIGHT;
+		rectSel.setBounds(x, y, w, h);
 		if(ELEMENT_INDEX != null){
 			editingElement.setDrawable(new TextureRegionDrawable(new TextureRegion(Loading.demoElements[ELEMENT_INDEX])));
 		}else {
@@ -183,6 +197,7 @@ public class ElementEdition extends AbstractScreen {
 	@Override
 	public void hide() {
 		root.setVisible(false);
+		rectSel.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
 	}
 	

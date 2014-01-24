@@ -57,6 +57,7 @@ import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.EffectsComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.InteractiveComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.RectangleSelector;
 import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent.Type;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent.TypeOther;
 
@@ -86,6 +87,11 @@ public class SceneEdition extends AbstractScreen {
 	 */
 	private Image editingScene;
 	
+	/**
+	 * Used to tdaw the rectangle selection.
+	 */
+	private RectangleSelector rectSel;
+	
 	@Override
 	public void create() {
 		setPreviousScreen(Screens.PROJECT_MENU);
@@ -96,8 +102,6 @@ public class SceneEdition extends AbstractScreen {
 
 		toolBar = new ToolBar(skin);
 		toolBar.right();
-		//toolBar.setBounds(0, AbstractScreen.stageh * .9f, AbstractScreen.stagew, AbstractScreen.stageh * .1f);
-
 		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "Mover",
 				skin);
 
@@ -108,7 +112,9 @@ public class SceneEdition extends AbstractScreen {
 		text = new DrawComponent("ic_text", "Texto", skin,
 				"Herramienta de escribir", Type.TEXT, 300, 550);
 		//change this ic_select icon
-		interac = new InteractiveComponent("ic_select", "Zonas", skin,
+		rectSel = new RectangleSelector();
+		rectSel.setVisible(false);
+		interac = new InteractiveComponent(rectSel, "ic_select", "Zonas", skin,
 				"Añadir zona interactiva", 250, 390);
 		add = new AddComponent("tree_plus", "Añadir", skin,
 				"Añadir a la escena:", 250, 390);
@@ -144,6 +150,7 @@ public class SceneEdition extends AbstractScreen {
 		editingScene.setBounds(0, 0, stagew, stageh - UIAssets.TOOLBAR_HEIGHT);
 		
 		root.addActor(editingScene);
+		root.addActor(rectSel);
 		root.addActor(toolBar);
 		root.addActor(frames);
 
@@ -170,6 +177,12 @@ public class SceneEdition extends AbstractScreen {
 	public void show() {
 		super.show();
 		root.setVisible(true);
+		float x,y,w,h;
+		x= 0;
+		y= 0;
+		w= stagew;
+		h = stageh - UIAssets.TOOLBAR_HEIGHT;
+		rectSel.setBounds(x, y, w, h);
 		if(SCENE_INDEX != null){
 			editingScene.setDrawable(new TextureRegionDrawable(new TextureRegion(Loading.demoScenes[SCENE_INDEX])));
 		} else {
@@ -192,6 +205,7 @@ public class SceneEdition extends AbstractScreen {
 	@Override
 	public void hide() {
 		root.setVisible(false);
+		rectSel.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
 	}
 	

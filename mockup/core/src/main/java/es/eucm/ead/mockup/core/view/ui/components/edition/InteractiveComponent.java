@@ -54,10 +54,24 @@ public class InteractiveComponent {
 
 	private InteractivePanel panel;
 	private Button button;
+	private RectangleSelector rectangleSelector;
+	
+	
 
-	public InteractiveComponent(String imageUp, String name, Skin skin,
+	public InteractiveComponent(RectangleSelector rectSel, String imageUp, String name, Skin skin,
 			String description, float width, float height) {
-		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin);
+
+		this.rectangleSelector = rectSel;
+		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin){
+
+			@Override
+			public void setChecked(boolean isChecked) {
+				super.setChecked(isChecked);
+				if(!isChecked) {
+				}
+			}
+		};
+		
 		this.panel = new InteractivePanel(skin, "opaque", description, width,
 				height);
 		this.button.addListener(new ClickListener() {
@@ -114,6 +128,12 @@ public class InteractiveComponent {
 			final Button rec = new Button(skin, "default");
 			rec.add(backImg2).left().expand();
 			rec.add(auxLabel2).left().expand();
+			rec.addListener(new ClickListener(){
+				@Override
+				public void clicked(InputEvent event, float x, float y) {
+					rectangleSelector.setVisible(button.isChecked());
+				}
+			});
 
 			Label auxLabel3 = new Label("Polígono", skin);
 			auxLabel3.setFontScale(0.7f);

@@ -57,6 +57,7 @@ import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 
 public class Loading extends AbstractScreen {
 
+	public static NinePatch loadingSel;
 	private NinePatch loadingBar, loadingProgress;
 	private TextureAtlas atlas;
 	private float xBar, yBar, wBar, hBar;
@@ -109,6 +110,11 @@ public class Loading extends AbstractScreen {
 		this.atlas = new TextureAtlas("mockup/ninepatch/ninepatch.atlas");
 		loadingBar = new NinePatch(atlas.findRegion("2"), 4, 4, 4, 4);
 		loadingProgress = new NinePatch(atlas.findRegion("3"), 4, 4, 4, 4);
+		loadingSel = new NinePatch(atlas.findRegion("1"), 39, 39, 39, 39);
+		loadingSel.setBottomHeight(5f);
+		loadingSel.setRightWidth(5f);
+		loadingSel.setTopHeight(5f);
+		loadingSel.setLeftWidth(5f);
 
 		//We must create Engine here if we want to pass 
 		//his SpriteBatch to ours (very important performancewise)
@@ -170,11 +176,10 @@ public class Loading extends AbstractScreen {
 		sb.end();
 	}
 
-	@Override
-	public void hide() {
-		this.atlas.dispose();
+	public void dispose(){
+		atlas.dispose();
 	}
-
+	
 	private void initStatics() {
 		if (skin == null) {
 			skin = am.get(Constants.SKIN_SRC, Skin.class);
