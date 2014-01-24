@@ -81,7 +81,7 @@ public class ProjectGallery extends AbstractScreen {
 		TextField searchtf = new TextField("", skin);
 		searchtf.setMessageText(search);
 		searchtf.setMaxLength(search.length());
-		String[] orders = new String[] { "Ordenar por ...", "Ordenar por 2..." };//TODO use i18n!
+		String[] orders = new String[] { "Ordenar por ...", "nombre A-Z", "nombre Z-A", "más recientes", "menos recientes" };//TODO use i18n!
 		SelectBox ordenar = new SelectBox(orders, skin);
 
 		Label nombre = new Label("Galería de proyectos", skin);

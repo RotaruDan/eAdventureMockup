@@ -135,12 +135,12 @@ public class EffectsComponent {
 
 			Table table = new Table(skin);
 
-			CheckBox cb1 = new CheckBox("Efecto 1", skin);
-			CheckBox cb2 = new CheckBox("Efecto 2", skin);
-			CheckBox cb3 = new CheckBox("Efecto 3", skin);
-			CheckBox cb4 = new CheckBox("Efecto 4", skin);
-			CheckBox cb5 = new CheckBox("Efecto 5", skin);
-			CheckBox cb6 = new CheckBox("Efecto 6", skin);
+			CheckBox cb1 = new CheckBox("Color diluido", skin);
+			CheckBox cb2 = new CheckBox("Pincel seco", skin);
+			CheckBox cb3 = new CheckBox("Neón", skin);
+			CheckBox cb4 = new CheckBox("Bordes", skin);
+			CheckBox cb5 = new CheckBox("Sombreado", skin);
+			CheckBox cb6 = new CheckBox("Ondas marinas", skin);
 			CheckBox cb7 = new CheckBox("Efecto 7", skin);
 
 			ScrollPane sp = new ScrollPane(table, skin);
