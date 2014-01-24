@@ -172,7 +172,7 @@ public class SceneGallery extends AbstractScreen {
 					.fill();
 				} else {
 					int rand = MathUtils.random(Loading.demoScenesThumbnail.length-1);
-					GalleryEntity auxImg = new GalleryEntity(Loading.demoElementsThumbnail[rand]);
+					GalleryEntity auxImg = new GalleryEntity(Loading.demoScenesThumbnail[rand]);
 					auxImg.setUserObject(Integer.valueOf(rand));
 					gridPanel.addItem(auxImg, i, j);
 				}
