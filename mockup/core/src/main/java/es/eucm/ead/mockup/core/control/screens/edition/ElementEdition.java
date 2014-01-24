@@ -47,13 +47,12 @@ import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
 import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
-import es.eucm.ead.mockup.core.view.ui.components.AddComponent;
-import es.eucm.ead.mockup.core.view.ui.components.DrawComponent;
-import es.eucm.ead.mockup.core.view.ui.components.OtherComponent;
-import es.eucm.ead.mockup.core.view.ui.components.DrawComponent.Type;
-import es.eucm.ead.mockup.core.view.ui.components.OtherComponent.TypeOther;
-import es.eucm.ead.mockup.core.view.ui.components.EffectsComponent;
-import es.eucm.ead.mockup.core.view.ui.components.InteractiveComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.EffectsComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.InteractiveComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent.Type;
+import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent.TypeOther;
 
 public class ElementEdition extends AbstractScreen {
 
@@ -80,25 +79,26 @@ public class ElementEdition extends AbstractScreen {
 		toolBar.right();
 		//toolBar.setBounds(0, AbstractScreen.stageh * .9f, AbstractScreen.stagew, AbstractScreen.stageh * .1f);
 
-		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "MOVER",
+		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "Mover",
 				skin);
 
-		paint = new DrawComponent("ic_pencil", "PINTAR", skin,
+		paint = new DrawComponent("ic_pencil", "Pintar", skin,
 				"Herramienta de pincel", Type.BRUSH, 350, 550);
-		delete = new DrawComponent("ic_eraser", "BORRAR", skin,
+		delete = new DrawComponent("ic_eraser", "Borrar", skin,
 				"Herramienta de goma", Type.RUBBER, 350, 250);
-		text = new DrawComponent("ic_text", "TEXTO", skin,
+		text = new DrawComponent("ic_text", "Texto", skin,
 				"Herramienta de escribir", Type.TEXT, 350, 550);
-		interac = new InteractiveComponent("ic_select", "SELECCIÓN", skin,
+		interac = new InteractiveComponent("ic_select", "Selección", skin,
 				"Seleccionar parte a recortar usando", 300, 390);
-		effect = new EffectsComponent("ic_effects", "EFECTOS", skin,
+		effect = new EffectsComponent("ic_effects", "Efectos", skin,
 				"Añadir efectos de imagen", 300, 600);
 		more = new OtherComponent("ic_more", "Otros", skin,
 				TypeOther.OTHER_ELEMENT, 300, 600);
+		
 
 		Button frames = new ImageButton(skin);
 		frames.setX(AbstractScreen.stagew - frames.getWidth());
-
+				
 		//Radio-button functionality
 		new ButtonGroup(move, paint.getButton(), delete.getButton(), text
 				.getButton(), interac.getButton(), effect.getButton(), more
@@ -132,6 +132,7 @@ public class ElementEdition extends AbstractScreen {
 		root.addActor(effect.getOpt());
 		effect.actCoordinates();
 		root.addActor(more.getPanel());
+		root.addActor(more.getActions());
 		more.actCoordinates();
 
 		stage.addActor(root);

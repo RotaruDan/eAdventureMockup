@@ -34,7 +34,7 @@
  *      You should have received a copy of the GNU Lesser General Public License
  *      along with eAdventure.  If not, see <http://www.gnu.org/licenses/>.
  */
-package es.eucm.ead.mockup.core.view.ui.components;
+package es.eucm.ead.mockup.core.view.ui.components.edition;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -56,6 +56,7 @@ public class OtherComponent {
 
 	private OtherPanel panel;
 	private Button button;
+	private ActionsComponent actionsC;
 
 	public enum TypeOther {
 		OTHER_ELEMENT, OTHER_SCENE
@@ -105,6 +106,7 @@ public class OtherComponent {
 			} else {
 				duplicate += "elemento";
 				remove += "elemento";
+				actionsC = new ActionsComponent(skin);
 			}
 
 			Label label = new Label("default-thin-opaque", skin);
@@ -151,6 +153,17 @@ public class OtherComponent {
 				actions.add(backImg3).left().expand();
 				actions.add(auxLabel3).left().expand();
 				actions.scale(0.5f);
+				actions.addListener(new ClickListener() {
+					@Override
+					public void clicked(InputEvent event, float x, float y) {
+						event.cancel();
+						if (!actionsC.isVisible()) {
+							AbstractScreen.mockupController.show(actionsC);
+						} else {
+							AbstractScreen.mockupController.hide(actionsC);
+						}
+					}
+				});
 
 				add(actions).expandX().fill();
 				
@@ -197,5 +210,9 @@ public class OtherComponent {
 
 	public void actCoordinates() {
 		panel.actCoordinates();
+	}
+
+	public ActionsComponent getActions() {
+		return actionsC;
 	}
 }

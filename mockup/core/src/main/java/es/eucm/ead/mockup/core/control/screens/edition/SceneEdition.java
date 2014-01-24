@@ -47,13 +47,13 @@ import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
 import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
-import es.eucm.ead.mockup.core.view.ui.components.AddComponent;
-import es.eucm.ead.mockup.core.view.ui.components.DrawComponent;
-import es.eucm.ead.mockup.core.view.ui.components.DrawComponent.Type;
-import es.eucm.ead.mockup.core.view.ui.components.EffectsComponent;
-import es.eucm.ead.mockup.core.view.ui.components.InteractiveComponent;
-import es.eucm.ead.mockup.core.view.ui.components.OtherComponent;
-import es.eucm.ead.mockup.core.view.ui.components.OtherComponent.TypeOther;
+import es.eucm.ead.mockup.core.view.ui.components.edition.AddComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.EffectsComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.InteractiveComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent.Type;
+import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent.TypeOther;
 
 public class SceneEdition extends AbstractScreen {
 
@@ -81,21 +81,21 @@ public class SceneEdition extends AbstractScreen {
 		toolBar.right();
 		//toolBar.setBounds(0, AbstractScreen.stageh * .9f, AbstractScreen.stagew, AbstractScreen.stageh * .1f);
 
-		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "MOVER",
+		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "Mover",
 				skin);
 
-		paint = new DrawComponent("ic_pencil", "PINTAR", skin,
+		paint = new DrawComponent("ic_pencil", "Pintar", skin,
 				"Herramienta de pincel", Type.BRUSH, 300, 550);
-		delete = new DrawComponent("ic_eraser", "BORRAR", skin,
+		delete = new DrawComponent("ic_eraser", "Borrar", skin,
 				"Herramienta de goma", Type.RUBBER, 300, 250);
-		text = new DrawComponent("ic_text", "TEXTO", skin,
+		text = new DrawComponent("ic_text", "Texto", skin,
 				"Herramienta de escribir", Type.TEXT, 300, 550);
 		//change this ic_select icon
-		interac = new InteractiveComponent("ic_select", "ZONAS", skin,
+		interac = new InteractiveComponent("ic_select", "Zonas", skin,
 				"Añadir zona interactiva", 250, 390);
-		add = new AddComponent("tree_plus", "AÑADIR", skin,
+		add = new AddComponent("tree_plus", "Añadir", skin,
 				"Añadir a la escena:", 250, 390);
-		effect = new EffectsComponent("ic_effects", "EFECTOS", skin,
+		effect = new EffectsComponent("ic_effects", "Efectos", skin,
 				"Añadir efectos de imagen", 300, 600);
 		more = new OtherComponent("ic_more", "Otros", skin,
 				TypeOther.OTHER_SCENE, 300, 600);
