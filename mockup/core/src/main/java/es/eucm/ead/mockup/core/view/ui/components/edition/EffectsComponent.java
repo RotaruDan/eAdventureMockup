@@ -147,26 +147,26 @@ public class EffectsComponent {
 			sp.setupFadeScrollBars(0f, 0f);
 			sp.setScrollingDisabled(true, false);
 
-			table.add(prop1).left();
-			table.add(cb1).left();
+			table.add(cb1).left().expandX();
+			table.add(prop1).right().padRight(30);
 			table.row();
-			table.add(prop2).left();
 			table.add(cb2).left();
+			table.add(prop2).right().padRight(30);
 			table.row();
-			table.add(prop3).left();
 			table.add(cb3).left();
+			table.add(prop3).right().padRight(30);
 			table.row();
-			table.add(prop4).left();
 			table.add(cb4).left();
+			table.add(prop4).right().padRight(30);
 			table.row();
-			table.add(prop5).left();
 			table.add(cb5).left();
+			table.add(prop5).right().padRight(30);
 			table.row();
-			table.add(prop6).left();
 			table.add(cb6).left();
+			table.add(prop6).right().padRight(30);
 			table.row();
-			table.add(prop7).left();
 			table.add(cb7).left();
+			table.add(prop7).right().padRight(30);
 
 			//table.debug();
 

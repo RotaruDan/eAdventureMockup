@@ -114,11 +114,11 @@ public class SceneEdition extends AbstractScreen {
 				"Añadir a la escena:", 250, 390);
 		effect = new EffectsComponent("ic_effects", "Efectos", skin,
 				"Añadir efectos de imagen", 300, 600);
-		more = new OtherComponent("ic_more", "OTROS", skin,
+		more = new OtherComponent("ic_more", "Otros", skin,
 				TypeOther.OTHER_SCENE, 300, 600);
 
-		Button frames = new ImageButton(skin);
-		frames.setX(AbstractScreen.stagew - frames.getWidth());
+		Button frames = new ImageButton(skin, "ic_hidescenes");
+		frames.setX(AbstractScreen.stagew-frames.getWidth());
 
 		//Radio-button functionality
 		new ButtonGroup(move, paint.getButton(), delete.getButton(), text

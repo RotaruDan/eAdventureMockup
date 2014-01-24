@@ -91,6 +91,8 @@ public class OtherComponent {
 			this.height = height;
 			this.width = width;
 
+			String iconDuplicate=null; 
+			
 			setHeight(height);
 			setWidth(width);
 
@@ -103,10 +105,12 @@ public class OtherComponent {
 			if (type == TypeOther.OTHER_SCENE) {
 				duplicate += "escena";
 				remove += "escena";
+				iconDuplicate="ic_duplicate_scene";
 			} else {
 				duplicate += "elemento";
 				remove += "elemento";
 				actionsC = new ActionsComponent(skin);
+				iconDuplicate="ic_duplicate_element";
 			}
 
 			Label label = new Label("default-thin-opaque", skin);
@@ -121,7 +125,7 @@ public class OtherComponent {
 
 			Label auxLabel1 = new Label(duplicate, skin);
 			auxLabel1.setFontScale(0.7f);
-			Image backImg1 = new Image(skin.getRegion("icon-blitz")); //edit element img
+			Image backImg1 = new Image(skin.getRegion(iconDuplicate)); //edit element img
 			final Button clone = new Button(skin, "default");
 			clone.add(backImg1).left().expand();
 			clone.add(auxLabel1).left().expand();
@@ -148,7 +152,7 @@ public class OtherComponent {
 			if (type == TypeOther.OTHER_ELEMENT) {
 				Label auxLabel3 = new Label("Editar acciones", skin);
 				auxLabel3.setFontScale(0.7f);
-				Image backImg3 = new Image(skin.getRegion("ic_settings")); //edit element img
+				Image backImg3 = new Image(skin.getRegion("ic_editactions")); //edit element img
 				final Button actions = new Button(skin, "default");
 				actions.add(backImg3).left().expand();
 				actions.add(auxLabel3).left().expand();
