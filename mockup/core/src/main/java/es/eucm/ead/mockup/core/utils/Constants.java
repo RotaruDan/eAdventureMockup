@@ -44,16 +44,67 @@ public class Constants {
 	/**
 	 * Screen's width used for UI's Stage.
 	 */
-	public static final float SCREENW = 1100F;
+	public static final float SCREENW = 1100f;
 
 	/**
 	 * Screen's height used for UI's Stage.
 	 */
-	public static final float SCREENH = 720;
+	public static final float SCREENH = 720f;
 
 	public static final String LOG_TAG = "MOCKUP_LOG";
 
 	public static final String SKIN_SRC = "mockup/skin/holo-dark-xhdpi.json";
 
 	public static final String DEFAULT_LANG = "es_ES";
+	
+	/**
+	 * Fast implementation to display some
+	 * elements...
+	 */
+	public static final String[] demoElements = {
+		"mockup/temp/elements/cama-quirofano.jpg",
+		"mockup/temp/elements/Cama2.jpg",
+		"mockup/temp/elements/enfermera.jpg",
+		"mockup/temp/elements/enfermera2.jpg",
+		"mockup/temp/elements/estetoscopio.jpg",
+		"mockup/temp/elements/lampara.jpg",
+		"mockup/temp/elements/medico-de-ambulancia.jpg"
+	};
+	
+	/**
+	 * Fast implementation to display some
+	 * scenes...
+	 */
+	public static final String[] demoScenes = {
+		"mockup/temp/scenes/sala-de-estar.jpg", //Initial scene
+		"mockup/temp/scenes/ambulancia.jpg",
+		"mockup/temp/scenes/pacientes.jpg",
+		"mockup/temp/scenes/quirofano.jpg"
+	};
+	
+	/**
+	 * Fast implementation to display some thumbnail
+	 * elements...
+	 */
+	public static final String[] demoElementsThumbnail = {		
+		"mockup/temp/elements/thumbnail/cama-quirofano_thumb.jpg",
+		"mockup/temp/elements/thumbnail/Cama2_thumb.jpg",
+		"mockup/temp/elements/thumbnail/enfermera_thumb.jpg",
+		"mockup/temp/elements/thumbnail/enfermera2_thumb.jpg",
+		"mockup/temp/elements/thumbnail/estetoscopio_thumb.jpg",
+		"mockup/temp/elements/thumbnail/lampara_thumb.jpg",
+		"mockup/temp/elements/thumbnail/medico-de-ambulancia_thumb.jpg"
+		
+	};
+	
+	/**
+	 * Fast implementation to display some thumbnail
+	 * scenes...
+	 */
+	public static final String[] demoScenesThumbnail = {		
+		"mockup/temp/scenes/thumbnail/sala-de-estar_thumb.jpg", //Initial scene
+		"mockup/temp/scenes/thumbnail/ambulancia_thumb.jpg",
+		"mockup/temp/scenes/thumbnail/pacientes_thumb.jpg",
+		"mockup/temp/scenes/thumbnail/quirofano_thumb.jpg"
+	};
 }

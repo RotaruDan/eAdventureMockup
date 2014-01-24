@@ -36,12 +36,16 @@
  */
 package es.eucm.ead.mockup.core.view.ui.buttons;
 
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Align;
+import com.badlogic.gdx.utils.Scaling;
 import com.esotericsoftware.tablelayout.Cell;
 
 /**
@@ -57,20 +61,27 @@ public class MenuButton extends Button {
 	public MenuButton(String name, Skin skin, String styleName) {
 		super(skin);
 		setSize(getPrefWidth(), getPrefHeight());
-		initialize(name, skin, styleName);
+		initialize(name, skin,null,  styleName);
+	}
+	
+	public MenuButton(String name, Skin skin, AssetManager am, String imgPath) {
+		super(skin);
+		setSize(getPrefWidth(), getPrefHeight());
+		initialize(name, skin, am, imgPath);
 	}
 
 	public MenuButton(String name, Skin skin, String styleName, float width,
 			float height) {
 		super(skin);
 		setSize(width, height);
-		initialize(name, skin, styleName);
+		initialize(name, skin, null, styleName);
 	}
 
 	@SuppressWarnings("unchecked")
-	private void initialize(String name, Skin skin, String styleName) {
+	private void initialize(String name, Skin skin, AssetManager am, String img) {
 		pad(PAD_TOP, PAD_LEFT, PAD_BOTTOM, PAD_RIGHT);
-		Image sceneIcon = new Image(skin.getRegion(styleName));
+		Image sceneIcon = new Image(am == null ? skin.getRegion(img) : new TextureRegion(am.get(img, Texture.class)));
+		sceneIcon.setScaling(Scaling.fit);;
 		Label scene = new Label(name, skin);
 		scene.setAlignment(Align.center);
 

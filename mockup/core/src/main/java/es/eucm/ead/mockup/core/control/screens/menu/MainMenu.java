@@ -60,6 +60,8 @@ import es.eucm.ead.mockup.core.view.ui.buttons.MenuButton;
 
 public class MainMenu extends AbstractScreen {
 
+	private static final float DEFAULT_DIALOG_PADDING_BOTTON_TOP = 20f;
+
 	private final float MAIN_MENU_BUTTON_WIDTH_HEIGHT = stageh * .23f;
 
 	private Group optionsGroup;
@@ -91,7 +93,7 @@ public class MainMenu extends AbstractScreen {
 		ScrollPane sp = new ScrollPane(projectsTable);
 		sp.setBounds(stagew * .1f, 10, stagew * .8f, stageh * .2f);
 		sp.setScrollingDisabled(false, true);
-		Texture t = new Texture(Gdx.files.internal("mockup/temp/proyecto.png"));
+		Texture t = am.get("mockup/temp/proyecto.png", Texture.class);
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		final int PROJECTS = 8;
 		final Array<Actor> mProjects = new Array<Actor>(false, PROJECTS);
@@ -152,9 +154,11 @@ public class MainMenu extends AbstractScreen {
 					Gdx.app.exit();
 				}
 			}
-		}.text("¿Estás seguro?").button("Salir", true).button("¡Todavía no!",
-				false).key(Keys.BACK, false).key(Keys.ENTER, true); // TODO use i18n
+		}.text("¿Estás seguro?").button("¡Todavía no!", false)
+		.button("Salir", true).key(Keys.ENTER, true); // TODO use i18n
 		exitDialog.setMovable(false);
+		exitDialog.padLeft(DEFAULT_DIALOG_PADDING_BOTTON_TOP);
+		exitDialog.padRight(DEFAULT_DIALOG_PADDING_BOTTON_TOP);
 	}
 
 	@Override
