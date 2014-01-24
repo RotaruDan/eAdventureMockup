@@ -191,17 +191,6 @@ public class OtherComponent {
 			}
 			setY(AbstractScreen.stageh - UIAssets.TOOLBAR_HEIGHT - height - 10);
 		}
-
-		@Override
-		public void show() {
-			super.show();
-		}
-
-		@Override
-		public void hide() {
-			super.hide();
-		}
-
 	}
 
 	public OtherPanel getPanel() {

@@ -4,10 +4,10 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
-import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ArrayMap;
 import com.esotericsoftware.tablelayout.Cell;
 
@@ -25,6 +25,9 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	 */
 	private ButtonGroup buttonGroup;
 
+	/**
+	 * Keeps track of the current bindings between Tabs and Containers.
+	 */
 	private ArrayMap<T, C> tabBind;
 
 	private T currentTab;
@@ -55,9 +58,8 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 		tabs = new Table();
 
 		body = new Stack();
-		this.left().top();
 
-		super.add(tabs).left().expandX().fillX();
+		super.add(tabs).expandX().fillX();
 		this.row();
 		super.add(body).expand().fill();
 	}
@@ -90,10 +92,14 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	@Override
 	public void addActor(Actor actor)
 	{
-		if(actor instanceof HorizontalGroup || actor instanceof Stack)
+		if(actor instanceof Table || actor instanceof Stack)
 			super.addActor(actor);
 		else
 			throw new UnsupportedOperationException("Use addBinding(T, C) instead.");
+	}
+	
+	public Table getTabTable() {
+		return tabs;
 	}
 
 	@Deprecated
@@ -120,10 +126,11 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	{
 		tabBind.put(tab, container);
 		buttonGroup.add(tab);
+		tab.addListener(changeTabListener);
 
 		body.add(container);
 
-		setCurrentTab(tab);
+		//setCurrentTab(tab);
 		return tabs.add(tab);
 	}
 
@@ -250,4 +257,14 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 		}
 		return null;
 	}
+	
+	/**
+	 * Used to change between tabs.
+	 */
+	private final ClickListener changeTabListener = new ClickListener(){
+		@SuppressWarnings("unchecked")
+		public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
+			setCurrentTab((T) event.getListenerActor());			
+		}
+	};
 }
