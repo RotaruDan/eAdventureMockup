@@ -75,23 +75,22 @@ public class SceneEdition extends AbstractScreen {
 	private float TOOLBAR_ICON_WIDTH;
 	private OtherComponent more;
 
-	
 	/**
 	 * Fast implementation to know what SCENE
 	 * we shall display (edit).
 	 */
 	private static Integer SCENE_INDEX;
-	
+
 	/**
 	 * Shows the element that we're editing.
 	 */
 	private Image editingScene;
-	
+
 	/**
 	 * Used to tdaw the rectangle selection.
 	 */
 	private RectangleSelector rectSel;
-	
+
 	@Override
 	public void create() {
 		setPreviousScreen(Screens.PROJECT_MENU);
@@ -124,7 +123,7 @@ public class SceneEdition extends AbstractScreen {
 				TypeOther.OTHER_SCENE, 300, 600);
 
 		Button frames = new ImageButton(skin, "ic_hidescenes");
-		frames.setX(AbstractScreen.stagew-frames.getWidth());
+		frames.setX(AbstractScreen.stagew - frames.getWidth());
 
 		//Radio-button functionality
 		new ButtonGroup(move, paint.getButton(), delete.getButton(), text
@@ -148,7 +147,7 @@ public class SceneEdition extends AbstractScreen {
 		editingScene = new Image();
 		editingScene.setScaling(Scaling.fit);
 		editingScene.setBounds(0, 0, stagew, stageh - UIAssets.TOOLBAR_HEIGHT);
-		
+
 		root.addActor(editingScene);
 		root.addActor(rectSel);
 		root.addActor(toolBar);
@@ -169,7 +168,7 @@ public class SceneEdition extends AbstractScreen {
 		effect.actCoordinates();
 		root.addActor(more.getPanel());
 		more.actCoordinates();
-		
+
 		stage.addActor(root);
 	}
 
@@ -177,14 +176,15 @@ public class SceneEdition extends AbstractScreen {
 	public void show() {
 		super.show();
 		root.setVisible(true);
-		float x,y,w,h;
-		x= 0;
-		y= 0;
-		w= stagew;
+		float x, y, w, h;
+		x = 0;
+		y = 0;
+		w = stagew;
 		h = stageh - UIAssets.TOOLBAR_HEIGHT;
 		rectSel.setBounds(x, y, w, h);
-		if(SCENE_INDEX != null){
-			editingScene.setDrawable(new TextureRegionDrawable(new TextureRegion(Loading.demoScenes[SCENE_INDEX])));
+		if (SCENE_INDEX != null) {
+			editingScene.setDrawable(new TextureRegionDrawable(
+					new TextureRegion(Loading.demoScenes[SCENE_INDEX])));
 		} else {
 			editingScene.setDrawable(null);
 		}
@@ -208,7 +208,7 @@ public class SceneEdition extends AbstractScreen {
 		rectSel.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
 	}
-	
+
 	/**
 	 * Fast implementation to know what scene
 	 * we shall display (edit).

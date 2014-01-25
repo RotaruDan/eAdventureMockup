@@ -109,7 +109,8 @@ public class Picture extends AbstractScreen {
 
 		rootTable.add(resolution).right().top();
 		rootTable.row();
-		rootTable.add(takePicButton).size(takePicButton.getWidth()*1.3f).bottom().expand().padBottom(5f);
+		rootTable.add(takePicButton).size(takePicButton.getWidth() * 1.3f)
+				.bottom().expand().padBottom(5f);
 
 		//Coice dialog panel
 		mDialogPanel = new Panel(skin, "dialog");
@@ -117,20 +118,15 @@ public class Picture extends AbstractScreen {
 		mDialogPanel.setModal(true);
 		mDialogPanel.setHideOnOutterTouch(false);
 		mDialogPanel.pad(DEFAULT_ICON_LABEL_SPACE);
-		mDialogPanel.defaults().space(DEFAULT_ICON_LABEL_SPACE).uniform().expand().fill();
-		final float PANEL_W = stagew*.3f, 
-				PANEL_H = UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT *3f, 
-				PANEL_X = halfstagew - PANEL_W *.5F, 
-				PANEL_Y = halfstageh - PANEL_H *.5f;
+		mDialogPanel.defaults().space(DEFAULT_ICON_LABEL_SPACE).uniform()
+				.expand().fill();
+		final float PANEL_W = stagew * .3f, PANEL_H = UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 3f, PANEL_X = halfstagew
+				- PANEL_W * .5F, PANEL_Y = halfstageh - PANEL_H * .5f;
 		mDialogPanel.setBounds(PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
-		final Button newElement = createButton("Nuevo elemento", 
-				"ic_editelement", 
-				DEFAULT_ICON_LABEL_SPACE, 
-				false);
-		final Button newScene = createButton("Escena nueva", 
-				"ic_editstage", 
-				DEFAULT_ICON_LABEL_SPACE, 
-				false);
+		final Button newElement = createButton("Nuevo elemento",
+				"ic_editelement", DEFAULT_ICON_LABEL_SPACE, false);
+		final Button newScene = createButton("Escena nueva", "ic_editstage",
+				DEFAULT_ICON_LABEL_SPACE, false);
 		mDialogPanel.add(newScene);
 		mDialogPanel.row();
 		mDialogPanel.add(newElement);
@@ -164,30 +160,31 @@ public class Picture extends AbstractScreen {
 		stage.addActor(mDialogPanel);
 	}
 
-	private Button createButton(String text, String image, float defaultSpace, boolean left){
+	private Button createButton(String text, String image, float defaultSpace,
+			boolean left) {
 		Button mButton = new Button(skin);
 		mButton.defaults().space(defaultSpace);
 		Label vidLabel = new Label(text, skin);
 		Image vidImage = new Image(skin.getDrawable(image));
-		if(left){
+		if (left) {
 			mButton.add(vidLabel);
-			mButton.add(vidImage);			
+			mButton.add(vidImage);
 		} else {
 			mButton.add(vidImage);
-			mButton.add(vidLabel);			
+			mButton.add(vidLabel);
 		}
 		return mButton;
 	}
 
 	private void takePic() {
 		//TODO take picture here
-		
+
 		onPictureTaken();
 	}
 
-	private void onPictureTaken(){
-		if(nextScreen == null){
-			if(mockupController.getPreviousScreen() == Screens.GALLERY){
+	private void onPictureTaken() {
+		if (nextScreen == null) {
+			if (mockupController.getPreviousScreen() == Screens.GALLERY) {
 				//  We've came from Gallery 
 				// so we must ask if he want an element or a scene
 				mockupController.show(mDialogPanel);
@@ -211,19 +208,19 @@ public class Picture extends AbstractScreen {
 		//	We implement distincg behaviours 
 		// depending on where we came from
 		Screens nextScr = null;
-		if(ProjectMenu.getFROM_INITIAL_SCENE()){
+		if (ProjectMenu.getFROM_INITIAL_SCENE()) {
 			nextScr = Screens.PROJECT_MENU;
 		} else {
-			if(previousScreen == Screens.ELEMENT_GALLERY){
+			if (previousScreen == Screens.ELEMENT_GALLERY) {
 				nextScr = Screens.ELEMENT_EDITION;
 				ElementEdition.setELEMENT_INDEX(null);
-			} else if(previousScreen == Screens.SCENE_GALLERY){
+			} else if (previousScreen == Screens.SCENE_GALLERY) {
 				nextScr = Screens.SCENE_EDITION;
 				SceneEdition.setSCENE_INDEX(null);
-			} else if(previousScreen == Screens.PROJECT_MENU){
+			} else if (previousScreen == Screens.PROJECT_MENU) {
 				// If it's null we go to the previous screen.
 				nextScr = previousScreen;
-			} 
+			}
 		}
 		setNextScreen(nextScr);
 		rootTable.setVisible(true);
@@ -247,7 +244,7 @@ public class Picture extends AbstractScreen {
 
 	@Override
 	public void hide() {
-		if(mDialogPanel.isVisible()){
+		if (mDialogPanel.isVisible()) {
 			mDialogPanel.setVisible(false);
 		}
 		this.screenController.changeClearColor(previousClearColor);

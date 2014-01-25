@@ -85,7 +85,8 @@ public class SceneGallery extends AbstractScreen {
 		TextField searchtf = new TextField("", skin);
 		searchtf.setMessageText(search);
 		searchtf.setMaxLength(search.length());
-		String[] orders = new String[] { "Ordenar por ...", "nombre A-Z", "nombre Z-A", "más recientes", "menos recientes" };//TODO use i18n!
+		String[] orders = new String[] { "Ordenar por ...", "nombre A-Z",
+				"nombre Z-A", "más recientes", "menos recientes" };//TODO use i18n!
 		SelectBox order = new SelectBox(orders, skin);
 
 		/*filter panel*/
@@ -133,46 +134,48 @@ public class SceneGallery extends AbstractScreen {
 		applyFilter.addListener(closeFilterListenerTmp);
 		filterButton.addListener(closeFilterListenerTmp);
 
-
 		name = new Label("Galería de escenas", skin);
 
 		topToolbar.add(name).expandX().left().padLeft(
-				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f);
+				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 1.1f);
 		topToolbar.add(order);
 		topToolbar.add(filterButton);
 		topToolbar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
 		/***/
-		
+
 		final int COLS = 4, ROWS = 6;
-		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS,
-				root, new ToolBar[] { topToolbar, bottomToolBar}){
+		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS, root,
+				new ToolBar[] { topToolbar, bottomToolBar }) {
 			@Override
 			protected void entityClicked(InputEvent event) {
 				Actor target = event.getTarget();
 				if (target instanceof Image) {
-					if(ProjectMenu.getFROM_INITIAL_SCENE()){
+					if (ProjectMenu.getFROM_INITIAL_SCENE()) {
 						exitAnimation(Screens.PROJECT_MENU);
 					} else {
-						SceneEdition.setSCENE_INDEX((Integer)target.getUserObject());
+						SceneEdition.setSCENE_INDEX((Integer) target
+								.getUserObject());
 						exitAnimation(Screens.SCENE_EDITION);
 					}
-				} else if(target instanceof Label){
+				} else if (target instanceof Label) {
 					SceneEdition.setSCENE_INDEX(null);
 					exitAnimation(Screens.SCENE_EDITION);
 				}
-			}			
+			}
 		};
 		boolean first = true;
 		for (int i = 0; i < ROWS; ++i) {
 			for (int j = 0; j < COLS; ++j) {
 				if (first) {
 					first = false;
-					gridPanel.addItem(new TextButton("Imagen en blanco", skin), 0, 0)
-					.fill();
+					gridPanel.addItem(new TextButton("Imagen en blanco", skin),
+							0, 0).fill();
 				} else {
-					int rand = MathUtils.random(Loading.demoScenesThumbnail.length-1);
-					GalleryEntity auxImg = new GalleryEntity(Loading.demoScenesThumbnail[rand]);
+					int rand = MathUtils
+							.random(Loading.demoScenesThumbnail.length - 1);
+					GalleryEntity auxImg = new GalleryEntity(
+							Loading.demoScenesThumbnail[rand]);
 					auxImg.setUserObject(Integer.valueOf(rand));
 					gridPanel.addItem(auxImg, i, j);
 				}
@@ -235,7 +238,7 @@ public class SceneGallery extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
-		if(ProjectMenu.getFROM_INITIAL_SCENE()){
+		if (ProjectMenu.getFROM_INITIAL_SCENE()) {
 			name.setText("Elige tu escena inicial");
 		} else {
 			name.setText("Galería de escenas");
@@ -256,7 +259,7 @@ public class SceneGallery extends AbstractScreen {
 
 	@Override
 	public void hide() {
-		if(gridPanel.isSelecting()){
+		if (gridPanel.isSelecting()) {
 			gridPanel.onHide();
 		}
 		root.setVisible(false);
@@ -265,7 +268,7 @@ public class SceneGallery extends AbstractScreen {
 
 	@Override
 	public void onBackKeyPressed() {
-		if(gridPanel.isSelecting()){
+		if (gridPanel.isSelecting()) {
 			gridPanel.onHide();
 		} else {
 			super.onBackKeyPressed();

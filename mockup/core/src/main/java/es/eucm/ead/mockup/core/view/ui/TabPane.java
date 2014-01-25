@@ -1,3 +1,39 @@
+/**
+ * eAdventure is a research project of the
+ *    e-UCM research group.
+ *
+ *    Copyright 2005-2013 e-UCM research group.
+ *
+ *    You can access a list of all the contributors to eAdventure at:
+ *          http://e-adventure.e-ucm.es/contributors
+ *
+ *    e-UCM is a research group of the Department of Software Engineering
+ *          and Artificial Intelligence at the Complutense University of Madrid
+ *          (School of Computer Science).
+ *
+ *          C Profesor Jose Garcia Santesmases sn,
+ *          28040 Madrid (Madrid), Spain.
+ *
+ *          For more info please visit:  <http://e-adventure.e-ucm.es> or
+ *          <http://www.e-ucm.es>
+ *
+ * ****************************************************************************
+ *
+ *  This file is part of eAdventure
+ *
+ *      eAdventure is free software: you can redistribute it and/or modify
+ *      it under the terms of the GNU Lesser General Public License as published by
+ *      the Free Software Foundation, either version 3 of the License, or
+ *      (at your option) any later version.
+ *
+ *      eAdventure is distributed in the hope that it will be useful,
+ *      but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      GNU Lesser General Public License for more details.
+ *
+ *      You should have received a copy of the GNU Lesser General Public License
+ *      along with eAdventure.  If not, see <http://www.gnu.org/licenses/>.
+ */
 package es.eucm.ead.mockup.core.view.ui;
 
 import com.badlogic.gdx.graphics.Color;
@@ -14,8 +50,7 @@ import com.esotericsoftware.tablelayout.Cell;
 /**
  * This contains the bindings between Tabs and Containers.
  */
-public class TabPane<T extends Button, C extends Table> extends Panel
-{
+public class TabPane<T extends Button, C extends Table> extends Panel {
 
 	private Table tabs;
 	private Stack body;
@@ -38,8 +73,7 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	 * 
 	 * @param skin the skin to use for style
 	 */
-	public TabPane(Skin skin)
-	{
+	public TabPane(Skin skin) {
 		this(skin, "default");
 	}
 
@@ -49,8 +83,7 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	 * @param skin the skin to use for style
 	 * @param styleName the name of the style to use
 	 */
-	public TabPane(Skin skin, String styleName)
-	{
+	public TabPane(Skin skin, String styleName) {
 		super(skin, styleName);
 
 		tabBind = new ArrayMap<T, C>();
@@ -66,53 +99,71 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 
 	@Deprecated
 	@Override
-	public Cell<?> add() { throw new UnsupportedOperationException("Use addBinding(T, C) instead."); };
+	public Cell<?> add() {
+		throw new UnsupportedOperationException("Use addBinding(T, C) instead.");
+	};
 
 	@Deprecated
 	@Override
-	public Cell<?> add(Actor actor) { throw new UnsupportedOperationException("Use addBinding(T, C) instead."); }
+	public Cell<?> add(Actor actor) {
+		throw new UnsupportedOperationException("Use addBinding(T, C) instead.");
+	}
 
 	@Deprecated
 	@Override
-	public Cell<?> add(String text) { throw new UnsupportedOperationException("Use addBinding(T, C) instead."); }
+	public Cell<?> add(String text) {
+		throw new UnsupportedOperationException("Use addBinding(T, C) instead.");
+	}
 
 	@Deprecated
 	@Override
-	public Cell<?> add(String text, String fontName, Color color) { throw new UnsupportedOperationException("Use addBinding(T, C) instead."); }
+	public Cell<?> add(String text, String fontName, Color color) {
+		throw new UnsupportedOperationException("Use addBinding(T, C) instead.");
+	}
 
 	@Deprecated
 	@Override
-	public Cell<?> add(String text, String fontName, String colorName) { throw new UnsupportedOperationException("Use addBinding(T, C) instead."); }
+	public Cell<?> add(String text, String fontName, String colorName) {
+		throw new UnsupportedOperationException("Use addBinding(T, C) instead.");
+	}
 
 	@Deprecated
 	@Override
-	public Cell<?> add(String text, String labelStyleName) { throw new UnsupportedOperationException("Use addBinding(T, C) instead."); }
+	public Cell<?> add(String text, String labelStyleName) {
+		throw new UnsupportedOperationException("Use addBinding(T, C) instead.");
+	}
 
 	@Deprecated
 	@Override
-	public void addActor(Actor actor)
-	{
-		if(actor instanceof Table || actor instanceof Stack)
+	public void addActor(Actor actor) {
+		if (actor instanceof Table || actor instanceof Stack)
 			super.addActor(actor);
 		else
-			throw new UnsupportedOperationException("Use addBinding(T, C) instead.");
+			throw new UnsupportedOperationException(
+					"Use addBinding(T, C) instead.");
 	}
-	
+
 	public Table getTabTable() {
 		return tabs;
 	}
 
 	@Deprecated
 	@Override
-	public void addActorAfter(Actor actorAfter, Actor actor) { throw new UnsupportedOperationException("Use addBinding(T, C) instead."); }
+	public void addActorAfter(Actor actorAfter, Actor actor) {
+		throw new UnsupportedOperationException("Use addBinding(T, C) instead.");
+	}
 
 	@Deprecated
 	@Override
-	public void addActorAt(int index, Actor actor) { throw new UnsupportedOperationException("Use addBinding(T, C) instead."); }
+	public void addActorAt(int index, Actor actor) {
+		throw new UnsupportedOperationException("Use addBinding(T, C) instead.");
+	}
 
 	@Deprecated
 	@Override
-	public void addActorBefore(Actor actorBefore, Actor actor) { throw new UnsupportedOperationException("Use addBinding(T, C) instead."); }
+	public void addActorBefore(Actor actorBefore, Actor actor) {
+		throw new UnsupportedOperationException("Use addBinding(T, C) instead.");
+	}
 
 	/**
 	 * Add the specified {@link T tab} bound to the specified {@link C container}.
@@ -122,8 +173,7 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	 * 
 	 * @return Returns the Tab's cell in the upper table.
 	 */
-	public Cell<?> addBinding(T tab, C container)
-	{
+	public Cell<?> addBinding(T tab, C container) {
 		tabBind.put(tab, container);
 		buttonGroup.add(tab);
 		tab.addListener(changeTabListener);
@@ -139,13 +189,12 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	 * 
 	 * @param tab the {@link T tab} to remove
 	 */
-	public void removeTab(T tab)
-	{
+	public void removeTab(T tab) {
 		T _tab = null;
 		int _index = tabBind.indexOfKey(tab);
-		if(_index + 1 < tabBind.size)
+		if (_index + 1 < tabBind.size)
 			_tab = tabBind.getKeyAt(_index + 1);
-		else if(_index - 1 >= 0)
+		else if (_index - 1 >= 0)
 			_tab = tabBind.getKeyAt(_index - 1);
 
 		buttonGroup.remove(tab);
@@ -158,10 +207,11 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 
 	@Deprecated
 	@Override
-	public boolean removeActor(Actor actor) { throw new UnsupportedOperationException("Use removeTab(T) instead."); }
+	public boolean removeActor(Actor actor) {
+		throw new UnsupportedOperationException("Use removeTab(T) instead.");
+	}
 
-	private void hideAllContainer()
-	{
+	private void hideAllContainer() {
 		for (C _cont : tabBind.values())
 			_cont.setVisible(false);
 	}
@@ -171,11 +221,10 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	 * 
 	 * @return all {@link T tabs}
 	 */
-	public ArrayMap<T, C> getTabs()
-	{
+	public ArrayMap<T, C> getTabs() {
 		return tabBind;
 	}
-	
+
 	/**
 	 * Get the selected {@link C container}.
 	 * 
@@ -190,8 +239,7 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	 * 
 	 * @return the selected {@link T tab}
 	 */
-	public T getCurrentTab()
-	{
+	public T getCurrentTab() {
 		return currentTab;
 	}
 
@@ -200,11 +248,10 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	 * 
 	 * @param currentTab the {@link T tab} to set selected
 	 */
-	public void setCurrentTab(T currentTab)
-	{
+	public void setCurrentTab(T currentTab) {
 		this.currentTab = currentTab;
 
-		if(currentTab == null)
+		if (currentTab == null)
 			return;
 
 		currentContainer = tabBind.get(currentTab);
@@ -219,8 +266,7 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	 * 
 	 * @param index the index of the {@link T tab}
 	 */
-	public void setCurrentTab(int index)
-	{
+	public void setCurrentTab(int index) {
 		setCurrentTab(tabBind.getKeyAt(index));
 	}
 
@@ -231,8 +277,7 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	 * @param index position of the {@link T tab} of the {@link C container}
 	 * @return the {@link C container} at the specified index
 	 */
-	public C getTab(int index)
-	{
+	public C getTab(int index) {
 		return tabBind.getValueAt(index);
 	}
 
@@ -242,29 +287,27 @@ public class TabPane<T extends Button, C extends Table> extends Panel
 	 * @param clazz the type of the searched {@link C container}
 	 * @return the first found {@link C container} of the searched type or null if nothing is found
 	 */
-	public <A extends C> A getTab(Class<A> clazz)
-	{
-		for(C _container : tabBind.values())
-		{
+	public <A extends C> A getTab(Class<A> clazz) {
+		for (C _container : tabBind.values()) {
 			try {
 				A _cast = clazz.cast(_container);
 
 				return _cast;
-			} catch(ClassCastException e)
-			{
+			} catch (ClassCastException e) {
 
 			}
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Used to change between tabs.
 	 */
-	private final ClickListener changeTabListener = new ClickListener(){
+	private final ClickListener changeTabListener = new ClickListener() {
 		@SuppressWarnings("unchecked")
-		public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event, float x, float y) {
-			setCurrentTab((T) event.getListenerActor());			
+		public void clicked(com.badlogic.gdx.scenes.scene2d.InputEvent event,
+				float x, float y) {
+			setCurrentTab((T) event.getListenerActor());
 		}
 	};
 }

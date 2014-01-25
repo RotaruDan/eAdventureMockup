@@ -82,7 +82,7 @@ public class MockupController implements EventListener {
 	 * Used if we want to go to he previous screen.
 	 */
 	private Screens previousScreen, actualScreen;
-	
+
 	/**
 	 * The loading Screen.
 	 */
@@ -172,7 +172,7 @@ public class MockupController implements EventListener {
 
 	public void dispose() {
 		loading.dispose();
-		
+
 		AbstractScreen.stage.dispose();
 		AbstractScreen.stage = null;
 

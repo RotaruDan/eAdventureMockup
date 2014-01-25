@@ -62,12 +62,12 @@ public class ProjectMenu extends AbstractScreen {
 	 * we must come to this Screen if we go to the gallery by clicking { initialSceneButton }
 	 */
 	private static boolean FROM_INITIAL_SCENE;
-	
+
 	private final float PANEL_MENU_BUTTON_WIDTH_HEIGHT = stageh * .2f;
 	private Group optionsGroup;
 
 	private String project_name = "Hospitalizado";
-	
+
 	@Override
 	public void create() {
 		setPreviousScreen(Screens.MAIN_MENU);
@@ -76,9 +76,8 @@ public class ProjectMenu extends AbstractScreen {
 
 		super.root = new Group();
 		root.setVisible(false);
-		
-		final MenuButton scene, element, gallery, play, 
-				takePictureButton, initialSceneButton, recordVideoButton;		
+
+		final MenuButton scene, element, gallery, play, takePictureButton, initialSceneButton, recordVideoButton;
 		scene = new MenuButton("Escena", skin, "ic_editstage",
 				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
 		element = new MenuButton("Elemento", skin, "ic_editelement",
@@ -94,12 +93,15 @@ public class ProjectMenu extends AbstractScreen {
 		cg.setY(halfstageh * 1.1f);
 
 		Table bottomButtonsTable = new Table();
-		bottomButtonsTable.setBounds(0, 0, stagew, UIAssets.TOOLBAR_HEIGHT * 2f);
-		
+		bottomButtonsTable
+				.setBounds(0, 0, stagew, UIAssets.TOOLBAR_HEIGHT * 2f);
+
 		takePictureButton = new MenuButton("Tomar Foto", skin, "ic_photocamera");//TODO i18n
-		initialSceneButton = new MenuButton("Aquí empieza el juego", skin, am,  Constants.demoScenes[0]);
-		recordVideoButton = new MenuButton("Grabar Vídeo", skin, "ic_videocamera");
-		
+		initialSceneButton = new MenuButton("Aquí empieza el juego", skin, am,
+				Constants.demoScenes[0]);
+		recordVideoButton = new MenuButton("Grabar Vídeo", skin,
+				"ic_videocamera");
+
 		final ImageButton backButton = new ImageButton(skin, "ic_goback");
 
 		ClickListener mTransitionListener = new ClickListener() {
@@ -127,7 +129,7 @@ public class ProjectMenu extends AbstractScreen {
 					next = Screens.RECORDING;
 				} else if (target == backButton) {
 					next = Screens.MAIN_MENU;
-				} else if (target == initialSceneButton){
+				} else if (target == initialSceneButton) {
 					FROM_INITIAL_SCENE = true;
 					next = Screens.SCENE_GALLERY;
 				}
@@ -144,9 +146,10 @@ public class ProjectMenu extends AbstractScreen {
 		initialSceneButton.addListener(mTransitionListener);
 
 		bottomButtonsTable.add(takePictureButton).fill().left();
-		bottomButtonsTable.add(initialSceneButton).height(bottomButtonsTable.getHeight()).width(250f).expandX();
+		bottomButtonsTable.add(initialSceneButton).height(
+				bottomButtonsTable.getHeight()).width(250f).expandX();
 		bottomButtonsTable.add(recordVideoButton).fill().right();
-		
+
 		final TextField projectName = new TextField(project_name, skin);
 		final int MAX_NAME_CHARACTERS = project_name.length();
 		projectName.setMaxLength(MAX_NAME_CHARACTERS);
@@ -154,13 +157,17 @@ public class ProjectMenu extends AbstractScreen {
 		// We create a table with contraints for
 		// GoBackButton and ProjectNameLabel
 		Table topLeftbuttons = new Table();
-		topLeftbuttons.setBounds(0, stageh - UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT, 
-				stagew, UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
+		topLeftbuttons.setBounds(0, stageh
+				- UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT, stagew,
+				UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
 		topLeftbuttons.left();
 		topLeftbuttons.defaults().height(UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
 		topLeftbuttons.add(backButton);
-		topLeftbuttons.add(projectName).width(skin.getFont("default-font").getBounds(projectName.getText()).width*1.35f);
-		
+		topLeftbuttons.add(projectName)
+				.width(
+						skin.getFont("default-font").getBounds(
+								projectName.getText()).width * 1.35f);
+
 		Image bg = new Image(skin.getRegion("bg2"));
 		bg.setTouchable(Touchable.disabled);
 		bg.setBounds(0, 0, stagew, stageh);
@@ -207,13 +214,13 @@ public class ProjectMenu extends AbstractScreen {
 			super.onBackKeyPressed();
 		}
 	}
-	
+
 	/**
 	 * Fast navigation implementation to know that
 	 * we must come to this Screen if we go to the gallery by clicking { initialSceneButton }
 	 * if true we pressed initialSceneButton.
 	 */
-	public static boolean getFROM_INITIAL_SCENE(){
+	public static boolean getFROM_INITIAL_SCENE() {
 		return FROM_INITIAL_SCENE;
 	}
 }

@@ -93,7 +93,8 @@ public class Gallery extends AbstractScreen {
 		TextField searchtf = new TextField("", skin);
 		searchtf.setMessageText(search);
 		searchtf.setMaxLength(search.length());
-		String[] orders = new String[] { "Ordenar por ...", "nombre A-Z", "nombre Z-A", "más recientes", "menos recientes" };//TODO use i18n!
+		String[] orders = new String[] { "Ordenar por ...", "nombre A-Z",
+				"nombre Z-A", "más recientes", "menos recientes" };//TODO use i18n!
 		SelectBox order = new SelectBox(orders, skin);
 
 		/*filter panel*/
@@ -151,11 +152,10 @@ public class Gallery extends AbstractScreen {
 		applyFilter.addListener(closeFilterListenerTmp);
 		filterButton.addListener(closeFilterListenerTmp);
 
-
 		Label nombre = new Label("Galería", skin);
 
 		topToolbar.add(nombre).expandX().left().padLeft(
-				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f);
+				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 1.1f);
 		topToolbar.add(order);
 		topToolbar.add(filterButton);
 		topToolbar.add(searchtf).width(
@@ -164,16 +164,17 @@ public class Gallery extends AbstractScreen {
 		/***/
 
 		final int COLS = 4, ROWS = 6;
-		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS,
-				root, new ToolBar[] { topToolbar, bottomToolbar}){
+		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS, root,
+				new ToolBar[] { topToolbar, bottomToolbar }) {
 			@Override
 			protected void entityClicked(InputEvent event) {
 				Actor target = event.getTarget();
 				if (target instanceof Image) {
 					//TODO distinguish between elements and scenes
-					String[] auxAttr = String.valueOf(target.getUserObject()).split(" ");
+					String[] auxAttr = String.valueOf(target.getUserObject())
+							.split(" ");
 					Integer index = Integer.valueOf(auxAttr[0]);
-					if(Boolean.valueOf(auxAttr[1])){ //isElement
+					if (Boolean.valueOf(auxAttr[1])) { //isElement
 						ElementEdition.setELEMENT_INDEX(index);
 						exitAnimation(Screens.ELEMENT_EDITION);
 					} else {
@@ -183,7 +184,7 @@ public class Gallery extends AbstractScreen {
 				} else if (target instanceof Label) {
 					// We've clicked new from blank page...
 					//TODO ask for choise			
-					SCENE_EDITION = true;	
+					SCENE_EDITION = true;
 					showDialog();
 				}
 			}
@@ -193,20 +194,23 @@ public class Gallery extends AbstractScreen {
 			for (int j = 0; j < COLS; ++j) {
 				if (first) {
 					first = false;
-					gridPanel.addItem(new TextButton("Crear nuevo\nen blanco",skin), 0, 0)
-					.fill();
+					gridPanel.addItem(
+							new TextButton("Crear nuevo\nen blanco", skin), 0,
+							0).fill();
 				} else {
 					Texture tex;
 					int rand;
 					boolean isElement;
-					if(MathUtils.randomBoolean()){
+					if (MathUtils.randomBoolean()) {
 						isElement = false;
-						rand = MathUtils.random(Loading.demoScenesThumbnail.length-1);
+						rand = MathUtils
+								.random(Loading.demoScenesThumbnail.length - 1);
 						tex = Loading.demoScenesThumbnail[rand];
 					} else {
 						isElement = true;
-						rand = MathUtils.random(Loading.demoElementsThumbnail.length-1);
-						tex = Loading.demoElementsThumbnail[rand];						
+						rand = MathUtils
+								.random(Loading.demoElementsThumbnail.length - 1);
+						tex = Loading.demoElementsThumbnail[rand];
 					}
 					GalleryEntity auxImg = new GalleryEntity(tex);
 					auxImg.setUserObject(rand + " " + isElement);
@@ -220,23 +224,19 @@ public class Gallery extends AbstractScreen {
 		scrollPane.setBounds(0, topToolbar.getHeight(), stagew, stageh - 2
 				* topToolbar.getHeight());
 		final float DEFAULT_ICON_LABEL_SPACE = 10f;
-		final Button picButton = createButton("Nuevo desde cámara", 
-				"ic_photocamera", 
-				DEFAULT_ICON_LABEL_SPACE, 
-				false);
-		final Button vidButton = createButton("Grabar desde Escena", 
-				"ic_videocamera", 
-				DEFAULT_ICON_LABEL_SPACE, 
-				true);
+		final Button picButton = createButton("Nuevo desde cámara",
+				"ic_photocamera", DEFAULT_ICON_LABEL_SPACE, false);
+		final Button vidButton = createButton("Grabar desde Escena",
+				"ic_videocamera", DEFAULT_ICON_LABEL_SPACE, true);
 		ClickListener showDialogListener = new ClickListener() {
 			@Override
-			public void clicked(InputEvent event, float x, float y) {	
-				SCENE_EDITION = false;	
+			public void clicked(InputEvent event, float x, float y) {
+				SCENE_EDITION = false;
 				exitAnimation(Screens.PICTURE);
 			}
 		};
 		picButton.addListener(showDialogListener);
-		vidButton.addListener(new ClickListener(){
+		vidButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				exitAnimation(Screens.RECORDING);
@@ -248,20 +248,15 @@ public class Gallery extends AbstractScreen {
 		mDialogPanel.setVisible(false);
 		mDialogPanel.setModal(true);
 		mDialogPanel.pad(DEFAULT_ICON_LABEL_SPACE);
-		mDialogPanel.defaults().space(DEFAULT_ICON_LABEL_SPACE).uniform().expand().fill();
-		final float PANEL_W = stagew*.3f, 
-				PANEL_H = UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT *3f, 
-				PANEL_X = halfstagew - PANEL_W *.5F, 
-				PANEL_Y = halfstageh - PANEL_H *.5f;
+		mDialogPanel.defaults().space(DEFAULT_ICON_LABEL_SPACE).uniform()
+				.expand().fill();
+		final float PANEL_W = stagew * .3f, PANEL_H = UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 3f, PANEL_X = halfstagew
+				- PANEL_W * .5F, PANEL_Y = halfstageh - PANEL_H * .5f;
 		mDialogPanel.setBounds(PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
-		final Button newElement = createButton("Nuevo elemento", 
-				"ic_editelement", 
-				DEFAULT_ICON_LABEL_SPACE, 
-				false);
-		final Button newScene = createButton("Escena nueva", 
-				"ic_editstage", 
-				DEFAULT_ICON_LABEL_SPACE, 
-				false);
+		final Button newElement = createButton("Nuevo elemento",
+				"ic_editelement", DEFAULT_ICON_LABEL_SPACE, false);
+		final Button newScene = createButton("Escena nueva", "ic_editstage",
+				DEFAULT_ICON_LABEL_SPACE, false);
 		mDialogPanel.add(newScene);
 		mDialogPanel.row();
 		mDialogPanel.add(newElement);
@@ -278,7 +273,7 @@ public class Gallery extends AbstractScreen {
 
 			private Screens getNextScreen(Actor target) {
 				Screens next = null;
-				if(SCENE_EDITION){
+				if (SCENE_EDITION) {
 					//We've clicked NewBlankImage 
 					if (target == newElement) {
 						next = Screens.ELEMENT_EDITION;
@@ -306,22 +301,23 @@ public class Gallery extends AbstractScreen {
 		stage.addActor(root);
 	}
 
-	private Button createButton(String text, String image, float defaultSpace, boolean left){
+	private Button createButton(String text, String image, float defaultSpace,
+			boolean left) {
 		Button mButton = new Button(skin);
 		mButton.defaults().space(defaultSpace);
 		Label vidLabel = new Label(text, skin);
 		Image vidImage = new Image(skin.getDrawable(image));
-		if(left){
+		if (left) {
 			mButton.add(vidLabel);
-			mButton.add(vidImage);			
+			mButton.add(vidImage);
 		} else {
 			mButton.add(vidImage);
-			mButton.add(vidLabel);			
+			mButton.add(vidLabel);
 		}
 		return mButton;
 	}
 
-	private void showDialog(){
+	private void showDialog() {
 		mockupController.show(mDialogPanel);
 	}
 
@@ -344,7 +340,7 @@ public class Gallery extends AbstractScreen {
 
 	@Override
 	public void hide() {
-		if(gridPanel.isSelecting()){
+		if (gridPanel.isSelecting()) {
 			gridPanel.onHide();
 		}
 		root.setVisible(false);
@@ -353,7 +349,7 @@ public class Gallery extends AbstractScreen {
 
 	@Override
 	public void onBackKeyPressed() {
-		if(gridPanel.isSelecting()){
+		if (gridPanel.isSelecting()) {
 			gridPanel.onHide();
 		} else {
 			super.onBackKeyPressed();

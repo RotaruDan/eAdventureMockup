@@ -154,8 +154,8 @@ public class MainMenu extends AbstractScreen {
 					Gdx.app.exit();
 				}
 			}
-		}.text("¿Estás seguro?").button("¡Todavía no!", false)
-		.button("Salir", true).key(Keys.ENTER, true); // TODO use i18n
+		}.text("¿Estás seguro?").button("¡Todavía no!", false).button("Salir",
+				true).key(Keys.ENTER, true); // TODO use i18n
 		exitDialog.setMovable(false);
 		exitDialog.padLeft(DEFAULT_DIALOG_PADDING_BOTTON_TOP);
 		exitDialog.padRight(DEFAULT_DIALOG_PADDING_BOTTON_TOP);

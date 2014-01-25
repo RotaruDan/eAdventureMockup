@@ -73,8 +73,9 @@ public class ToolbarButton extends ImageButton {
 		initializeLabel(name, skin, fontScale);
 		initialize(skin, true);
 	}
-	
-	public ToolbarButton(Drawable imageUp, String name, Skin skin, boolean toggle) {
+
+	public ToolbarButton(Drawable imageUp, String name, Skin skin,
+			boolean toggle) {
 		super(imageUp);
 		initializeLabel(name, skin, DEFAULT_FONT_SCALE);
 		initialize(skin, toggle);
@@ -89,7 +90,8 @@ public class ToolbarButton extends ImageButton {
 		//mName.setAlignment(Align.top);
 		float labelCellHeight = LABEL_CELL_HEIGHT * fontScale
 				* DEFAULT_SCALE_PROGRESSION;
-		this.add(mName).height(labelCellHeight).bottom().padBottom(LABEL_PAD_BOTTOM);
+		this.add(mName).height(labelCellHeight).bottom().padBottom(
+				LABEL_PAD_BOTTOM);
 	}
 
 	private void initialize(Skin skin, boolean toggle) {
@@ -98,7 +100,8 @@ public class ToolbarButton extends ImageButton {
 		mStyle.down = btn_default_pressed;
 		mStyle.over = btn_default_focused;
 		mStyle.checked = btn_default_pressed;
-		if(toggle) mStyle.checkedOver = btn_default_focused;
+		if (toggle)
+			mStyle.checkedOver = btn_default_focused;
 		mStyle.disabled = btn_default_disabled;
 	}
 

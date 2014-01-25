@@ -83,7 +83,8 @@ public class ElementGallery extends AbstractScreen {
 		TextField searchtf = new TextField("", skin);
 		searchtf.setMessageText(search);
 		searchtf.setMaxLength(search.length());
-		String[] orders = new String[] { "Ordenar por ...", "nombre A-Z", "nombre Z-A", "más recientes", "menos recientes" };//TODO use i18n!
+		String[] orders = new String[] { "Ordenar por ...", "nombre A-Z",
+				"nombre Z-A", "más recientes", "menos recientes" };//TODO use i18n!
 		SelectBox order = new SelectBox(orders, skin);
 
 		/*filter panel*/
@@ -140,17 +141,18 @@ public class ElementGallery extends AbstractScreen {
 		topToolbar.add(searchtf).width(
 				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
 		/***/
-		
+
 		final int COLS = 4, ROWS = 6;
-		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS,
-				root, new ToolBar[] { topToolbar, bottomToolbar}){
+		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS, root,
+				new ToolBar[] { topToolbar, bottomToolbar }) {
 			@Override
 			protected void entityClicked(InputEvent event) {
 				Actor target = event.getTarget();
 				if (target instanceof Image) {
-					ElementEdition.setELEMENT_INDEX((Integer)target.getUserObject());
+					ElementEdition.setELEMENT_INDEX((Integer) target
+							.getUserObject());
 					exitAnimation(Screens.ELEMENT_EDITION);
-				} else if(target instanceof Label){
+				} else if (target instanceof Label) {
 					ElementEdition.setELEMENT_INDEX(null);
 					exitAnimation(Screens.ELEMENT_EDITION);
 				}
@@ -164,13 +166,15 @@ public class ElementGallery extends AbstractScreen {
 					gridPanel.addItem(new TextButton("Imagen en blanco", skin),
 							0, 0).fill();
 				} else {
-					int rand = MathUtils.random(Loading.demoElementsThumbnail.length - 1);
-					GalleryEntity auxImg = new GalleryEntity(Loading.demoElementsThumbnail[rand]);
+					int rand = MathUtils
+							.random(Loading.demoElementsThumbnail.length - 1);
+					GalleryEntity auxImg = new GalleryEntity(
+							Loading.demoElementsThumbnail[rand]);
 					auxImg.setUserObject(Integer.valueOf(rand));
 					gridPanel.addItem(auxImg, i, j);//.size(auxWidth, auxHeight);
 				}
 			}
-		}		
+		}
 
 		ScrollPane scrollPane = new ScrollPane(gridPanel);
 		scrollPane.setScrollingDisabled(true, false);
@@ -235,7 +239,7 @@ public class ElementGallery extends AbstractScreen {
 
 	@Override
 	public void onBackKeyPressed() {
-		if(gridPanel.isSelecting()){
+		if (gridPanel.isSelecting()) {
 			gridPanel.onHide();
 		} else {
 			super.onBackKeyPressed();
@@ -244,7 +248,7 @@ public class ElementGallery extends AbstractScreen {
 
 	@Override
 	public void hide() {
-		if(gridPanel.isSelecting()){
+		if (gridPanel.isSelecting()) {
 			gridPanel.onHide();
 		}
 		root.setVisible(false);

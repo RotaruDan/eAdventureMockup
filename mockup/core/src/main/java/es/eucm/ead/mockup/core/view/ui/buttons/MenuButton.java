@@ -61,9 +61,9 @@ public class MenuButton extends Button {
 	public MenuButton(String name, Skin skin, String styleName) {
 		super(skin);
 		setSize(getPrefWidth(), getPrefHeight());
-		initialize(name, skin,null,  styleName);
+		initialize(name, skin, null, styleName);
 	}
-	
+
 	public MenuButton(String name, Skin skin, AssetManager am, String imgPath) {
 		super(skin);
 		setSize(getPrefWidth(), getPrefHeight());
@@ -80,8 +80,10 @@ public class MenuButton extends Button {
 	@SuppressWarnings("unchecked")
 	private void initialize(String name, Skin skin, AssetManager am, String img) {
 		pad(PAD_TOP, PAD_LEFT, PAD_BOTTOM, PAD_RIGHT);
-		Image sceneIcon = new Image(am == null ? skin.getRegion(img) : new TextureRegion(am.get(img, Texture.class)));
-		sceneIcon.setScaling(Scaling.fit);;
+		Image sceneIcon = new Image(am == null ? skin.getRegion(img)
+				: new TextureRegion(am.get(img, Texture.class)));
+		sceneIcon.setScaling(Scaling.fit);
+		;
 		Label scene = new Label(name, skin);
 		scene.setAlignment(Align.center);
 

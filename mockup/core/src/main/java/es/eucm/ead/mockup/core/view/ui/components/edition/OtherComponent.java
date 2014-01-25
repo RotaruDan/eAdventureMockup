@@ -91,8 +91,8 @@ public class OtherComponent {
 			this.height = height;
 			this.width = width;
 
-			String iconDuplicate=null; 
-			
+			String iconDuplicate = null;
+
 			setHeight(height);
 			setWidth(width);
 
@@ -105,12 +105,12 @@ public class OtherComponent {
 			if (type == TypeOther.OTHER_SCENE) {
 				duplicate += "escena";
 				remove += "escena";
-				iconDuplicate="ic_duplicate_scene";
+				iconDuplicate = "ic_duplicate_scene";
 			} else {
 				duplicate += "elemento";
 				remove += "elemento";
 				actionsC = new ActionsComponent(skin);
-				iconDuplicate="ic_duplicate_element";
+				iconDuplicate = "ic_duplicate_element";
 			}
 
 			Label label = new Label("default-thin-opaque", skin);
@@ -119,7 +119,7 @@ public class OtherComponent {
 			label.setFontScale(0.7f);
 
 			TextField nameField = new TextField("Nombre", skin);
-			
+
 			TextArea tags = new TextArea("TAGs separados por ';'", skin);
 			TextArea infoField = new TextArea("Información", skin);
 
@@ -146,7 +146,7 @@ public class OtherComponent {
 			row();
 			add(infoField).fill().expand();
 			row();
-			
+
 			add(clone).expandX().fill();
 			row();
 			if (type == TypeOther.OTHER_ELEMENT) {
@@ -170,7 +170,7 @@ public class OtherComponent {
 				});
 
 				add(actions).expandX().fill();
-				
+
 				row();
 			}
 			add(" "); //this add more space between delete and the before button

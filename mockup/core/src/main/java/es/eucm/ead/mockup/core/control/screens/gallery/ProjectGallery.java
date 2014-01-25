@@ -81,7 +81,8 @@ public class ProjectGallery extends AbstractScreen {
 		TextField searchtf = new TextField("", skin);
 		searchtf.setMessageText(search);
 		searchtf.setMaxLength(search.length());
-		String[] orders = new String[] { "Ordenar por ...", "nombre A-Z", "nombre Z-A", "más recientes", "menos recientes" };//TODO use i18n!
+		String[] orders = new String[] { "Ordenar por ...", "nombre A-Z",
+				"nombre Z-A", "más recientes", "menos recientes" };//TODO use i18n!
 		SelectBox ordenar = new SelectBox(orders, skin);
 
 		Label nombre = new Label("Galería de proyectos", skin);
@@ -95,14 +96,14 @@ public class ProjectGallery extends AbstractScreen {
 		Texture t = am.get("mockup/temp/proyecto.png", Texture.class);
 		t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		final int COLS = 3, ROWS = 6;
-		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS,
-				root, new ToolBar[] {topToolBar}){
+		gridPanel = new GalleryGrid<Actor>(skin, ROWS, COLS, root,
+				new ToolBar[] { topToolBar }) {
 			@Override
 			protected void entityClicked(InputEvent event) {
 				if (event.getListenerActor() instanceof GridPanel) {
 					exitAnimation(Screens.PROJECT_MENU);
 				}
-			}			
+			}
 		};
 		boolean first = true;
 		for (int i = 0; i < ROWS; ++i) {
@@ -146,15 +147,15 @@ public class ProjectGallery extends AbstractScreen {
 
 	@Override
 	public void hide() {
-		if(gridPanel.isSelecting()){
+		if (gridPanel.isSelecting()) {
 			gridPanel.onHide();
 		}
 		root.setVisible(false);
 	}
-	
+
 	@Override
 	public void onBackKeyPressed() {
-		if(gridPanel.isSelecting()){
+		if (gridPanel.isSelecting()) {
 			gridPanel.onHide();
 		} else {
 			super.onBackKeyPressed();

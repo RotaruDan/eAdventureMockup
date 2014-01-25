@@ -95,7 +95,7 @@ public class Panel extends Table implements FocusListener {
 				localToStageCoordinates(/* in/out */temp.set(x, y));
 				rtmp.set(getX(), getY(), getWidth(), getHeight());
 				if (!rtmp.contains(temp.x, temp.y)) {
-					if(hideOnOutterTouch)
+					if (hideOnOutterTouch)
 						hide();
 				}
 				return isModal;
@@ -191,7 +191,7 @@ public class Panel extends Table implements FocusListener {
 					Interpolation.fade), Actions.visible(false)));
 		}
 	}
-	
+
 	public void setHideOnOutterTouch(boolean hideOnOutterTouch) {
 		this.hideOnOutterTouch = hideOnOutterTouch;
 	}

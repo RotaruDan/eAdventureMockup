@@ -62,7 +62,7 @@ public class Loading extends AbstractScreen {
 	private TextureAtlas atlas;
 	private float xBar, yBar, wBar, hBar;
 	private Batch sb;
-	
+
 	/**
 	 * Fast implementation to cache some demo Textures of
 	 * elements and scenes...
@@ -74,30 +74,30 @@ public class Loading extends AbstractScreen {
 	 * elements and scenes...
 	 */
 	public static Texture[] demoElementsThumbnail, demoScenesThumbnail;
-	
+
 	@Override
 	public void create() {
-		
+
 		/*DEMO*/
 		int i;
-		for(i = 0; i < Constants.demoElements.length; ++i){
-			am.load(Constants.demoElements[i], Texture.class);			
+		for (i = 0; i < Constants.demoElements.length; ++i) {
+			am.load(Constants.demoElements[i], Texture.class);
 		}
 		demoElements = new Texture[Constants.demoElements.length];
-		for(i = 0; i < Constants.demoScenes.length; ++i){
-			am.load(Constants.demoScenes[i], Texture.class);			
+		for (i = 0; i < Constants.demoScenes.length; ++i) {
+			am.load(Constants.demoScenes[i], Texture.class);
 		}
 		demoScenes = new Texture[Constants.demoScenes.length];
-		
-		for(i = 0; i < Constants.demoElementsThumbnail.length; ++i){
-			am.load(Constants.demoElementsThumbnail[i], Texture.class);			
+
+		for (i = 0; i < Constants.demoElementsThumbnail.length; ++i) {
+			am.load(Constants.demoElementsThumbnail[i], Texture.class);
 		}
 		demoElementsThumbnail = new Texture[Constants.demoElementsThumbnail.length];
-		for(i = 0; i < Constants.demoScenesThumbnail.length; ++i){
-			am.load(Constants.demoScenesThumbnail[i], Texture.class);			
+		for (i = 0; i < Constants.demoScenesThumbnail.length; ++i) {
+			am.load(Constants.demoScenesThumbnail[i], Texture.class);
 		}
 		demoScenesThumbnail = new Texture[Constants.demoScenesThumbnail.length];
-		
+
 		am.load("mockup/temp/proyecto.png", Texture.class);
 		/*--*/
 		am.load(Constants.SKIN_SRC, Skin.class);
@@ -131,34 +131,36 @@ public class Loading extends AbstractScreen {
 
 	@Override
 	public void act(float delta) {
-		if (am.update()) {			
+		if (am.update()) {
 			/*DEMO*/
 			int i;
 			Texture auxTex = null;
-			for(i = 0; i < Constants.demoElements.length; ++i){				
+			for (i = 0; i < Constants.demoElements.length; ++i) {
 				auxTex = am.get(Constants.demoElements[i], Texture.class);
 				auxTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 				demoElements[i] = auxTex;
 			}
-			for(i = 0; i < Constants.demoScenes.length; ++i){
+			for (i = 0; i < Constants.demoScenes.length; ++i) {
 				auxTex = am.get(Constants.demoScenes[i], Texture.class);
 				auxTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-				demoScenes[i] = auxTex;			
+				demoScenes[i] = auxTex;
 			}
-			
-			for(i = 0; i < Constants.demoElementsThumbnail.length; ++i){				
-				auxTex = am.get(Constants.demoElementsThumbnail[i], Texture.class);
+
+			for (i = 0; i < Constants.demoElementsThumbnail.length; ++i) {
+				auxTex = am.get(Constants.demoElementsThumbnail[i],
+						Texture.class);
 				auxTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 				demoElementsThumbnail[i] = auxTex;
 			}
-			for(i = 0; i < Constants.demoScenesThumbnail.length; ++i){
-				auxTex = am.get(Constants.demoScenesThumbnail[i], Texture.class);
+			for (i = 0; i < Constants.demoScenesThumbnail.length; ++i) {
+				auxTex = am
+						.get(Constants.demoScenesThumbnail[i], Texture.class);
 				auxTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-				demoScenesThumbnail[i] = auxTex;			
+				demoScenesThumbnail[i] = auxTex;
 			}
-			
+
 			/*--*/
-			
+
 			initStatics();
 
 			mockupController.create();
@@ -176,10 +178,10 @@ public class Loading extends AbstractScreen {
 		sb.end();
 	}
 
-	public void dispose(){
+	public void dispose() {
 		atlas.dispose();
 	}
-	
+
 	private void initStatics() {
 		if (skin == null) {
 			skin = am.get(Constants.SKIN_SRC, Skin.class);
@@ -196,7 +198,7 @@ public class Loading extends AbstractScreen {
 		stage.getRoot().addCaptureListener(new InputListener() {
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
-				if (!(event.getTarget() instanceof TextField)){
+				if (!(event.getTarget() instanceof TextField)) {
 					stage.setKeyboardFocus(null);
 					Gdx.input.setOnscreenKeyboardVisible(false);
 				}
