@@ -41,7 +41,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
-import es.eucm.ead.mockup.core.control.listeners.FocusListener;
+import es.eucm.ead.mockup.core.view.ui.Panel;
 
 /**
  * A button displayed in the MainMenu and PanelMenu Screens.
@@ -57,11 +57,12 @@ public class ToolbarButton extends ImageButton {
 	private static Drawable btn_default_pressed;
 	private static Drawable btn_default_focused;
 	private static Drawable btn_default_disabled;
-	
+
 	/**
-	 * Represents the panel that is expected to be shown when this button is touched.
+	 * Represents the panel that is expected to be shown when this button is
+	 * touched.
 	 */
-	private FocusListener boundPanel;
+	private Panel boundPanel;
 
 	public ToolbarButton(Drawable imageUp, Skin skin) {
 		super(imageUp);
@@ -73,14 +74,15 @@ public class ToolbarButton extends ImageButton {
 		initializeLabel(name, skin, DEFAULT_FONT_SCALE);
 		initialize(skin, true);
 	}
-	
-	public ToolbarButton(FocusListener boundPanel, Drawable imageUp, String name, Skin skin) {
+
+	public ToolbarButton(Panel boundPanel, Drawable imageUp, String name,
+			Skin skin) {
 		super(imageUp);
 		this.boundPanel = boundPanel;
 		initializeLabel(name, skin, DEFAULT_FONT_SCALE);
 		initialize(skin, true);
 	}
-	
+
 	public ToolbarButton(Drawable imageUp, String name, Skin skin,
 			float fontScale) {
 		super(imageUp);
@@ -103,8 +105,8 @@ public class ToolbarButton extends ImageButton {
 		mName.setFontScale(fontScale);
 		float labelCellHeight = LABEL_CELL_HEIGHT * fontScale
 				* DEFAULT_SCALE_PROGRESSION;
-		this.add(mName).height(labelCellHeight).bottom().padBottom(
-				LABEL_PAD_BOTTOM);
+		this.add(mName).height(labelCellHeight).bottom()
+				.padBottom(LABEL_PAD_BOTTOM);
 	}
 
 	private void initialize(Skin skin, boolean toggle) {
@@ -117,26 +119,25 @@ public class ToolbarButton extends ImageButton {
 			mStyle.checkedOver = btn_default_focused;
 		mStyle.disabled = btn_default_disabled;
 	}
-	
+
 	/**
 	 * Automatically hides it's focus listener if isChecked is false.
 	 */
 	@Override
 	public void setChecked(boolean isChecked) {
-		if(!isChecked && this.boundPanel != null){
+		if (!isChecked && this.boundPanel != null && boundPanel.isVisible()) {
 			this.boundPanel.hide();
 		}
 		super.setChecked(isChecked);
 	}
-	
-	public void setFocusListener(FocusListener boundPanel) {
+
+	public void setFocusListener(Panel boundPanel) {
 		this.boundPanel = boundPanel;
 	}
 
 	/**
-	 * We initialize our styles. 
-	 * This method should be called right after the skin was loaded 
-	 * and initialized.
+	 * We initialize our styles. This method should be called right after the
+	 * skin was loaded and initialized.
 	 */
 	public static void loadStyle(Skin skin) {
 		btn_default_pressed = skin.getDrawable("blueBlackMedium");

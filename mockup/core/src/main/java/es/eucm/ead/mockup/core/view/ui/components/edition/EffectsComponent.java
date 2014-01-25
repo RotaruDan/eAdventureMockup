@@ -103,7 +103,7 @@ public class EffectsComponent {
 			effectOpt = new EffectOption(skin, "variante1", "variante2",
 					"variante3");
 
-			//FIXME *repeated code*
+			// FIXME *repeated code*
 			Label label = new Label(description, skin, "default-thin-opaque");
 			label.setWrap(true);
 			label.setAlignment(Align.center);
@@ -132,7 +132,7 @@ public class EffectsComponent {
 			prop7.addListener(optionListener());
 
 			new ButtonGroup(prop1, prop2, prop3, prop4, prop5, prop6, prop7);
-			//END FIXME
+			// END FIXME
 
 			Table table = new Table(skin);
 
@@ -169,13 +169,13 @@ public class EffectsComponent {
 			table.add(cb7).left();
 			table.add(prop7).right().padRight(30);
 
-			//table.debug();
+			// table.debug();
 
 			defaults().fill().expand();
 			add(label);
 			row();
 			add(sp);
-			//add(table);
+			// add(table);
 		}
 
 		public EffectOption getOptions() {

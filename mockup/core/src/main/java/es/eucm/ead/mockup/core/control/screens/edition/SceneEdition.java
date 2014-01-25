@@ -42,7 +42,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 
@@ -54,12 +53,12 @@ import es.eucm.ead.mockup.core.view.ui.ToolBar;
 import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 import es.eucm.ead.mockup.core.view.ui.components.edition.AddComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent.Type;
 import es.eucm.ead.mockup.core.view.ui.components.edition.EffectsComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.InteractiveComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent;
-import es.eucm.ead.mockup.core.view.ui.components.edition.RectangleSelector;
-import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent.Type;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent.TypeOther;
+import es.eucm.ead.mockup.core.view.ui.components.edition.RectangleSelector;
 
 public class SceneEdition extends AbstractScreen {
 
@@ -76,8 +75,7 @@ public class SceneEdition extends AbstractScreen {
 	private OtherComponent more;
 
 	/**
-	 * Fast implementation to know what SCENE
-	 * we shall display (edit).
+	 * Fast implementation to know what SCENE we shall display (edit).
 	 */
 	private static Integer SCENE_INDEX;
 
@@ -110,7 +108,7 @@ public class SceneEdition extends AbstractScreen {
 				"Herramienta de goma", Type.RUBBER, 300, 250);
 		text = new DrawComponent("ic_text", "Texto", skin,
 				"Herramienta de escribir", Type.TEXT, 300, 550);
-		//change this ic_select icon
+		// change this ic_select icon
 		rectSel = new RectangleSelector();
 		rectSel.setVisible(false);
 		interac = new InteractiveComponent(rectSel, "ic_select", "Zonas", skin,
@@ -125,12 +123,12 @@ public class SceneEdition extends AbstractScreen {
 		Button frames = new ImageButton(skin, "ic_hidescenes");
 		frames.setX(AbstractScreen.stagew - frames.getWidth());
 
-		//Radio-button functionality
-		new ButtonGroup(move, paint.getButton(), delete.getButton(), text
-				.getButton(), interac.getButton(), add.getButton(), effect
-				.getButton(), more.getButton());
+		// Radio-button functionality
+		new ButtonGroup(move, paint.getButton(), delete.getButton(),
+				text.getButton(), interac.getButton(), add.getButton(),
+				effect.getButton(), more.getButton());
 
-		//toolBar.debug();
+		// toolBar.debug();
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
 		toolBar.add(move);
 		toolBar.add(paint.getButton());
@@ -140,7 +138,7 @@ public class SceneEdition extends AbstractScreen {
 		toolBar.add(add.getButton());
 		toolBar.add(effect.getButton());
 		toolBar.add(more.getButton());
-		/*Does the actors in toolBar update their coordinates*/
+		/* Does the actors in toolBar update their coordinates */
 		toolBar.invalidate();
 		toolBar.validate();
 
@@ -167,7 +165,7 @@ public class SceneEdition extends AbstractScreen {
 		effect.actCoordinates();
 		root.addActor(more.getPanel());
 		more.actCoordinates();
-		
+
 		root.addActor(toolBar);
 
 		stage.addActor(root);
@@ -200,7 +198,7 @@ public class SceneEdition extends AbstractScreen {
 	@Override
 	public void draw() {
 		stage.draw();
-		Table.drawDebug(stage);
+		// Table.drawDebug(stage);
 	}
 
 	@Override
@@ -211,9 +209,8 @@ public class SceneEdition extends AbstractScreen {
 	}
 
 	/**
-	 * Fast implementation to know what scene
-	 * we shall display (edit).
-	 * if sCENE_INDEX == null no image will be shown.
+	 * Fast implementation to know what scene we shall display (edit). if
+	 * sCENE_INDEX == null no image will be shown.
 	 */
 	public static void setSCENE_INDEX(Integer sCENE_INDEX) {
 		SCENE_INDEX = sCENE_INDEX;

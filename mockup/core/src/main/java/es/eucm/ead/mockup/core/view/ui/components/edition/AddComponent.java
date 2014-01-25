@@ -102,7 +102,7 @@ public class AddComponent {
 			label.setAlignment(Align.center);
 			label.setFontScale(0.7f);
 
-			//FIXME *repeated code*
+			// FIXME *repeated code*
 			Label auxLabel1 = new Label("Último elemento \n editado", skin);
 			auxLabel1.setFontScale(0.7f);
 			final Button touch = new Button(skin, "default");
@@ -118,7 +118,7 @@ public class AddComponent {
 			auxLabel3.setFontScale(0.7f);
 			final Button pol = new Button(skin, "default");
 			pol.add(auxLabel3).left().expand();
-			//END FIXME
+			// END FIXME
 
 			add(label);
 			row();

@@ -42,7 +42,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 
@@ -74,8 +73,7 @@ public class ElementEdition extends AbstractScreen {
 	private float TOOLBAR_ICON_WIDTH;
 
 	/**
-	 * Fast implementation to know what element
-	 * we shall display (edit).
+	 * Fast implementation to know what element we shall display (edit).
 	 */
 	private static Integer ELEMENT_INDEX;
 
@@ -99,7 +97,8 @@ public class ElementEdition extends AbstractScreen {
 
 		toolBar = new ToolBar(skin);
 		toolBar.right();
-		//toolBar.setBounds(0, AbstractScreen.stageh * .9f, AbstractScreen.stagew, AbstractScreen.stageh * .1f);
+		// toolBar.setBounds(0, AbstractScreen.stageh * .9f,
+		// AbstractScreen.stagew, AbstractScreen.stageh * .1f);
 
 		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "MOVER",
 				skin);
@@ -123,10 +122,10 @@ public class ElementEdition extends AbstractScreen {
 		Button frames = new ImageButton(skin, "ic_hidescenes");
 		frames.setX(AbstractScreen.stagew - frames.getWidth());
 
-		//Radio-button functionality
-		new ButtonGroup(move, paint.getButton(), delete.getButton(), text
-				.getButton(), interac.getButton(), effect.getButton(), more
-				.getButton());
+		// Radio-button functionality
+		new ButtonGroup(move, paint.getButton(), delete.getButton(),
+				text.getButton(), interac.getButton(), effect.getButton(),
+				more.getButton());
 
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
 		toolBar.add(move);
@@ -136,7 +135,7 @@ public class ElementEdition extends AbstractScreen {
 		toolBar.add(interac.getButton());
 		toolBar.add(effect.getButton());
 		toolBar.add(more.getButton());
-		/*Does the actors in toolBar update their coordinates*/
+		/* Does the actors in toolBar update their coordinates */
 		toolBar.invalidate();
 		toolBar.validate();
 
@@ -161,11 +160,10 @@ public class ElementEdition extends AbstractScreen {
 		root.addActor(effect.getOpt());
 		effect.actCoordinates();
 		root.addActor(more.getPanel());
-		root.addActor(more.getActions());
 		more.actCoordinates();
-		
 		root.addActor(toolBar);
-		
+		root.addActor(more.getActions());
+
 		stage.addActor(root);
 	}
 
@@ -196,7 +194,7 @@ public class ElementEdition extends AbstractScreen {
 	@Override
 	public void draw() {
 		stage.draw();
-		Table.drawDebug(stage);
+		// Table.drawDebug(stage);
 	}
 
 	@Override
@@ -207,9 +205,8 @@ public class ElementEdition extends AbstractScreen {
 	}
 
 	/**
-	 * Fast implementation to know what element
-	 * we shall display (edit).
-	 * if ELEMENT_IDX == null  no image will be shown.
+	 * Fast implementation to know what element we shall display (edit). if
+	 * ELEMENT_IDX == null no image will be shown.
 	 */
 	public static void setELEMENT_INDEX(Integer ELEMENT_IDX) {
 		ELEMENT_INDEX = ELEMENT_IDX;

@@ -114,17 +114,21 @@ public class InteractiveComponent {
 			label.setAlignment(Align.center);
 			label.setFontScale(0.7f);
 
-			//FIXME *repeated code* see NavigationPanel
+			// FIXME *repeated code* see NavigationPanel
 			Label auxLabel1 = new Label("Dedo", skin);
 			auxLabel1.setFontScale(0.7f);
-			Image backImg1 = new Image(skin.getRegion("ic_finger")); //edit element img
+			Image backImg1 = new Image(skin.getRegion("ic_finger")); // edit
+																		// element
+																		// img
 			final Button touch = new Button(skin, "default");
 			touch.add(backImg1).left().expand();
 			touch.add(auxLabel1).left().expand();
 
 			Label auxLabel2 = new Label("Rectángulo", skin);
 			auxLabel2.setFontScale(0.7f);
-			Image backImg2 = new Image(skin.getRegion("ic_rectangle")); //edit element img
+			Image backImg2 = new Image(skin.getRegion("ic_rectangle")); // edit
+																		// element
+																		// img
 			final Button rec = new Button(skin, "default");
 			rec.add(backImg2).left().expand();
 			rec.add(auxLabel2).left().expand();
@@ -137,11 +141,13 @@ public class InteractiveComponent {
 
 			Label auxLabel3 = new Label("Polígono", skin);
 			auxLabel3.setFontScale(0.7f);
-			Image backImg3 = new Image(skin.getRegion("ic_polygon")); //edit element img
+			Image backImg3 = new Image(skin.getRegion("ic_polygon")); // edit
+																		// element
+																		// img
 			final Button pol = new Button(skin, "default");
 			pol.add(backImg3).left().expand();
 			pol.add(auxLabel3).left().expand();
-			//END FIXME
+			// END FIXME
 
 			add(label);
 			row();

@@ -181,9 +181,11 @@ public class DrawComponent {
 			circleSample.setColor(color);
 			int radius = (int) getCurrentRadius();
 			circleSample.fillCircle(center, center, radius);
-			pixTex = new Texture(circleSample); // FIXME unmanaged upenGL textures, TODO reload onResume (after pause)
+			pixTex = new Texture(circleSample); // FIXME unmanaged upenGL
+												// textures, TODO reload
+												// onResume (after pause)
 			pixTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			cir = new Image(pixTex);//cir.setScaleX(0.2f);
+			cir = new Image(pixTex);// cir.setScaleX(0.2f);
 
 			add(label);
 			row();
@@ -208,7 +210,7 @@ public class DrawComponent {
 				add(gridPanel);
 			}
 
-			//debug();
+			// debug();
 
 		}
 
@@ -236,8 +238,8 @@ public class DrawComponent {
 		}
 
 		/**
-		 * Updates the texture that displays the 
-		 * visual representation of our draw component.
+		 * Updates the texture that displays the visual representation of our
+		 * draw component.
 		 */
 		private void updateDemoColor() {
 			if (type == Type.TEXT) {
@@ -293,7 +295,15 @@ public class DrawComponent {
 					Color c = colrs[i][j];
 					auxPixmap.setColor(c);
 					auxPixmap.fill();
-					final Image colorB = new Image(new Texture(auxPixmap)); // FIXME unmanaged upenGL textures, TODO reload onResume (after pause)
+					final Image colorB = new Image(new Texture(auxPixmap)); // FIXME
+																			// unmanaged
+																			// upenGL
+																			// textures,
+																			// TODO
+																			// reload
+																			// onResume
+																			// (after
+																			// pause)
 					colorB.setColor(c);
 					colorB.addListener(colorListener);
 					gridPanel.addItem(colorB, i, j).expand().fill();

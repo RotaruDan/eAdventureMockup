@@ -50,7 +50,7 @@ import es.eucm.ead.mockup.core.control.screens.Loading;
  */
 public class RectangleSelector extends Actor {
 
-	/**TODO FAST implementation for rectangle selection**/
+	/** TODO FAST implementation for rectangle selection **/
 
 	private final float rRESIZEWH = 50;
 
@@ -110,7 +110,7 @@ public class RectangleSelector extends Actor {
 				} else if (np2q == Quadrant.THREE) {
 					x2 = rHitbox.x;
 					y2 = rHitbox.y;
-				} else { //FOUR
+				} else { // FOUR
 					x2 = rHitbox.x + rHitbox.width - rResize.width;
 					y2 = rHitbox.y;
 				}

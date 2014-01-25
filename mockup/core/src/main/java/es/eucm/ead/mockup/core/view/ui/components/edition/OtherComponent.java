@@ -126,7 +126,9 @@ public class OtherComponent {
 
 			Label auxLabel1 = new Label(duplicate, skin);
 			auxLabel1.setFontScale(0.7f);
-			Image backImg1 = new Image(skin.getRegion(iconDuplicate)); //edit element img
+			Image backImg1 = new Image(skin.getRegion(iconDuplicate)); // edit
+																		// element
+																		// img
 			final Button clone = new Button(skin, "default");
 			clone.add(backImg1).left().expand();
 			clone.add(auxLabel1).left().expand();
@@ -140,7 +142,7 @@ public class OtherComponent {
 			erase.add(auxLabel2).left().expand();
 			erase.scale(0.5f);
 
-			//defaults().fill().expand();
+			// defaults().fill().expand();
 			add(nameField).fill().expand();
 			row();
 			add(tags).fill().expand();
@@ -153,7 +155,9 @@ public class OtherComponent {
 			if (type == TypeOther.OTHER_ELEMENT) {
 				Label auxLabel3 = new Label("Editar acciones", skin);
 				auxLabel3.setFontScale(0.7f);
-				Image backImg3 = new Image(skin.getRegion("ic_editactions")); //edit element img
+				Image backImg3 = new Image(skin.getRegion("ic_editactions")); // edit
+																				// element
+																				// img
 				final Button actions = new Button(skin, "default");
 				actions.add(backImg3).left().expand();
 				actions.add(auxLabel3).left().expand();
@@ -174,10 +178,11 @@ public class OtherComponent {
 
 				row();
 			}
-			add(" "); //this add more space between delete and the before button
+			add(" "); // this add more space between delete and the before
+						// button
 			row();
 			add(erase).expandX().fill();
-			//debug();
+			// debug();
 
 		}
 
