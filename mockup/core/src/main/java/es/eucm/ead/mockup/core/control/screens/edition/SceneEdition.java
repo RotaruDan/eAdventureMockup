@@ -150,7 +150,6 @@ public class SceneEdition extends AbstractScreen {
 
 		root.addActor(editingScene);
 		root.addActor(rectSel);
-		root.addActor(toolBar);
 		root.addActor(frames);
 
 		root.addActor(paint.getPanel());
@@ -168,6 +167,8 @@ public class SceneEdition extends AbstractScreen {
 		effect.actCoordinates();
 		root.addActor(more.getPanel());
 		more.actCoordinates();
+		
+		root.addActor(toolBar);
 
 		stage.addActor(root);
 	}

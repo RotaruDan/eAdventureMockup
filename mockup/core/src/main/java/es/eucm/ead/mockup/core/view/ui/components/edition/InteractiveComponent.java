@@ -53,7 +53,7 @@ import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 public class InteractiveComponent {
 
 	private InteractivePanel panel;
-	private Button button;
+	private ToolbarButton button;
 	private RectangleSelector rectangleSelector;
 
 	public InteractiveComponent(RectangleSelector rectSel, String imageUp,
@@ -73,6 +73,7 @@ public class InteractiveComponent {
 
 		this.panel = new InteractivePanel(skin, "opaque", description, width,
 				height);
+		button.setFocusListener(panel);
 		this.button.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {

@@ -41,6 +41,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
+import es.eucm.ead.mockup.core.control.listeners.FocusListener;
+
 /**
  * A button displayed in the MainMenu and PanelMenu Screens.
  */
@@ -55,6 +57,11 @@ public class ToolbarButton extends ImageButton {
 	private static Drawable btn_default_pressed;
 	private static Drawable btn_default_focused;
 	private static Drawable btn_default_disabled;
+	
+	/**
+	 * Represents the panel that is expected to be shown when this button is touched.
+	 */
+	private FocusListener boundPanel;
 
 	public ToolbarButton(Drawable imageUp, Skin skin) {
 		super(imageUp);
@@ -66,7 +73,14 @@ public class ToolbarButton extends ImageButton {
 		initializeLabel(name, skin, DEFAULT_FONT_SCALE);
 		initialize(skin, true);
 	}
-
+	
+	public ToolbarButton(FocusListener boundPanel, Drawable imageUp, String name, Skin skin) {
+		super(imageUp);
+		this.boundPanel = boundPanel;
+		initializeLabel(name, skin, DEFAULT_FONT_SCALE);
+		initialize(skin, true);
+	}
+	
 	public ToolbarButton(Drawable imageUp, String name, Skin skin,
 			float fontScale) {
 		super(imageUp);
@@ -87,7 +101,6 @@ public class ToolbarButton extends ImageButton {
 		this.row();
 		Label mName = new Label(name, skin, "toolbar");
 		mName.setFontScale(fontScale);
-		//mName.setAlignment(Align.top);
 		float labelCellHeight = LABEL_CELL_HEIGHT * fontScale
 				* DEFAULT_SCALE_PROGRESSION;
 		this.add(mName).height(labelCellHeight).bottom().padBottom(
@@ -103,6 +116,21 @@ public class ToolbarButton extends ImageButton {
 		if (toggle)
 			mStyle.checkedOver = btn_default_focused;
 		mStyle.disabled = btn_default_disabled;
+	}
+	
+	/**
+	 * Automatically hides it's focus listener if isChecked is false.
+	 */
+	@Override
+	public void setChecked(boolean isChecked) {
+		if(!isChecked && this.boundPanel != null){
+			this.boundPanel.hide();
+		}
+		super.setChecked(isChecked);
+	}
+	
+	public void setFocusListener(FocusListener boundPanel) {
+		this.boundPanel = boundPanel;
 	}
 
 	/**

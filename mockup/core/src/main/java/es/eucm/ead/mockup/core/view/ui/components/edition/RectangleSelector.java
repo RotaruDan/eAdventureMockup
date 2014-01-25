@@ -45,6 +45,9 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 import es.eucm.ead.mockup.core.control.screens.Loading;
 
+/**
+ * Fast implementation of a RectangleSelection.
+ */
 public class RectangleSelector extends Actor {
 
 	/**TODO FAST implementation for rectangle selection**/

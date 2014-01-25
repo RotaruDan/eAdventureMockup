@@ -147,7 +147,6 @@ public class ElementEdition extends AbstractScreen {
 
 		root.addActor(editingElement);
 		root.addActor(rectSel);
-		root.addActor(toolBar);
 		root.addActor(frames);
 
 		root.addActor(paint.getPanel());
@@ -164,6 +163,9 @@ public class ElementEdition extends AbstractScreen {
 		root.addActor(more.getPanel());
 		root.addActor(more.getActions());
 		more.actCoordinates();
+		
+		root.addActor(toolBar);
+		
 		stage.addActor(root);
 	}
 

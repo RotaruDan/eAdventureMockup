@@ -52,7 +52,7 @@ import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 public class AddComponent {
 
 	private AddPanel panel;
-	private Button button;
+	private ToolbarButton button;
 
 	public enum Type {
 		BRUSH, RUBBER, TEXT
@@ -62,6 +62,7 @@ public class AddComponent {
 			String description, float width, float height) {
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin);
 		this.panel = new AddPanel(skin, "opaque", description, width, height);
+		button.setFocusListener(panel);
 		this.button.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {

@@ -55,7 +55,7 @@ import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 public class OtherComponent {
 
 	private OtherPanel panel;
-	private Button button;
+	private ToolbarButton button;
 	private ActionsComponent actionsC;
 
 	public enum TypeOther {
@@ -66,6 +66,7 @@ public class OtherComponent {
 			TypeOther type, float width, float height) {
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin);
 		this.panel = new OtherPanel(skin, "opaque", type, width, height);
+		button.setFocusListener(panel);
 		this.button.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {

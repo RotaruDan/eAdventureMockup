@@ -57,7 +57,7 @@ import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 public class EffectsComponent {
 
 	private EffectsPanel panel;
-	private Button button;
+	private ToolbarButton button;
 	private EffectOption effectsOpt;
 
 	public EffectsComponent(String imageUp, String name, Skin skin,
@@ -66,6 +66,7 @@ public class EffectsComponent {
 		this.panel = new EffectsPanel(skin, "opaque", description, width,
 				height);
 		this.effectsOpt = panel.getOptions();
+		button.setFocusListener(panel);
 		this.button.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
