@@ -41,7 +41,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.utils.IdentityMap;
 
 import es.eucm.ead.editor.control.Controller;
-import es.eucm.ead.engine.Engine;
 import es.eucm.ead.mockup.core.control.listeners.EventListener;
 import es.eucm.ead.mockup.core.control.listeners.FocusListener;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
@@ -59,9 +58,8 @@ import es.eucm.ead.mockup.core.control.screens.menu.MainMenu;
 import es.eucm.ead.mockup.core.control.screens.menu.ProjectMenu;
 
 /**
- * The main controller for Mockup Editor.
- * Controlls the different views or screens and stores a reference to
- * Editor's Controller providing access to 
+ * The main controller for Mockup Editor. Controlls the different views or
+ * screens and stores a reference to Editor's Controller providing access to
  * <ul>
  * <li>persistent editor preferences</li>
  * <li>internationalized messages (i18n)</li>
@@ -78,8 +76,8 @@ public class MockupController implements EventListener {
 	private ScreenController screenCtr;
 
 	/**
-	 * Is the screen that we came from.
-	 * Used if we want to go to he previous screen.
+	 * Is the screen that we came from. Used if we want to go to he previous
+	 * screen.
 	 */
 	private Screens previousScreen, actualScreen;
 
@@ -101,18 +99,18 @@ public class MockupController implements EventListener {
 		// we make sure those attributes are properly setted.
 
 		this.states = new IdentityMap<Screens, AbstractScreen>();
-		/*MENUS*/
+		/* MENUS */
 		this.states.put(Screens.MAIN_MENU, new MainMenu());
 		this.states.put(Screens.PROJECT_MENU, new ProjectMenu());
-		/*GALLERIES*/
+		/* GALLERIES */
 		this.states.put(Screens.GALLERY, new Gallery());
 		this.states.put(Screens.PROJECT_GALLERY, new ProjectGallery());
 		this.states.put(Screens.SCENE_GALLERY, new SceneGallery());
 		this.states.put(Screens.ELEMENT_GALLERY, new ElementGallery());
-		/*CAMARA*/
+		/* CAMARA */
 		this.states.put(Screens.RECORDING, new Recording());
 		this.states.put(Screens.PICTURE, new Picture());
-		/*EDITION*/
+		/* EDITION */
 		this.states.put(Screens.SCENE_EDITION, new SceneEdition());
 		this.states.put(Screens.ELEMENT_EDITION, new ElementEdition());
 
@@ -131,7 +129,9 @@ public class MockupController implements EventListener {
 
 	/**
 	 * Updates the handlers through EventController.
-	 * @param delta Elapsed time since the game last updated.
+	 * 
+	 * @param delta
+	 *            Elapsed time since the game last updated.
 	 */
 	public void act(float delta) {
 		this.screenCtr.act(delta);
@@ -179,15 +179,14 @@ public class MockupController implements EventListener {
 		AbstractScreen.am.dispose();
 		AbstractScreen.am = null;
 
-		/*TODO Dispose Engine here*/
-		Engine.stage.dispose();
+		/* TODO Dispose Engine here */
 
 		System.exit(0);
 	}
 
 	/**
-	 * Is the screen that we came from.
-	 * Used if we want to go to he previous screen.
+	 * Is the screen that we came from. Used if we want to go to he previous
+	 * screen.
 	 */
 	public Screens getPreviousScreen() {
 		return this.previousScreen;

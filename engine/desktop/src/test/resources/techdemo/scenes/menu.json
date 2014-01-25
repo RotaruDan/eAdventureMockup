@@ -1,0 +1,229 @@
+{
+    children: [     
+    {
+        renderer: {
+            class: rectangle,
+            paint: "FFFFFF;000000",
+            bounds: {
+                left: 0,
+                right: 90,
+                bottom: 0,
+                top: 90
+            }
+        },
+        transformation: {
+             x: 10,
+             y: 10
+        },
+        behaviors: [
+        {
+            trigger: {
+                class: touch,
+                type: enter
+            },
+            action: {
+                class: transform,
+                relative: true,
+                duration: 0.1,
+                transformation: {
+                    scaleX: 0.1,
+                    scaleY: 0.1
+                }
+            }
+        },
+        {
+            trigger: {
+                class: touch,
+                type: exit
+            },
+            action: {
+                class: transform,
+                relative: true,
+                duration: 0.1,
+                transformation: {
+                    scaleX: -0.1,
+                    scaleY: -0.1
+                }
+            }
+        },        
+        {
+            trigger: {
+                class: touch,
+                type: press
+            },
+            action: {
+                class: goscene,
+                name: "shapes"
+            }
+        }
+        ]
+    },
+    {
+        renderer: {
+            class: text,
+            color: {
+                r: 1,
+                g: 0,
+                b: 0,
+                a: 1
+            },
+            text: "scenes.shapes.title"
+        },
+        transformation: {
+            x: 15,
+            y: 40
+        }
+    },
+
+
+    {
+        renderer: {
+            class: rectangle,
+            paint: "FFFFFF;000000",
+            bounds: {
+                left: 0,
+                right: 90,
+                bottom: 0,
+                top: 90
+            }
+        },
+        transformation: {
+             x: 110,
+             y: 10
+        },
+        behaviors: [
+        {
+            trigger: {
+                class: touch,
+                type: enter
+            },
+            action: {
+                class: transform,
+                relative: true,
+                duration: 0.1,
+                transformation: {
+                    scaleX: 0.1,
+                    scaleY: 0.1
+                }
+            }
+        },
+        {
+            trigger: {
+                class: touch,
+                type: exit
+            },
+            action: {
+                class: transform,
+                relative: true,
+                duration: 0.1,
+                transformation: {
+                    scaleX: -0.1,
+                    scaleY: -0.1
+                }
+            }
+        },        
+        {
+            trigger: {
+                class: touch,
+                type: press
+            },
+            action: {
+                class: goscene,
+                name: "ninepatch"
+            }
+        }
+        ]
+    },
+    {
+        renderer: {
+            class: text,
+            color: {
+                r: 1,
+                g: 0,
+                b: 0,
+                a: 1
+            },
+            text: "scenes.ninepatch.title"
+        },
+        transformation: {
+            x: 125,
+            y: 40
+        }
+    },
+    
+    {
+        renderer: {
+            class: rectangle,
+            paint: "FFFFFF;000000",
+            bounds: {
+                left: 0,
+                right: 90,
+                bottom: 0,
+                top: 90
+            }
+        },
+        transformation: {
+             x: 210,
+             y: 10
+        },
+        behaviors: [
+        {
+            trigger: {
+                class: touch,
+                type: enter
+            },
+            action: {
+                class: transform,
+                relative: true,
+                duration: 0.1,
+                transformation: {
+                    scaleX: 0.1,
+                    scaleY: 0.1
+                }
+            }
+        },
+        {
+            trigger: {
+                class: touch,
+                type: exit
+            },
+            action: {
+                class: transform,
+                relative: true,
+                duration: 0.1,
+                transformation: {
+                    scaleX: -0.1,
+                    scaleY: -0.1
+                }
+            }
+        },        
+        {
+            trigger: {
+                class: touch,
+                type: press
+            },
+            action: {
+                class: goscene,
+                name: "initial"
+            }
+        }
+        ]
+    },
+    {
+        renderer: {
+            class: text,
+            color: {
+                r: 1,
+                g: 0,
+                b: 0,
+                a: 1
+            },
+            text: "scenes.initial.title"
+        },
+        transformation: {
+            x: 225,
+            y: 40
+        }
+    },        
+    ]
+}

@@ -56,8 +56,8 @@ import es.eucm.ead.editor.view.options.OptionsPanel;
 import es.eucm.ead.editor.view.options.TextOption;
 import es.eucm.ead.engine.Assets;
 import es.eucm.ead.engine.Engine;
+import es.eucm.ead.engine.GameController;
 import es.eucm.ead.engine.actors.SceneElementActor;
-import es.eucm.ead.engine.scene.SceneManager;
 import es.eucm.ead.schema.actors.SceneElement;
 import es.eucm.ead.schema.behaviors.Behavior;
 import es.eucm.ead.schema.game.Game;
@@ -65,21 +65,22 @@ import es.eucm.ead.schema.game.Game;
 import java.io.IOException;
 import java.io.StringReader;
 
-public class EditorSceneManager extends SceneManager {
+public class EditorSceneManager extends GameController {
 
 	private FileHandle currentPath;
 
 	private EditorIO io = (EditorIO) Engine.schemaIO;
 
 	public EditorSceneManager(Assets assetManager) {
-		super(assetManager);
+		super(null, null, null);
 	}
 
 	@Override
-	public void loadGame() {
+	public boolean loadGame() {
 		if (currentPath != null) {
 			super.loadGame();
 		}
+		return false;
 	}
 
 	public void readGame() {
@@ -88,7 +89,7 @@ public class EditorSceneManager extends SceneManager {
 			public void string(String result) {
 				if (result != null && result.endsWith("game.json")) {
 					currentPath = Gdx.files.absolute(result).parent();
-					Engine.engine.setLoadingPath(currentPath.path());
+					// Engine.engine.setLoadingPath(currentPath.path(), false);
 					Gdx.app.postRunnable(new Runnable() {
 						@Override
 						public void run() {
@@ -126,11 +127,11 @@ public class EditorSceneManager extends SceneManager {
 				.from(game, "title");
 		op.add(textOption);
 		op.add(new IntegerOption("Screen width",
-				"Width of game screen, in pixels", dn).min(400).max(1600).from(
-				game, "width"));
+				"Width of game screen, in pixels", dn).min(400).max(1600)
+				.from(game, "width"));
 		op.add(new IntegerOption("Screen height",
-				"Tal of game screen, in pixels", dn).min(400).max(1600).from(
-				game, "width"));
+				"Tal of game screen, in pixels", dn).min(400).max(1600)
+				.from(game, "width"));
 		op.add(new IntegerOption("Screen height",
 				"Height of game screen, in pixels", dn).min(300).max(1200)
 				.from(game, "height"));
@@ -140,10 +141,9 @@ public class EditorSceneManager extends SceneManager {
 		op.add(new BooleanOption("Check if you want", "Yeah, awesome option")
 				.from(o, "stub"));
 		op.add(new DropdownOption<String>("List", "Choose from list", dn)
-				.items(
-						new String[] { "My eAdventure Game",
-								"Super big option in here", "Yeah, whatever" })
-				.from(game, "title"));
+				.items(new String[] { "My eAdventure Game",
+						"Super big option in here", "Yeah, whatever" }).from(
+						game, "title"));
 
 		Editor.controller.getViewController().showOptionsDialog(op,
 				new DialogListener() {
@@ -159,20 +159,19 @@ public class EditorSceneManager extends SceneManager {
 	public void createGame(Game game) {
 		// FIXME create action to create game
 		/*
-		currentPath = Gdx.files.external("eadgames/" + game.getTitle());
-		Editor.controller.getCommandManager().performCommand(
-				new NewProjectCommand(game, currentPath));
-		loadGame();
+		 * currentPath = Gdx.files.external("eadgames/" + game.getTitle());
+		 * Editor.controller.getCommandManager().performCommand( new
+		 * NewProjectCommand(game, currentPath)); loadGame();
 		 */
 	}
 
 	public void save(boolean optimize) {
-		String name = this.getCurrentScenePath();
-		if (!name.endsWith(".json")) {
-			name += ".json";
-		}
-		io.save(Editor.sceneManager.getCurrentScene(), (optimize ? "bin/" : "")
-				+ name, optimize);
+		/*
+		 * String name = this.getCurrentScenePath(); if
+		 * (!name.endsWith(".json")) { name += ".json"; }
+		 * io.save(Editor.gameController.getCurrentScene(), (optimize ? "bin/" :
+		 * "") + name, optimize);
+		 */
 	}
 
 	public void addSceneElement() {
@@ -184,7 +183,7 @@ public class EditorSceneManager extends SceneManager {
 					SceneElement sceneElement = buildFromTemplate(
 							SceneElement.class, "imageactor.json", "uri",
 							result);
-					Editor.sceneManager.loadSceneElement(sceneElement);
+					Editor.gameController.loadSceneElement(sceneElement);
 				}
 			}
 		});
@@ -238,12 +237,12 @@ public class EditorSceneManager extends SceneManager {
 	@Override
 	public void loadSceneElement(SceneElement sceneElement) {
 		super.loadSceneElement(sceneElement);
-		currentScene.getChildren().add(sceneElement);
+		// currentScene.getChildren().add(sceneElement);
 	}
 
 	@Override
 	public boolean removeSceneElement(SceneElementActor actor) {
-		currentScene.getChildren().remove(actor.getSchema());
+		// currentScene.getChildren().remove(actor.getSchema());
 		return super.removeSceneElement(actor);
 	}
 }

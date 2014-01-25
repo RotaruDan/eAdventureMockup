@@ -48,9 +48,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 
-import es.eucm.ead.engine.Engine;
-import es.eucm.ead.mockup.core.engine.MockupEngine;
-import es.eucm.ead.mockup.core.engine.MockupEventListener;
 import es.eucm.ead.mockup.core.utils.Constants;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
@@ -64,21 +61,20 @@ public class Loading extends AbstractScreen {
 	private Batch sb;
 
 	/**
-	 * Fast implementation to cache some demo Textures of
-	 * elements and scenes...
+	 * Fast implementation to cache some demo Textures of elements and scenes...
 	 */
 	public static Texture[] demoElements, demoScenes;
 
 	/**
-	 * Fast implementation to cache some demo Thumbnail Textures of
-	 * elements and scenes...
+	 * Fast implementation to cache some demo Thumbnail Textures of elements and
+	 * scenes...
 	 */
 	public static Texture[] demoElementsThumbnail, demoScenesThumbnail;
 
 	@Override
 	public void create() {
 
-		/*DEMO*/
+		/* DEMO */
 		int i;
 		for (i = 0; i < Constants.demoElements.length; ++i) {
 			am.load(Constants.demoElements[i], Texture.class);
@@ -116,14 +112,10 @@ public class Loading extends AbstractScreen {
 		loadingSel.setTopHeight(5f);
 		loadingSel.setLeftWidth(5f);
 
-		//We must create Engine here if we want to pass 
-		//his SpriteBatch to ours (very important performancewise)
-		MockupEngine engine = new MockupEngine();
-		engine.setMockupEventListener(new MockupEventListener());
-		engine.create();
+		// We must create Engine here if we want to pass
+		// his SpriteBatch to ours (very important performancewise)
 
-		stage = new Stage(Constants.SCREENW, Constants.SCREENH, true,
-				Engine.stage.getSpriteBatch());
+		stage = new Stage(Constants.SCREENW, Constants.SCREENH, true);
 		initStage();
 
 		this.sb = stage.getSpriteBatch();
@@ -132,7 +124,7 @@ public class Loading extends AbstractScreen {
 	@Override
 	public void act(float delta) {
 		if (am.update()) {
-			/*DEMO*/
+			/* DEMO */
 			int i;
 			Texture auxTex = null;
 			for (i = 0; i < Constants.demoElements.length; ++i) {

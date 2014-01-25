@@ -44,7 +44,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.GLCommon;
 
-import es.eucm.ead.engine.Engine;
 import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 
 /**
@@ -62,7 +61,8 @@ public class ScreenController extends InputAdapter {
 	private Color auxClearColor;
 
 	/**
-	 * Used to cap the fps so we don't suffer stuttering after pause/resume events.
+	 * Used to cap the fps so we don't suffer stuttering after pause/resume
+	 * events.
 	 */
 	private final float MIN_FPS = 30F, MIN_DELTA_TIME = 1F / MIN_FPS;
 
@@ -71,14 +71,15 @@ public class ScreenController extends InputAdapter {
 
 	public void create() {
 		auxClearColor = new Color(r, g, b, a);
-		this.multiplexer = new InputMultiplexer(AbstractScreen.stage, this,
-				Engine.stage);
+		this.multiplexer = new InputMultiplexer(AbstractScreen.stage, this);
 		Gdx.input.setInputProcessor(this.multiplexer);
 	}
 
 	/**
 	 * Updates the current renderer.
-	 * @param delta Elapsed time since the game last updated.
+	 * 
+	 * @param delta
+	 *            Elapsed time since the game last updated.
 	 */
 	public void act(float delta) {
 		this.currentScreen.act(Math.min(delta, MIN_DELTA_TIME));
@@ -99,10 +100,11 @@ public class ScreenController extends InputAdapter {
 	}
 
 	/**
-	 * Changes the current handler to the next one.
-	 * Triggers the hide() and show() events.
+	 * Changes the current handler to the next one. Triggers the hide() and
+	 * show() events.
 	 * 
-	 * @param next The next handler.
+	 * @param next
+	 *            The next handler.
 	 */
 	public void changeTo(AbstractScreen next) {
 		this.currentScreen.hide();

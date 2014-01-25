@@ -36,9 +36,13 @@
  */
 package es.eucm.ead.engine.actors;
 
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
+
 import es.eucm.ead.engine.Engine;
 import es.eucm.ead.engine.EngineObject;
+import es.eucm.ead.schema.actions.Action;
+import es.eucm.ead.schema.actors.SceneElement;
 
 public abstract class AbstractActor<T> extends Group implements EngineObject<T> {
 
@@ -55,7 +59,7 @@ public abstract class AbstractActor<T> extends Group implements EngineObject<T> 
 		return element;
 	}
 
-	public void free() {
+	public void dispose() {
 		Engine.factory.free(this);
 	}
 
@@ -65,4 +69,35 @@ public abstract class AbstractActor<T> extends Group implements EngineObject<T> 
 		accTime += delta;
 	}
 
+	/**
+	 * @param sceneElement
+	 *            the target scene element
+	 * @return Returns the actor that wraps the given scene element
+	 */
+	public Actor getSceneElement(SceneElement sceneElement) {
+		if (sceneElement == element) {
+			return this;
+		}
+		for (Actor a : this.getChildren()) {
+			if (a instanceof AbstractActor) {
+				Actor actor = ((AbstractActor) a).getSceneElement(sceneElement);
+				if (actor != null) {
+					return actor;
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * Adds an schema action to the actor. The action is automatically converted
+	 * to an engine action
+	 * 
+	 * @param action
+	 *            the action schema
+	 */
+	public void addAction(Action action) {
+		addAction((com.badlogic.gdx.scenes.scene2d.Action) Engine.factory
+				.getEngineObject(action));
+	}
 }

@@ -41,7 +41,6 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
 import es.eucm.ead.engine.Engine;
-import es.eucm.ead.engine.I18N;
 import es.eucm.ead.schema.renderers.Text;
 
 public class TextRenderer extends AbstractRenderer<Text> {
@@ -58,16 +57,16 @@ public class TextRenderer extends AbstractRenderer<Text> {
 
 	@Override
 	public void initialize(Text schemaObject) {
-		text = I18N.m(schemaObject.getText());
+		text = Engine.i18n.m(schemaObject.getText());
 		scale = schemaObject.getScale();
 
 		es.eucm.ead.schema.components.Color c = schemaObject.getColor();
-		color = c == null ? Color.WHITE : new Color(c.getR(), c.getG(), c
-				.getB(), c.getA());
+		color = c == null ? Color.WHITE : new Color(c.getR(), c.getG(),
+				c.getB(), c.getA());
 
 		String fontFile = schemaObject.getFont();
 		if (fontFile == null || !Engine.assets.resolve(fontFile).exists()) {
-			bitmapFont = Engine.assets.defaultFont();
+			bitmapFont = Engine.assets.getDefaultFont();
 		} else {
 			bitmapFont = Engine.assets.get(schemaObject.getFont(),
 					BitmapFont.class);

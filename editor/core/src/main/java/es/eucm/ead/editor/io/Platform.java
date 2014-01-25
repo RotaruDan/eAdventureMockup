@@ -54,10 +54,11 @@ public interface Platform {
 
 	/**
 	 * Asks for a folder in the platform file system
-	 *
+	 * 
 	 * @param listener
 	 *            listener processing the result. The listener will receive a
-	 *            null if no folder was selected (e.g., the action was cancelled)
+	 *            null if no folder was selected (e.g., the action was
+	 *            cancelled)
 	 */
 	void askForFolder(StringListener listener);
 
@@ -86,7 +87,7 @@ public interface Platform {
 	 */
 	Vector2 getSize();
 
-	public interface StringListener {
+	interface StringListener {
 		void string(String result);
 	}
 }

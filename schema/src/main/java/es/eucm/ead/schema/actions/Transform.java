@@ -36,15 +36,15 @@
  */
 package es.eucm.ead.schema.actions;
 
-import es.eucm.ead.schema.components.Transformation;
-
 import javax.annotation.Generated;
+import es.eucm.ead.schema.components.Transformation;
 
 @Generated("org.jsonschema2pojo")
 public class Transform extends TemporalAction {
 
 	/**
-	 * Sets if the transformation must be performed relative to the actual transformation
+	 * Sets if the transformation must be performed relative to the actual
+	 * transformation
 	 * 
 	 */
 	private boolean relative;
@@ -55,7 +55,8 @@ public class Transform extends TemporalAction {
 	private Transformation transformation;
 
 	/**
-	 * Sets if the transformation must be performed relative to the actual transformation
+	 * Sets if the transformation must be performed relative to the actual
+	 * transformation
 	 * 
 	 */
 	public boolean isRelative() {
@@ -63,7 +64,8 @@ public class Transform extends TemporalAction {
 	}
 
 	/**
-	 * Sets if the transformation must be performed relative to the actual transformation
+	 * Sets if the transformation must be performed relative to the actual
+	 * transformation
 	 * 
 	 */
 	public void setRelative(boolean relative) {
