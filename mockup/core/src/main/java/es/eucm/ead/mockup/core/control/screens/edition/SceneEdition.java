@@ -59,6 +59,7 @@ import es.eucm.ead.mockup.core.view.ui.components.edition.EffectsComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.InteractiveComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent.TypeOther;
+import es.eucm.ead.mockup.core.view.ui.components.edition.PaintingComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.RectangleSelector;
 
 public class SceneEdition extends AbstractScreen {
@@ -86,7 +87,7 @@ public class SceneEdition extends AbstractScreen {
 	private Image editingScene;
 
 	/**
-	 * Used to tdaw the rectangle selection.
+	 * Used to draw the rectangle selection.
 	 */
 	private RectangleSelector rectSel;
 
@@ -150,6 +151,8 @@ public class SceneEdition extends AbstractScreen {
 
 		root.addActor(editingScene);
 		root.addActor(rectSel);
+		PaintingComponent paintingComponent = new PaintingComponent();
+		root.addActor(paintingComponent);
 		root.addActor(frames);
 
 		root.addActor(paint.getPanel());
