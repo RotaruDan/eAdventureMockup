@@ -60,8 +60,8 @@ import es.eucm.ead.mockup.core.view.ui.Panel;
 public class Picture extends AbstractScreen {
 
 	/**
-	 * Fast implementation to know where we go after
-	 * the choice dialog depending on which button we clicked.
+	 * Fast implementation to know where we go after the choice dialog depending
+	 * on which button we clicked.
 	 * 
 	 */
 	private static Screens nextScreen;
@@ -74,8 +74,8 @@ public class Picture extends AbstractScreen {
 			0f, 0f, 0f);
 
 	/**
-	 *  Asks if we must the user want an element or 
-	 *  an scene after he takes the picture.
+	 * Asks if we must the user want an element or an scene after he takes the
+	 * picture.
 	 */
 	private Panel mDialogPanel;
 	private final float DEFAULT_ICON_LABEL_SPACE = 10f;
@@ -110,16 +110,16 @@ public class Picture extends AbstractScreen {
 		rootTable.add(resolution).right().top();
 		rootTable.row();
 		rootTable.add(takePicButton).size(takePicButton.getWidth() * 1.3f)
-		.bottom().expand().padBottom(5f);
+				.bottom().expand().padBottom(5f);
 
-		//Coice dialog panel
+		// Coice dialog panel
 		mDialogPanel = new Panel(skin, "dialog");
 		mDialogPanel.setVisible(false);
 		mDialogPanel.setModal(true);
 		mDialogPanel.setHideOnOutterTouch(false);
 		mDialogPanel.pad(DEFAULT_ICON_LABEL_SPACE);
 		mDialogPanel.defaults().space(DEFAULT_ICON_LABEL_SPACE).uniform()
-		.expand().fill();
+				.expand().fill();
 		final float PANEL_W = stagew * .3f, PANEL_H = UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 3f, PANEL_X = halfstagew
 				- PANEL_W * .5F, PANEL_Y = halfstageh - PANEL_H * .5f;
 		mDialogPanel.setBounds(PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
@@ -177,7 +177,7 @@ public class Picture extends AbstractScreen {
 	}
 
 	private void takePic() {
-		//TODO take picture here
+		// TODO take picture here
 
 		onPictureTaken();
 	}
@@ -185,11 +185,11 @@ public class Picture extends AbstractScreen {
 	private void onPictureTaken() {
 		if (nextScreen == null) {
 			if (mockupController.getPreviousScreen() == Screens.GALLERY) {
-				//  We've came from Gallery 
+				// We've came from Gallery
 				// so we must ask if he want an element or a scene
 				mockupController.show(mDialogPanel);
 			} else {
-				//We've came from Project menu so we go back
+				// We've came from Project menu so we go back
 				onBackKeyPressed();
 			}
 		} else {
@@ -203,11 +203,12 @@ public class Picture extends AbstractScreen {
 		previousClearColor.set(this.screenController.getClearColor());
 		this.screenController.changeClearColor(clearColor);
 		Screens previousScreen = mockupController.getPreviousScreen();
-		if(previousScreen != Screens.ELEMENT_EDITION && previousScreen != Screens.SCENE_EDITION){
+		if (previousScreen != Screens.ELEMENT_EDITION
+				&& previousScreen != Screens.SCENE_EDITION) {
 			setPreviousScreen(previousScreen);
 		}
 
-		//	We implement distincg behaviours 
+		// We implement distincg behaviours
 		// depending on where we came from
 		Screens nextScr = null;
 		if (ProjectMenu.getFROM_INITIAL_SCENE()) {
@@ -237,7 +238,7 @@ public class Picture extends AbstractScreen {
 	@Override
 	public void draw() {
 		stage.draw();
-		//Table.drawDebug(stage);
+		// Table.drawDebug(stage);
 	}
 
 	@Override
@@ -255,9 +256,9 @@ public class Picture extends AbstractScreen {
 	}
 
 	/**
-	 * Sets the nextScreen that will be shown after we take the picture.
-	 * Fast implementation to know where we go after
-	 * the choice dialog depending on which button we clicked.
+	 * Sets the nextScreen that will be shown after we take the picture. Fast
+	 * implementation to know where we go after the choice dialog depending on
+	 * which button we clicked.
 	 * 
 	 * If nextScreen in null we will go to the previous Screen.
 	 */

@@ -76,19 +76,24 @@ public class MainMenu extends AbstractScreen {
 
 		final Button newProject, projectGallery;
 		newProject = new MenuButton("Nuevo\nproyecto", skin, "ic_newproject",
-				MAIN_MENU_BUTTON_WIDTH_HEIGHT, MAIN_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
+				MAIN_MENU_BUTTON_WIDTH_HEIGHT, MAIN_MENU_BUTTON_WIDTH_HEIGHT);// TODO
+																				// use
+																				// i18n
+																				// in
+																				// this
+																				// class
 		projectGallery = new MenuButton("Galería de\nproyectos", skin,
 				"ic_gallery", MAIN_MENU_BUTTON_WIDTH_HEIGHT,
-				MAIN_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
+				MAIN_MENU_BUTTON_WIDTH_HEIGHT);// TODO use i18n in this class
 
 		CircularGroup cg = new CircularGroup(halfstageh, 135, 180, true,
 				newProject, projectGallery);
 		cg.setX(halfstagew);
 		cg.setY(halfstageh);
 
-		//Scan for aviable projects here...
+		// Scan for aviable projects here...
 		Table projectsTable = new Table();
-		//projectsTable.debug();
+		// projectsTable.debug();
 		projectsTable.defaults().space(10);
 		ScrollPane sp = new ScrollPane(projectsTable);
 		sp.setBounds(stagew * .1f, 10, stagew * .8f, stageh * .2f);
@@ -146,13 +151,14 @@ public class MainMenu extends AbstractScreen {
 		root.addActor(bg);
 		root.addActor(sp);
 		root.addActor(cg);
-		
+
 		Table topName = new Table(skin);
-		topName.setBounds(0, stageh - UIAssets.TOOLBAR_HEIGHT, stagew, UIAssets.TOOLBAR_HEIGHT);
+		topName.setBounds(0, stageh - UIAssets.TOOLBAR_HEIGHT, stagew,
+				UIAssets.TOOLBAR_HEIGHT);
 		topName.left();
 		topName.add("Menú principal").padLeft(10f);
 		root.addActor(topName);
- 		
+
 		stage.addActor(root);
 
 		exitDialog = new Dialog("¿Salir?", skin, "exit-dialog") {
@@ -161,8 +167,8 @@ public class MainMenu extends AbstractScreen {
 					Gdx.app.exit();
 				}
 			}
-		}.text("¿Estás seguro?").button("¡Todavía no!", false).button("Salir",
-				true).key(Keys.ENTER, true); // TODO use i18n
+		}.text("¿Estás seguro?").button("¡Todavía no!", false)
+				.button("Salir", true).key(Keys.ENTER, true); // TODO use i18n
 		exitDialog.setMovable(false);
 		exitDialog.padLeft(DEFAULT_DIALOG_PADDING_BOTTON_TOP);
 		exitDialog.padRight(DEFAULT_DIALOG_PADDING_BOTTON_TOP);
@@ -183,7 +189,7 @@ public class MainMenu extends AbstractScreen {
 	@Override
 	public void draw() {
 		stage.draw();
-		//Table.drawDebug(stage);
+		// Table.drawDebug(stage);
 	}
 
 	@Override

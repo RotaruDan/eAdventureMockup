@@ -90,7 +90,7 @@ public class SceneEdition extends AbstractScreen {
 	 * Used to draw the rectangle selection.
 	 */
 	private RectangleSelector rectSel;
-	
+
 	/**
 	 * Used to draw lines.
 	 */
@@ -108,11 +108,10 @@ public class SceneEdition extends AbstractScreen {
 		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "Mover",
 				skin);
 
-
 		paintingComponent = new PaintingComponent();
 		paintingComponent.setVisible(false);
-		paint = new DrawComponent(paintingComponent, "ic_pencil", "Pintar", skin,
-				"Herramienta de pincel", Type.BRUSH, 300, 550);
+		paint = new DrawComponent(paintingComponent, "ic_pencil", "Pintar",
+				skin, "Herramienta de pincel", Type.BRUSH, 300, 550);
 		delete = new DrawComponent(null, "ic_eraser", "Borrar", skin,
 				"Herramienta de goma", Type.RUBBER, 300, 250);
 		text = new DrawComponent(null, "ic_text", "Texto", skin,
@@ -138,7 +137,9 @@ public class SceneEdition extends AbstractScreen {
 				effect.getButton(), more.getButton());
 
 		Label name = new Label("Edición de escena", skin);
-		toolBar.add(name).padLeft(UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f).expandX().left();
+		toolBar.add(name)
+				.padLeft(UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 1.1f)
+				.expandX().left();
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
 		toolBar.add(move);
 		toolBar.add(paint.getButton());
@@ -219,9 +220,10 @@ public class SceneEdition extends AbstractScreen {
 	public void hide() {
 		root.setVisible(false);
 		rectSel.setVisible(false);
+		paintingComponent.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
 	}
-	
+
 	@Override
 	public void dispose() {
 		paintingComponent.dispose();

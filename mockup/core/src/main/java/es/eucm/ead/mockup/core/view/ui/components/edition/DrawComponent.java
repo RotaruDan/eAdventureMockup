@@ -75,15 +75,18 @@ public class DrawComponent {
 		BRUSH, RUBBER, TEXT
 	}
 
-	public DrawComponent(final PaintingComponent paintingComponent, String imageUp, String name, Skin skin,
-			String description, Type type, float width, float height) {
+	public DrawComponent(final PaintingComponent paintingComponent,
+			String imageUp, String name, Skin skin, String description,
+			Type type, float width, float height) {
 		this.color = Color.YELLOW;
 		this.paintingComponent = paintingComponent;
-		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin){
+		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin) {
 			@Override
 			public void setChecked(boolean isChecked) {
-				if(paintingComponent != null){
-					paintingComponent.setTouchable(isChecked ? Touchable.enabled : Touchable.disabled);
+				if (paintingComponent != null) {
+					paintingComponent
+							.setTouchable(isChecked ? Touchable.enabled
+									: Touchable.disabled);
 				}
 				super.setChecked(isChecked);
 			}
@@ -193,7 +196,9 @@ public class DrawComponent {
 			Pixmap.setBlending(Blending.None);
 			circleSample.fill();
 			Pixmap.setBlending(b);
-
+			if (type == Type.BRUSH) {
+				paintingComponent.setRadius(getCurrentRadius());
+			}
 			circleSample.setColor(color);
 			int radius = (int) getCurrentRadius();
 			circleSample.fillCircle(center, center, radius);
@@ -214,7 +219,7 @@ public class DrawComponent {
 
 			if (type != Type.TEXT) {
 				add(cir).align(Align.center).expand(false, false).fill(false)
-				.size(60, 60);
+						.size(60, 60);
 			} else {
 				textSample.setColor(color);
 				add(textSample).align(Align.left).size(60, 60);
@@ -246,7 +251,7 @@ public class DrawComponent {
 		@Override
 		public void hide() {
 			super.hide();
-			if(paintingComponent != null)
+			if (paintingComponent != null)
 				paintingComponent.setVisible(button.isChecked());
 		}
 
@@ -274,8 +279,8 @@ public class DrawComponent {
 			Pixmap.setBlending(b);
 
 			circleSample.setColor(color);
-			int radius = (int) getCurrentRadius();
-			circleSample.fillCircle(center, center, radius);
+			float radius = getCurrentRadius();
+			circleSample.fillCircle(center, center, (int) radius);
 			paintingComponent.setRadius(radius);
 			pixTex.draw(circleSample, 0, 0);
 		}
@@ -295,9 +300,9 @@ public class DrawComponent {
 			final int COLS = 4, ROWS = 3;
 			final Color[][] colrs = {
 					{ Color.BLACK, Color.BLUE, Color.CYAN,
-						new Color(.5f, .75f, .32f, 1f) },
-						{ Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK },
-						{ Color.RED, Color.LIGHT_GRAY, Color.YELLOW, Color.WHITE } };
+							new Color(.5f, .75f, .32f, 1f) },
+					{ Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK },
+					{ Color.RED, Color.LIGHT_GRAY, Color.YELLOW, Color.WHITE } };
 			gridPanel = new GridPanel<Actor>(skin, ROWS, COLS, 20);
 			ClickListener colorListener = new ClickListener() {
 				@Override

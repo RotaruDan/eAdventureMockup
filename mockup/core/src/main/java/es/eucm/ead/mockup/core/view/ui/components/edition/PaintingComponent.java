@@ -51,20 +51,21 @@ import com.badlogic.gdx.utils.Disposable;
 /**
  * Fast implementation of a PaintingActor.
  */
-public class PaintingComponent extends Actor implements Disposable{
+public class PaintingComponent extends Actor implements Disposable {
 
 	private MeshHelper mesh;
 	private float radius;
 
-	public PaintingComponent() {	
+	public PaintingComponent() {
 		mesh = new MeshHelper();
-		addListener(new InputListener() {	
-			
+		addListener(new InputListener() {
+
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y,
 					int pointer, int button) {
 				return true;
 			}
+
 			public void touchDragged(InputEvent event, float screenX,
 					float screenY, int pointer) {
 				mesh.input(screenX, screenY);
@@ -79,48 +80,58 @@ public class PaintingComponent extends Actor implements Disposable{
 
 	@Override
 	public void dispose() {
-		mesh.dispose();		
+		mesh.dispose();
 	}
-	
-	private class MeshHelper implements Disposable{
+
+	@Override
+	public void setVisible(boolean visible) {
+		super.setVisible(visible);
+		if (!visible) {
+			mesh.reset();
+		}
+	}
+
+	private class MeshHelper implements Disposable {
 		private Mesh mesh;
 		private ShaderProgram meshShader;
-		private static final int MAX_LINES = 1000; 
-		float[] lineVertices;
+		private static final int MAX_LINES = 1000;
+		private float[] lineVertices;
 		private int vertexIndex = 0;
 		private Vector3 unprojectedVertex = new Vector3();
 		private float lastX, lastY;
-		
+
 		public MeshHelper() {
-			lineVertices = new float[MAX_LINES * 2 * 2];		
+			lineVertices = new float[MAX_LINES * 2 * 2];
 			createShader();
 			createMesh();
 		}
 
+		private void reset() {
+			vertexIndex = 0;
+			mesh.setVertices(lineVertices, 0, vertexIndex);
+		}
+
 		public void createMesh() {
-			mesh = new Mesh(true, MAX_LINES * 2, 0, new VertexAttribute(Usage.Position, 2, "a_position"));	
+			mesh = new Mesh(true, MAX_LINES * 2, 0, new VertexAttribute(
+					Usage.Position, 2, "a_position"));
 		}
 
 		private void createShader() {
 			// this shader tells opengl where to put things
-			String vertexShader = 
-					"attribute vec4 a_position;    				\n" + 
-					"uniform mat4 u_worldView;					\n" + 
-					"void main()                  				\n" + 
-					"{                            				\n" + 
-					"   gl_Position =  u_worldView * a_position;\n" + 
-					"}" ;
+			String vertexShader = "attribute vec4 a_position;    					\n"
+					+ "uniform mat4 u_worldView;					\n"
+					+ "void main()                  				\n"
+					+ "{                            				\n"
+					+ "   gl_Position =  u_worldView * a_position;	\n" + "}";
 
 			// this one tells it what goes in between the points (i.e
 			// color/texture)
-			String fragmentShader = 
-					  "#ifdef GL_ES                			\n"
+			String fragmentShader = "#ifdef GL_ES                			\n"
 					+ "precision mediump float;    			\n"
 					+ "#endif                      			\n"
 					+ "void main()                 			\n"
 					+ "{                           			\n"
-					+ "  gl_FragColor = vec4(1, 1, 0, 1);   \n"
-					+ "}";
+					+ "  gl_FragColor = vec4(1, 1, 0, 1);   \n" + "}";
 
 			// make an actual shader from our strings
 			ShaderProgram.pedantic = false;
@@ -134,46 +145,47 @@ public class PaintingComponent extends Actor implements Disposable{
 		public void draw(Batch sb) {
 			sb.end();
 			meshShader.begin();
-			meshShader.setUniformMatrix("u_worldView", sb.getProjectionMatrix());
+			meshShader
+					.setUniformMatrix("u_worldView", sb.getProjectionMatrix());
 			mesh.render(meshShader, GL20.GL_TRIANGLE_STRIP);
 			meshShader.end();
 			sb.begin();
 		}
-		
+
 		public void dispose() {
 			mesh.dispose();
 			meshShader.dispose();
 		}
 
-		@SuppressWarnings("deprecation")
 		public void input(float x, float y) {
-			unprojectedVertex.set(x,y, 0);
-			x =  unprojectedVertex.x;
-			y =  unprojectedVertex.y;
+			if (vertexIndex == lineVertices.length)
+				return;
+			unprojectedVertex.set(x, y, 0);
+			x = unprojectedVertex.x;
+			y = unprojectedVertex.y;
 
-			if (vertexIndex == 0 || 
-					unprojectedVertex.dst(lastX, lastY, 0) > 5) {
+			if (vertexIndex == 0 || unprojectedVertex.dst(lastX, lastY, 0) > 5) {
 
 				unprojectedVertex.set(x, y, 0).sub(lastX, lastY, 0).nor();
-				unprojectedVertex.set(-unprojectedVertex.y, unprojectedVertex.x, 0);
-				unprojectedVertex.mul(radius);		
+				unprojectedVertex.set(-unprojectedVertex.y,
+						unprojectedVertex.x, 0);
+				unprojectedVertex.scl(radius);
 
 				lineVertices[vertexIndex++] = x + unprojectedVertex.x;
 				lineVertices[vertexIndex++] = y + unprojectedVertex.y;
-
 
 				lineVertices[vertexIndex++] = x - unprojectedVertex.x;
 				lineVertices[vertexIndex++] = y - unprojectedVertex.y;
 
 				mesh.setVertices(lineVertices, 0, vertexIndex);
 
-				lastX = x; lastY = y;
+				lastX = x;
+				lastY = y;
 			}
 		}
-
 	}
 
-	public void setRadius(int radius) {
-		this.radius = radius*.5f;		
+	public void setRadius(float radius) {
+		this.radius = radius * .5f;
 	}
 }

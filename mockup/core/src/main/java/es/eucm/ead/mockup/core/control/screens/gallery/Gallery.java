@@ -66,9 +66,8 @@ import es.eucm.ead.mockup.core.view.ui.components.GalleryGrid;
 public class Gallery extends AbstractScreen {
 
 	/**
-	 * Fast implementation to know where we go
-	 * when we take a picture if we go to the picture screen.
-	 * If true -> SCENE_EDITION else ELEMENT_EDITION.
+	 * Fast implementation to know where we go when we take a picture if we go
+	 * to the picture screen. If true -> SCENE_EDITION else ELEMENT_EDITION.
 	 */
 	public static boolean SCENE_EDITION;
 
@@ -89,37 +88,33 @@ public class Gallery extends AbstractScreen {
 		ToolBar bottomToolbar = new ToolBar(skin);
 		topToolbar.right();
 
-		String search = "Buscar por ...";//TODO use i18n!
+		String search = "Buscar por ...";// TODO use i18n!
 		TextField searchtf = new TextField("", skin);
 		searchtf.setMessageText(search);
 		searchtf.setMaxLength(search.length());
 		String[] orders = new String[] { "Ordenar por ...", "nombre A-Z",
-				"nombre Z-A", "más recientes", "menos recientes" };//TODO use i18n!
+				"nombre Z-A", "más recientes", "menos recientes" };// TODO use
+																	// i18n!
 		SelectBox order = new SelectBox(orders, skin);
 
-		/*filter panel*/
+		/* filter panel */
 		CheckBox cbs = new CheckBox("Escenas", skin);
 		cbs.setChecked(true);
 		CheckBox cbe = new CheckBox("Elementos", skin);
 		cbe.setChecked(true);
 		CheckBox cbi = new CheckBox("Imágenes", skin);
-		cbi.setChecked(true);//TODO use i18n!
+		cbi.setChecked(true);// TODO use i18n!
 		Button applyFilter = new TextButton("Filtrar", skin);
 
-		CheckBox[] tags = new CheckBox[] { 
-				new CheckBox("Almohada", skin),
-				new CheckBox("Camilla", skin),
-				new CheckBox("Doctor", skin),
-				new CheckBox("Enfermera", skin),
-				new CheckBox("Guantes", skin),
+		CheckBox[] tags = new CheckBox[] { new CheckBox("Almohada", skin),
+				new CheckBox("Camilla", skin), new CheckBox("Doctor", skin),
+				new CheckBox("Enfermera", skin), new CheckBox("Guantes", skin),
 				new CheckBox("Habitación", skin),
 				new CheckBox("Hospital", skin),
-				new CheckBox("Quirófano", skin), 
+				new CheckBox("Quirófano", skin),
 				new CheckBox("Medicamentos", skin),
-				new CheckBox("Médico", skin), 
-				new CheckBox("Paciente", skin),
-				new CheckBox("Vehículo", skin)
-				};
+				new CheckBox("Médico", skin), new CheckBox("Paciente", skin),
+				new CheckBox("Vehículo", skin) };
 		Table tagList = new Table(skin);
 		tagList.left();
 		tagList.defaults().left();
@@ -159,12 +154,15 @@ public class Gallery extends AbstractScreen {
 
 		Label nombre = new Label("Galería", skin);
 
-		topToolbar.add(nombre).expandX().left().padLeft(
-				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 1.1f);
+		topToolbar.add(nombre).expandX().left()
+				.padLeft(UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 1.1f);
 		topToolbar.add(order);
 		topToolbar.add(filterButton);
 		topToolbar.add(searchtf).width(
-				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
+				skin.getFont("default-font").getBounds(search).width + 50); // FIXME
+																			// hardcoded
+																			// fixed
+																			// value
 
 		/***/
 
@@ -175,11 +173,11 @@ public class Gallery extends AbstractScreen {
 			protected void entityClicked(InputEvent event) {
 				Actor target = event.getTarget();
 				if (target instanceof Image) {
-					//TODO distinguish between elements and scenes
+					// TODO distinguish between elements and scenes
 					String[] auxAttr = String.valueOf(target.getUserObject())
 							.split(" ");
 					Integer index = Integer.valueOf(auxAttr[0]);
-					if (Boolean.valueOf(auxAttr[1])) { //isElement
+					if (Boolean.valueOf(auxAttr[1])) { // isElement
 						ElementEdition.setELEMENT_INDEX(index);
 						exitAnimation(Screens.ELEMENT_EDITION);
 					} else {
@@ -188,7 +186,7 @@ public class Gallery extends AbstractScreen {
 					}
 				} else if (target instanceof Label) {
 					// We've clicked new from blank page...
-					//TODO ask for choise			
+					// TODO ask for choise
 					SCENE_EDITION = true;
 					showDialog();
 				}
@@ -223,7 +221,6 @@ public class Gallery extends AbstractScreen {
 				}
 			}
 		}
-
 		ScrollPane scrollPane = new ScrollPane(gridPanel);
 		scrollPane.setScrollingDisabled(true, false);
 		scrollPane.setBounds(0, topToolbar.getHeight(), stagew, stageh - 2
@@ -248,7 +245,7 @@ public class Gallery extends AbstractScreen {
 			}
 		});
 
-		//Coice dialog panel
+		// Coice dialog panel
 		mDialogPanel = new Panel(skin, "dialog");
 		mDialogPanel.setVisible(false);
 		mDialogPanel.setModal(true);
@@ -279,7 +276,7 @@ public class Gallery extends AbstractScreen {
 			private Screens getNextScreen(Actor target) {
 				Screens next = null;
 				if (SCENE_EDITION) {
-					//We've clicked NewBlankImage 
+					// We've clicked NewBlankImage
 					if (target == newElement) {
 						next = Screens.ELEMENT_EDITION;
 						SCENE_EDITION = false;

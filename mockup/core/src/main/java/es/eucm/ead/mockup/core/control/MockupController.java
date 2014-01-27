@@ -57,6 +57,7 @@ import es.eucm.ead.mockup.core.control.screens.gallery.ProjectGallery;
 import es.eucm.ead.mockup.core.control.screens.gallery.SceneGallery;
 import es.eucm.ead.mockup.core.control.screens.menu.MainMenu;
 import es.eucm.ead.mockup.core.control.screens.menu.ProjectMenu;
+import es.eucm.ead.mockup.core.utils.Constants;
 
 /**
  * The main controller for Mockup Editor. Controlls the different views or
@@ -161,6 +162,8 @@ public class MockupController implements EventListener, Disposable {
 	}
 
 	public void resize(int width, int height) {
+		AbstractScreen.stage.setViewport(Constants.SCREENW, Constants.SCREENH,
+				true);
 	}
 
 	public void pause() {
@@ -175,7 +178,7 @@ public class MockupController implements EventListener, Disposable {
 		for (AbstractScreen _screen : this.states.values()) {
 			_screen.dispose();
 		}
-		
+
 		loading.dispose();
 
 		AbstractScreen.stage.dispose();

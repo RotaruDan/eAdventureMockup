@@ -85,7 +85,7 @@ public class Recording extends AbstractScreen {
 				super.clicked(event, x, y);
 				record();
 				if (!rec) {
-					//TODO show panel...
+					// TODO show panel...
 					if (ProjectMenu.getFROM_INITIAL_SCENE()) {
 						exitAnimation(Screens.PROJECT_MENU);
 					} else {
@@ -112,7 +112,7 @@ public class Recording extends AbstractScreen {
 		recInfoButton = new Table();
 		recInfoButton.setVisible(false);
 		Image recImg = new Image(skin.getRegion("ic_recordoff"));
-		//TODO personalize toggle-recording in JSON
+		// TODO personalize toggle-recording in JSON
 		recImg.setTouchable(Touchable.disabled);
 		recLabel = new Label("", skin);
 		recLabel.setColor(Color.RED);
@@ -123,7 +123,7 @@ public class Recording extends AbstractScreen {
 		rootTable.setVisible(false);
 		rootTable.setFillParent(true);
 		rootTable.pad(10f);
-		//rootTable.debug();
+		// rootTable.debug();
 
 		rootTable.add(resolution).right().top();
 		rootTable.row();
@@ -150,7 +150,7 @@ public class Recording extends AbstractScreen {
 		previousClearColor.set(this.screenController.getClearColor());
 		this.screenController.changeClearColor(clearColor);
 		Screens previousScreen = mockupController.getPreviousScreen();
-		if(previousScreen != Screens.SCENE_EDITION){
+		if (previousScreen != Screens.SCENE_EDITION) {
 			setPreviousScreen(previousScreen);
 		}
 		rootTable.setVisible(true);
@@ -173,7 +173,7 @@ public class Recording extends AbstractScreen {
 	@Override
 	public void draw() {
 		stage.draw();
-		//Table.drawDebug(stage);
+		// Table.drawDebug(stage);
 	}
 
 	@Override

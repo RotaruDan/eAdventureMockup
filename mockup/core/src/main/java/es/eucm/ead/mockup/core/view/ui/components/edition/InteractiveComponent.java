@@ -66,7 +66,8 @@ public class InteractiveComponent {
 			@Override
 			public void setChecked(boolean isChecked) {
 				super.setChecked(isChecked);
-				rectangleSelector.setTouchable(isChecked ? Touchable.enabled : Touchable.disabled);
+				rectangleSelector.setTouchable(isChecked ? Touchable.enabled
+						: Touchable.disabled);
 			}
 		};
 

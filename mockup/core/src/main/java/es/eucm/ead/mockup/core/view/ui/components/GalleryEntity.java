@@ -38,30 +38,48 @@ package es.eucm.ead.mockup.core.view.ui.components;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.math.Interpolation;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Scaling;
 
 import es.eucm.ead.mockup.core.control.listeners.SelectListener;
+import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 
 /**
- * Represents a selectable entry for the GalleryGrid by implementing SelectListener interface.
+ * Represents a selectable entry for the GalleryGrid by implementing
+ * SelectListener interface.
  */
 public class GalleryEntity extends Image implements SelectListener {
 	private static final float animationDuration = .4f;
-	private boolean selected;
+	private boolean selected, originUpdated = false;
+	private static NinePatch selectedview;
 
 	public GalleryEntity(Texture texture) {
 		super(texture);
 		setScaling(Scaling.fit);
-		setOrigin(getPrefWidth() * .5f, getPrefHeight() * .5f);
+		if (selectedview == null) {
+			selectedview = AbstractScreen.skin.getPatch("text_focused");
+		}
+	}
+
+	@Override
+	public void draw(Batch batch, float parentAlpha) {
+		super.draw(batch, parentAlpha);
+		if (selected)
+			selectedview.draw(batch, getX(), getY(), getWidth(), getHeight());
 	}
 
 	@Override
 	public void select() {
 		changeAlpha(.9f);
 		selected = true;
+		if (!originUpdated) {
+			originUpdated = true;
+			setOrigin(getWidth() * .5f, getHeight() * .5f);
+		}
 		addAction(Actions.scaleTo(.9f, .9f, animationDuration,
 				Interpolation.swingOut));
 	}
@@ -77,11 +95,9 @@ public class GalleryEntity extends Image implements SelectListener {
 	private void changeAlpha(float to) {
 		Color col = getColor();
 		col.a = to;
-		setColor(col);
 	}
 
 	public boolean isSelected() {
 		return selected;
 	}
-
 }

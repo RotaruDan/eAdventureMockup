@@ -89,7 +89,7 @@ public class ElementEdition extends AbstractScreen {
 	 * Used to tdaw the rectangle selection.
 	 */
 	private RectangleSelector rectSel;
-	
+
 	/**
 	 * Used to draw lines.
 	 */
@@ -105,13 +105,13 @@ public class ElementEdition extends AbstractScreen {
 		toolBar = new ToolBar(skin);
 		toolBar.right();
 
-		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "MOVER",
+		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "Mover",
 				skin);
 
 		paintingComponent = new PaintingComponent();
 		paintingComponent.setVisible(false);
-		paint = new DrawComponent(paintingComponent, "ic_pencil", "Pintar", skin,
-				"Herramienta de pincel", Type.BRUSH, 350, 550);
+		paint = new DrawComponent(paintingComponent, "ic_pencil", "Pintar",
+				skin, "Herramienta de pincel", Type.BRUSH, 350, 550);
 		delete = new DrawComponent(null, "ic_eraser", "Borrar", skin,
 				"Herramienta de goma", Type.RUBBER, 350, 250);
 		text = new DrawComponent(null, "ic_text", "Texto", skin,
@@ -134,9 +134,11 @@ public class ElementEdition extends AbstractScreen {
 				text.getButton(), interac.getButton(), effect.getButton(),
 				more.getButton());
 
-		//toolBar.debug();
+		// toolBar.debug();
 		Label name = new Label("Edición de elemento", skin);
-		toolBar.add(name).padLeft(UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f).expandX().left();
+		toolBar.add(name)
+				.padLeft(UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 1.1f)
+				.expandX().left();
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
 		toolBar.add(move);
 		toolBar.add(paint.getButton());
@@ -208,16 +210,17 @@ public class ElementEdition extends AbstractScreen {
 	@Override
 	public void draw() {
 		stage.draw();
-		 Table.drawDebug(stage);
+		Table.drawDebug(stage);
 	}
 
 	@Override
 	public void hide() {
 		root.setVisible(false);
 		rectSel.setVisible(false);
+		paintingComponent.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
 	}
-	
+
 	@Override
 	public void dispose() {
 		paintingComponent.dispose();

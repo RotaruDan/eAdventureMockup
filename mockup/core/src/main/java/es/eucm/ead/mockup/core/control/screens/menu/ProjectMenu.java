@@ -58,9 +58,9 @@ import es.eucm.ead.mockup.core.view.ui.buttons.MenuButton;
 public class ProjectMenu extends AbstractScreen {
 
 	/**
-	 * TODO: when refactoring change this way of navigation...
-	 * Fast navigation implementation to know that
-	 * we must come to this Screen if we go to the gallery by clicking { initialSceneButton }
+	 * TODO: when refactoring change this way of navigation... Fast navigation
+	 * implementation to know that we must come to this Screen if we go to the
+	 * gallery by clicking { initialSceneButton }
 	 */
 	private static boolean FROM_INITIAL_SCENE;
 
@@ -77,31 +77,37 @@ public class ProjectMenu extends AbstractScreen {
 
 		super.root = new Group();
 		root.setVisible(false);
-		
-		/*Warning Panel*/
-		final float warinngPanelWidth = stagew*.3f;
-		final float warinngPanelHeight = stageh*.1f;
+
+		/* Warning Panel */
+		final float warinngPanelWidth = stagew * .3f;
+		final float warinngPanelHeight = stageh * .1f;
 		final float warinngPanelX = 0;
-		final float warinngPanelY = halfstageh - warinngPanelHeight*.5f;
+		final float warinngPanelY = halfstageh - warinngPanelHeight * .5f;
 		final Panel warningPanel = new Panel(skin);
 		warningPanel.add("No es posible jugar en esta demo.");
-		warningPanel.setBounds(warinngPanelX, warinngPanelY, warinngPanelWidth, warinngPanelHeight);
+		warningPanel.setBounds(warinngPanelX, warinngPanelY, warinngPanelWidth,
+				warinngPanelHeight);
 		warningPanel.setVisible(false);
 		/**/
-		
+
 		final MenuButton scene, element, gallery, play, takePictureButton, initialSceneButton, recordVideoButton;
 		scene = new MenuButton("Escena", skin, "ic_editstage",
-				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
+				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);// TODO
+																				// use
+																				// i18n
+																				// in
+																				// this
+																				// class
 		element = new MenuButton("Elemento", skin, "ic_editelement",
 				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);
 		gallery = new MenuButton("Galeria", skin, "ic_galery",
 				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);
 		play = new MenuButton("Jugar", skin, "ic_playgame",
 				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);
-		play.addListener(new ClickListener(){
+		play.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				if(warningPanel.isVisible()){
+				if (warningPanel.isVisible()) {
 					mockupController.hide(warningPanel);
 				} else {
 					mockupController.show(warningPanel);
@@ -118,7 +124,8 @@ public class ProjectMenu extends AbstractScreen {
 		bottomButtonsTable
 				.setBounds(0, 0, stagew, UIAssets.TOOLBAR_HEIGHT * 2f);
 
-		takePictureButton = new MenuButton("Tomar Foto", skin, "ic_photocamera");//TODO i18n
+		takePictureButton = new MenuButton("Tomar Foto", skin, "ic_photocamera");// TODO
+																					// i18n
 		initialSceneButton = new MenuButton("Aquí empieza el juego", skin, am,
 				Constants.demoScenes[0]);
 		recordVideoButton = new MenuButton("Grabar Vídeo", skin,
@@ -168,8 +175,8 @@ public class ProjectMenu extends AbstractScreen {
 		initialSceneButton.addListener(mTransitionListener);
 
 		bottomButtonsTable.add(takePictureButton).fill().left();
-		bottomButtonsTable.add(initialSceneButton).height(
-				bottomButtonsTable.getHeight()).width(250f).expandX();
+		bottomButtonsTable.add(initialSceneButton)
+				.height(bottomButtonsTable.getHeight()).width(250f).expandX();
 		bottomButtonsTable.add(recordVideoButton).fill().right();
 
 		final TextField projectName = new TextField(project_name, skin);
@@ -187,9 +194,8 @@ public class ProjectMenu extends AbstractScreen {
 		topLeftbuttons.add(backButton);
 		topLeftbuttons.add("Proyecto:");
 		topLeftbuttons.add(projectName)
-				.width(
-						skin.getFont("default-font").getBounds(
-								projectName.getText()).width * 1.35f);
+				.width(skin.getFont("default-font").getBounds(
+						projectName.getText()).width * 1.35f);
 
 		Image bg = new Image(skin.getRegion("bg2"));
 		bg.setTouchable(Touchable.disabled);
@@ -240,9 +246,9 @@ public class ProjectMenu extends AbstractScreen {
 	}
 
 	/**
-	 * Fast navigation implementation to know that
-	 * we must come to this Screen if we go to the gallery by clicking { initialSceneButton }
-	 * if true we pressed initialSceneButton.
+	 * Fast navigation implementation to know that we must come to this Screen
+	 * if we go to the gallery by clicking { initialSceneButton } if true we
+	 * pressed initialSceneButton.
 	 */
 	public static boolean getFROM_INITIAL_SCENE() {
 		return FROM_INITIAL_SCENE;

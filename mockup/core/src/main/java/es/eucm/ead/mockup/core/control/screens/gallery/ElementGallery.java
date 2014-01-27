@@ -79,31 +79,27 @@ public class ElementGallery extends AbstractScreen {
 		ToolBar bottomToolbar = new ToolBar(skin);
 		topToolbar.right();
 
-		String search = "Buscar por ...";//TODO use i18n!
+		String search = "Buscar por ...";// TODO use i18n!
 		TextField searchtf = new TextField("", skin);
 		searchtf.setMessageText(search);
 		searchtf.setMaxLength(search.length());
 		String[] orders = new String[] { "Ordenar por ...", "nombre A-Z",
-				"nombre Z-A", "más recientes", "menos recientes" };//TODO use i18n!
+				"nombre Z-A", "más recientes", "menos recientes" };// TODO use
+																	// i18n!
 		SelectBox order = new SelectBox(orders, skin);
 
-		/*filter panel*/
+		/* filter panel */
 		Button applyFilter = new TextButton("Filtrar", skin);
 
-		CheckBox[] tags = new CheckBox[] { 
-				new CheckBox("Almohada", skin),
-				new CheckBox("Camilla", skin),
-				new CheckBox("Doctor", skin),
-				new CheckBox("Enfermera", skin),
-				new CheckBox("Guantes", skin),
+		CheckBox[] tags = new CheckBox[] { new CheckBox("Almohada", skin),
+				new CheckBox("Camilla", skin), new CheckBox("Doctor", skin),
+				new CheckBox("Enfermera", skin), new CheckBox("Guantes", skin),
 				new CheckBox("Habitación", skin),
 				new CheckBox("Hospital", skin),
-				new CheckBox("Quirófano", skin), 
+				new CheckBox("Quirófano", skin),
 				new CheckBox("Medicamentos", skin),
-				new CheckBox("Médico", skin), 
-				new CheckBox("Paciente", skin),
-				new CheckBox("Vehículo", skin)
-				};
+				new CheckBox("Médico", skin), new CheckBox("Paciente", skin),
+				new CheckBox("Vehículo", skin) };
 		Table tagList = new Table(skin);
 		tagList.left();
 		tagList.defaults().left();
@@ -139,12 +135,15 @@ public class ElementGallery extends AbstractScreen {
 
 		Label nombre = new Label("Galería de elementos", skin);
 
-		topToolbar.add(nombre).expandX().left().padLeft(
-				UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 1.1f);
+		topToolbar.add(nombre).expandX().left()
+				.padLeft(UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 1.1f);
 		topToolbar.add(order);
 		topToolbar.add(filterButton);
 		topToolbar.add(searchtf).width(
-				skin.getFont("default-font").getBounds(search).width + 50); //FIXME hardcoded fixed value
+				skin.getFont("default-font").getBounds(search).width + 50); // FIXME
+																			// hardcoded
+																			// fixed
+																			// value
 		/***/
 
 		final int COLS = 4, ROWS = 6;
@@ -176,7 +175,8 @@ public class ElementGallery extends AbstractScreen {
 					GalleryEntity auxImg = new GalleryEntity(
 							Loading.demoElementsThumbnail[rand]);
 					auxImg.setUserObject(Integer.valueOf(rand));
-					gridPanel.addItem(auxImg, i, j);//.size(auxWidth, auxHeight);
+					gridPanel.addItem(auxImg, i, j);// .size(auxWidth,
+													// auxHeight);
 				}
 			}
 		}
