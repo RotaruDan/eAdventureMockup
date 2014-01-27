@@ -110,7 +110,7 @@ public class Picture extends AbstractScreen {
 		rootTable.add(resolution).right().top();
 		rootTable.row();
 		rootTable.add(takePicButton).size(takePicButton.getWidth() * 1.3f)
-				.bottom().expand().padBottom(5f);
+		.bottom().expand().padBottom(5f);
 
 		//Coice dialog panel
 		mDialogPanel = new Panel(skin, "dialog");
@@ -119,7 +119,7 @@ public class Picture extends AbstractScreen {
 		mDialogPanel.setHideOnOutterTouch(false);
 		mDialogPanel.pad(DEFAULT_ICON_LABEL_SPACE);
 		mDialogPanel.defaults().space(DEFAULT_ICON_LABEL_SPACE).uniform()
-				.expand().fill();
+		.expand().fill();
 		final float PANEL_W = stagew * .3f, PANEL_H = UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 3f, PANEL_X = halfstagew
 				- PANEL_W * .5F, PANEL_Y = halfstageh - PANEL_H * .5f;
 		mDialogPanel.setBounds(PANEL_X, PANEL_Y, PANEL_W, PANEL_H);
@@ -203,7 +203,9 @@ public class Picture extends AbstractScreen {
 		previousClearColor.set(this.screenController.getClearColor());
 		this.screenController.changeClearColor(clearColor);
 		Screens previousScreen = mockupController.getPreviousScreen();
-		setPreviousScreen(previousScreen);
+		if(previousScreen != Screens.ELEMENT_EDITION && previousScreen != Screens.SCENE_EDITION){
+			setPreviousScreen(previousScreen);
+		}
 
 		//	We implement distincg behaviours 
 		// depending on where we came from

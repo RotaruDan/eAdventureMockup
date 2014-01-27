@@ -149,7 +149,10 @@ public class Recording extends AbstractScreen {
 		super.show();
 		previousClearColor.set(this.screenController.getClearColor());
 		this.screenController.changeClearColor(clearColor);
-		setPreviousScreen(mockupController.getPreviousScreen());
+		Screens previousScreen = mockupController.getPreviousScreen();
+		if(previousScreen != Screens.SCENE_EDITION){
+			setPreviousScreen(previousScreen);
+		}
 		rootTable.setVisible(true);
 		navigationGroup.setVisible(true);
 	}

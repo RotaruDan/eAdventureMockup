@@ -42,6 +42,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 
@@ -89,7 +91,6 @@ public class ElementEdition extends AbstractScreen {
 
 	@Override
 	public void create() {
-		setPreviousScreen(Screens.PROJECT_MENU);
 		this.TOOLBAR_ICON_HEIGHT = UIAssets.TOOLBAR_HEIGHT;
 		this.TOOLBAR_ICON_WIDTH = TOOLBAR_ICON_HEIGHT * 1.5f;
 		super.root = new Group();
@@ -127,6 +128,9 @@ public class ElementEdition extends AbstractScreen {
 				text.getButton(), interac.getButton(), effect.getButton(),
 				more.getButton());
 
+		//toolBar.debug();
+		Label name = new Label("Edición de elemento", skin);
+		toolBar.add(name).padLeft(UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f).expandX().left();
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
 		toolBar.add(move);
 		toolBar.add(paint.getButton());
@@ -135,7 +139,7 @@ public class ElementEdition extends AbstractScreen {
 		toolBar.add(interac.getButton());
 		toolBar.add(effect.getButton());
 		toolBar.add(more.getButton());
-		/* Does the actors in toolBar update their coordinates */
+		/* Make the actors in toolBar update their coordinates */
 		toolBar.invalidate();
 		toolBar.validate();
 
@@ -170,6 +174,8 @@ public class ElementEdition extends AbstractScreen {
 	@Override
 	public void show() {
 		super.show();
+		Screens previousScreen = mockupController.getPreviousScreen();
+		setPreviousScreen(previousScreen);
 		root.setVisible(true);
 		float x, y, w, h;
 		x = 0;
@@ -194,7 +200,7 @@ public class ElementEdition extends AbstractScreen {
 	@Override
 	public void draw() {
 		stage.draw();
-		// Table.drawDebug(stage);
+		 Table.drawDebug(stage);
 	}
 
 	@Override

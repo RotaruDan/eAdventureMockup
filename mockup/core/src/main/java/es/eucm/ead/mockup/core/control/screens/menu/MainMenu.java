@@ -146,6 +146,13 @@ public class MainMenu extends AbstractScreen {
 		root.addActor(bg);
 		root.addActor(sp);
 		root.addActor(cg);
+		
+		Table topName = new Table(skin);
+		topName.setBounds(0, stageh - UIAssets.TOOLBAR_HEIGHT, stagew, UIAssets.TOOLBAR_HEIGHT);
+		topName.left();
+		topName.add("Menú principal").padLeft(10f);
+		root.addActor(topName);
+ 		
 		stage.addActor(root);
 
 		exitDialog = new Dialog("¿Salir?", skin, "exit-dialog") {

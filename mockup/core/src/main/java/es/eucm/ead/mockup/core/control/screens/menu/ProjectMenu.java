@@ -87,7 +87,7 @@ public class ProjectMenu extends AbstractScreen {
 		play = new MenuButton("Jugar", skin, "ic_playgame",
 				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);
 
-		CircularGroup cg = new CircularGroup(halfstageh - 80, 135, 360, true,
+		CircularGroup cg = new CircularGroup(halfstageh - 100, 135, 360, true,
 				scene, element, gallery, play);
 		cg.setX(halfstagew);
 		cg.setY(halfstageh * 1.1f);
@@ -156,13 +156,14 @@ public class ProjectMenu extends AbstractScreen {
 
 		// We create a table with contraints for
 		// GoBackButton and ProjectNameLabel
-		Table topLeftbuttons = new Table();
+		Table topLeftbuttons = new Table(skin);
 		topLeftbuttons.setBounds(0, stageh
 				- UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT, stagew,
 				UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
 		topLeftbuttons.left();
 		topLeftbuttons.defaults().height(UIAssets.OPTIONS_BUTTON_WIDTH_HEIGHT);
 		topLeftbuttons.add(backButton);
+		topLeftbuttons.add("Proyecto:");
 		topLeftbuttons.add(projectName)
 				.width(
 						skin.getFont("default-font").getBounds(
