@@ -52,6 +52,7 @@ import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.utils.Constants;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.CircularGroup;
+import es.eucm.ead.mockup.core.view.ui.Panel;
 import es.eucm.ead.mockup.core.view.ui.buttons.MenuButton;
 
 public class ProjectMenu extends AbstractScreen {
@@ -76,7 +77,18 @@ public class ProjectMenu extends AbstractScreen {
 
 		super.root = new Group();
 		root.setVisible(false);
-
+		
+		/*Warning Panel*/
+		final float warinngPanelWidth = stagew*.3f;
+		final float warinngPanelHeight = stageh*.1f;
+		final float warinngPanelX = 0;
+		final float warinngPanelY = halfstageh - warinngPanelHeight*.5f;
+		final Panel warningPanel = new Panel(skin);
+		warningPanel.add("No es posible jugar en esta demo.");
+		warningPanel.setBounds(warinngPanelX, warinngPanelY, warinngPanelWidth, warinngPanelHeight);
+		warningPanel.setVisible(false);
+		/**/
+		
 		final MenuButton scene, element, gallery, play, takePictureButton, initialSceneButton, recordVideoButton;
 		scene = new MenuButton("Escena", skin, "ic_editstage",
 				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);//TODO use i18n in this class
@@ -86,6 +98,16 @@ public class ProjectMenu extends AbstractScreen {
 				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);
 		play = new MenuButton("Jugar", skin, "ic_playgame",
 				PANEL_MENU_BUTTON_WIDTH_HEIGHT, PANEL_MENU_BUTTON_WIDTH_HEIGHT);
+		play.addListener(new ClickListener(){
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				if(warningPanel.isVisible()){
+					mockupController.hide(warningPanel);
+				} else {
+					mockupController.show(warningPanel);
+				}
+			}
+		});
 
 		CircularGroup cg = new CircularGroup(halfstageh - 100, 135, 360, true,
 				scene, element, gallery, play);
@@ -174,6 +196,7 @@ public class ProjectMenu extends AbstractScreen {
 		bg.setBounds(0, 0, stagew, stageh);
 
 		root.addActor(bg);
+		root.addActor(warningPanel);
 		root.addActor(topLeftbuttons);
 		root.addActor(bottomButtonsTable);
 		root.addActor(cg);

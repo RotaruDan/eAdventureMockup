@@ -90,15 +90,20 @@ public class ElementGallery extends AbstractScreen {
 		/*filter panel*/
 		Button applyFilter = new TextButton("Filtrar", skin);
 
-		CheckBox[] tags = new CheckBox[] { new CheckBox("Hospital", skin),
-				new CheckBox("Quirófano", skin),
-				new CheckBox("Enfermera", skin), new CheckBox("Camilla", skin),
+		CheckBox[] tags = new CheckBox[] { 
 				new CheckBox("Almohada", skin),
+				new CheckBox("Camilla", skin),
+				new CheckBox("Doctor", skin),
+				new CheckBox("Enfermera", skin),
+				new CheckBox("Guantes", skin),
 				new CheckBox("Habitación", skin),
-				new CheckBox("Vehículo", skin), new CheckBox("Doctor", skin),
-				new CheckBox("Paciente", skin), new CheckBox("Guantes", skin),
+				new CheckBox("Hospital", skin),
+				new CheckBox("Quirófano", skin), 
 				new CheckBox("Medicamentos", skin),
-				new CheckBox("Médico", skin) };
+				new CheckBox("Médico", skin), 
+				new CheckBox("Paciente", skin),
+				new CheckBox("Vehículo", skin)
+				};
 		Table tagList = new Table(skin);
 		tagList.left();
 		tagList.defaults().left();
