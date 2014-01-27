@@ -38,6 +38,7 @@ package es.eucm.ead.mockup.core.control;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.IdentityMap;
 
 import es.eucm.ead.editor.control.Controller;
@@ -69,7 +70,7 @@ import es.eucm.ead.mockup.core.control.screens.menu.ProjectMenu;
  * <li>actions (reusable editor calls)</li>
  * </ul>
  */
-public class MockupController implements EventListener {
+public class MockupController implements EventListener, Disposable {
 
 	private IdentityMap<Screens, AbstractScreen> states;
 	private Controller controller;
@@ -171,6 +172,10 @@ public class MockupController implements EventListener {
 	}
 
 	public void dispose() {
+		for (AbstractScreen _screen : this.states.values()) {
+			_screen.dispose();
+		}
+		
 		loading.dispose();
 
 		AbstractScreen.stage.dispose();

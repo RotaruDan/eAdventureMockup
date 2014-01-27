@@ -90,6 +90,11 @@ public class SceneEdition extends AbstractScreen {
 	 * Used to draw the rectangle selection.
 	 */
 	private RectangleSelector rectSel;
+	
+	/**
+	 * Used to draw lines.
+	 */
+	private PaintingComponent paintingComponent;
 
 	@Override
 	public void create() {
@@ -103,11 +108,14 @@ public class SceneEdition extends AbstractScreen {
 		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "Mover",
 				skin);
 
-		paint = new DrawComponent("ic_pencil", "Pintar", skin,
+
+		paintingComponent = new PaintingComponent();
+		paintingComponent.setVisible(false);
+		paint = new DrawComponent(paintingComponent, "ic_pencil", "Pintar", skin,
 				"Herramienta de pincel", Type.BRUSH, 300, 550);
-		delete = new DrawComponent("ic_eraser", "Borrar", skin,
+		delete = new DrawComponent(null, "ic_eraser", "Borrar", skin,
 				"Herramienta de goma", Type.RUBBER, 300, 250);
-		text = new DrawComponent("ic_text", "Texto", skin,
+		text = new DrawComponent(null, "ic_text", "Texto", skin,
 				"Herramienta de escribir", Type.TEXT, 300, 550);
 		// change this ic_select icon
 		rectSel = new RectangleSelector();
@@ -129,7 +137,6 @@ public class SceneEdition extends AbstractScreen {
 				text.getButton(), interac.getButton(), add.getButton(),
 				effect.getButton(), more.getButton());
 
-		// toolBar.debug();
 		Label name = new Label("Edición de escena", skin);
 		toolBar.add(name).padLeft(UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT*1.1f).expandX().left();
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
@@ -150,9 +157,8 @@ public class SceneEdition extends AbstractScreen {
 		editingScene.setBounds(0, 0, stagew, stageh - UIAssets.TOOLBAR_HEIGHT);
 
 		root.addActor(editingScene);
-		root.addActor(rectSel);
-		PaintingComponent paintingComponent = new PaintingComponent();
 		root.addActor(paintingComponent);
+		root.addActor(rectSel);
 		root.addActor(frames);
 
 		root.addActor(paint.getPanel());
@@ -188,6 +194,7 @@ public class SceneEdition extends AbstractScreen {
 		w = stagew;
 		h = stageh - UIAssets.TOOLBAR_HEIGHT;
 		rectSel.setBounds(x, y, w, h);
+		paintingComponent.setBounds(x, y, w, h);
 		if (SCENE_INDEX != null) {
 			editingScene.setDrawable(new TextureRegionDrawable(
 					new TextureRegion(Loading.demoScenes[SCENE_INDEX])));
@@ -213,6 +220,11 @@ public class SceneEdition extends AbstractScreen {
 		root.setVisible(false);
 		rectSel.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
+	}
+	
+	@Override
+	public void dispose() {
+		paintingComponent.dispose();
 	}
 
 	/**

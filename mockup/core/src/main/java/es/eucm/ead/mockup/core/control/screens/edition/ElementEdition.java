@@ -58,6 +58,7 @@ import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent.Type;
 import es.eucm.ead.mockup.core.view.ui.components.edition.EffectsComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.InteractiveComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.PaintingComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent.TypeOther;
 import es.eucm.ead.mockup.core.view.ui.components.edition.RectangleSelector;
 
@@ -88,6 +89,11 @@ public class ElementEdition extends AbstractScreen {
 	 * Used to tdaw the rectangle selection.
 	 */
 	private RectangleSelector rectSel;
+	
+	/**
+	 * Used to draw lines.
+	 */
+	private PaintingComponent paintingComponent;
 
 	@Override
 	public void create() {
@@ -98,17 +104,17 @@ public class ElementEdition extends AbstractScreen {
 
 		toolBar = new ToolBar(skin);
 		toolBar.right();
-		// toolBar.setBounds(0, AbstractScreen.stageh * .9f,
-		// AbstractScreen.stagew, AbstractScreen.stageh * .1f);
 
 		Button move = new ToolbarButton(skin.getDrawable("ic_move"), "MOVER",
 				skin);
 
-		paint = new DrawComponent("ic_pencil", "Pintar", skin,
+		paintingComponent = new PaintingComponent();
+		paintingComponent.setVisible(false);
+		paint = new DrawComponent(paintingComponent, "ic_pencil", "Pintar", skin,
 				"Herramienta de pincel", Type.BRUSH, 350, 550);
-		delete = new DrawComponent("ic_eraser", "Borrar", skin,
+		delete = new DrawComponent(null, "ic_eraser", "Borrar", skin,
 				"Herramienta de goma", Type.RUBBER, 350, 250);
-		text = new DrawComponent("ic_text", "Texto", skin,
+		text = new DrawComponent(null, "ic_text", "Texto", skin,
 				"Herramienta de escribir", Type.TEXT, 350, 550);
 
 		rectSel = new RectangleSelector();
@@ -149,6 +155,7 @@ public class ElementEdition extends AbstractScreen {
 				.setBounds(0, 0, stagew, stageh - UIAssets.TOOLBAR_HEIGHT);
 
 		root.addActor(editingElement);
+		root.addActor(paintingComponent);
 		root.addActor(rectSel);
 		root.addActor(frames);
 
@@ -183,6 +190,7 @@ public class ElementEdition extends AbstractScreen {
 		w = stagew;
 		h = stageh - UIAssets.TOOLBAR_HEIGHT;
 		rectSel.setBounds(x, y, w, h);
+		paintingComponent.setBounds(x, y, w, h);
 		if (ELEMENT_INDEX != null) {
 			editingElement.setDrawable(new TextureRegionDrawable(
 					new TextureRegion(Loading.demoElements[ELEMENT_INDEX])));
@@ -208,6 +216,11 @@ public class ElementEdition extends AbstractScreen {
 		root.setVisible(false);
 		rectSel.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
+	}
+	
+	@Override
+	public void dispose() {
+		paintingComponent.dispose();
 	}
 
 	/**

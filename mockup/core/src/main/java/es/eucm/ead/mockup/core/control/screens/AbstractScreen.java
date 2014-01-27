@@ -43,6 +43,7 @@ import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.SnapshotArray;
 
 import es.eucm.ead.mockup.core.control.MockupController;
@@ -57,7 +58,7 @@ import es.eucm.ead.mockup.core.view.ui.Panel;
  * It's responsible for updating the screen.
  * 
  */
-public abstract class AbstractScreen implements EventListener, FocusListener {
+public abstract class AbstractScreen implements EventListener, FocusListener, Disposable {
 	/**
 	 * Fade in/out default duration.
 	 */
@@ -202,5 +203,9 @@ public abstract class AbstractScreen implements EventListener, FocusListener {
 							+ " or @Override {onBackKeyPressed()}");
 		}
 		exitAnimation(previousScreen);
+	}
+	
+	@Override
+	public void dispose() {
 	}
 }

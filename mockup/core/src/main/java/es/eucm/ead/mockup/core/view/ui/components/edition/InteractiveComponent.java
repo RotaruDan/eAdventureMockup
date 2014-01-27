@@ -38,6 +38,7 @@ package es.eucm.ead.mockup.core.view.ui.components.edition;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -62,12 +63,10 @@ public class InteractiveComponent {
 
 		this.rectangleSelector = rectSel;
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin) {
-
 			@Override
 			public void setChecked(boolean isChecked) {
 				super.setChecked(isChecked);
-				if (!isChecked) {
-				}
+				rectangleSelector.setTouchable(isChecked ? Touchable.enabled : Touchable.disabled);
 			}
 		};
 
@@ -83,6 +82,7 @@ public class InteractiveComponent {
 				} else {
 					AbstractScreen.mockupController.hide(panel);
 				}
+				button.setChecked(true);
 			}
 		});
 	}
@@ -136,6 +136,7 @@ public class InteractiveComponent {
 				@Override
 				public void clicked(InputEvent event, float x, float y) {
 					rectangleSelector.setVisible(button.isChecked());
+					hide();
 				}
 			});
 

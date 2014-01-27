@@ -45,6 +45,7 @@ import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -65,14 +66,28 @@ public class DrawComponent {
 	private ToolbarButton button;
 	private Color color;
 
+	/**
+	 * This will draw lines.
+	 */
+	private PaintingComponent paintingComponent;
+
 	public enum Type {
 		BRUSH, RUBBER, TEXT
 	}
 
-	public DrawComponent(String imageUp, String name, Skin skin,
+	public DrawComponent(final PaintingComponent paintingComponent, String imageUp, String name, Skin skin,
 			String description, Type type, float width, float height) {
-		this.color = Color.BLACK;
-		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin);
+		this.color = Color.YELLOW;
+		this.paintingComponent = paintingComponent;
+		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin){
+			@Override
+			public void setChecked(boolean isChecked) {
+				if(paintingComponent != null){
+					paintingComponent.setTouchable(isChecked ? Touchable.enabled : Touchable.disabled);
+				}
+				super.setChecked(isChecked);
+			}
+		};
 		this.panel = new PaintPanel(skin, "opaque", description, type, width,
 				height);
 		button.setFocusListener(panel);
@@ -85,6 +100,7 @@ public class DrawComponent {
 				} else {
 					AbstractScreen.mockupController.hide(panel);
 				}
+				button.setChecked(true);
 			}
 		});
 	}
@@ -182,8 +198,8 @@ public class DrawComponent {
 			int radius = (int) getCurrentRadius();
 			circleSample.fillCircle(center, center, radius);
 			pixTex = new Texture(circleSample); // FIXME unmanaged upenGL
-												// textures, TODO reload
-												// onResume (after pause)
+			// textures, TODO reload
+			// onResume (after pause)
 			pixTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 			cir = new Image(pixTex);// cir.setScaleX(0.2f);
 
@@ -198,7 +214,7 @@ public class DrawComponent {
 
 			if (type != Type.TEXT) {
 				add(cir).align(Align.center).expand(false, false).fill(false)
-						.size(60, 60);
+				.size(60, 60);
 			} else {
 				textSample.setColor(color);
 				add(textSample).align(Align.left).size(60, 60);
@@ -230,7 +246,8 @@ public class DrawComponent {
 		@Override
 		public void hide() {
 			super.hide();
-
+			if(paintingComponent != null)
+				paintingComponent.setVisible(button.isChecked());
 		}
 
 		public float getSize() {
@@ -259,6 +276,7 @@ public class DrawComponent {
 			circleSample.setColor(color);
 			int radius = (int) getCurrentRadius();
 			circleSample.fillCircle(center, center, radius);
+			paintingComponent.setRadius(radius);
 			pixTex.draw(circleSample, 0, 0);
 		}
 
@@ -277,9 +295,9 @@ public class DrawComponent {
 			final int COLS = 4, ROWS = 3;
 			final Color[][] colrs = {
 					{ Color.BLACK, Color.BLUE, Color.CYAN,
-							new Color(.5f, .75f, .32f, 1f) },
-					{ Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK },
-					{ Color.RED, Color.LIGHT_GRAY, Color.YELLOW, Color.WHITE } };
+						new Color(.5f, .75f, .32f, 1f) },
+						{ Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK },
+						{ Color.RED, Color.LIGHT_GRAY, Color.YELLOW, Color.WHITE } };
 			gridPanel = new GridPanel<Actor>(skin, ROWS, COLS, 20);
 			ClickListener colorListener = new ClickListener() {
 				@Override
@@ -296,14 +314,14 @@ public class DrawComponent {
 					auxPixmap.setColor(c);
 					auxPixmap.fill();
 					final Image colorB = new Image(new Texture(auxPixmap)); // FIXME
-																			// unmanaged
-																			// upenGL
-																			// textures,
-																			// TODO
-																			// reload
-																			// onResume
-																			// (after
-																			// pause)
+					// unmanaged
+					// upenGL
+					// textures,
+					// TODO
+					// reload
+					// onResume
+					// (after
+					// pause)
 					colorB.setColor(c);
 					colorB.addListener(colorListener);
 					gridPanel.addItem(colorB, i, j).expand().fill();

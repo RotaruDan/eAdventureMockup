@@ -46,17 +46,25 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * Fast implementation of a PaintingActor.
  */
-public class PaintingComponent extends Actor {
+public class PaintingComponent extends Actor implements Disposable{
 
 	private MeshHelper mesh;
+	private float radius;
 
 	public PaintingComponent() {	
 		mesh = new MeshHelper();
-		addListener(new InputListener() {			
+		addListener(new InputListener() {	
+			
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,
+					int pointer, int button) {
+				return true;
+			}
 			public void touchDragged(InputEvent event, float screenX,
 					float screenY, int pointer) {
 				mesh.input(screenX, screenY);
@@ -68,13 +76,18 @@ public class PaintingComponent extends Actor {
 	public void draw(Batch batch, float parentAlpha) {
 		mesh.draw(batch);
 	}
+
+	@Override
+	public void dispose() {
+		mesh.dispose();		
+	}
 	
-	private class MeshHelper {
+	private class MeshHelper implements Disposable{
 		private Mesh mesh;
 		private ShaderProgram meshShader;
-		static final int MAX_LINES = 1000; 
+		private static final int MAX_LINES = 1000; 
 		float[] lineVertices;
-		int vertexIndex = 0;
+		private int vertexIndex = 0;
 		private Vector3 unprojectedVertex = new Vector3();
 		private float lastX, lastY;
 		
@@ -85,83 +98,30 @@ public class PaintingComponent extends Actor {
 		}
 
 		public void createMesh() {
-			mesh = new Mesh(true, MAX_LINES * 2, 0, new VertexAttribute(Usage.Position, 2, "a_position"));		
+			mesh = new Mesh(true, MAX_LINES * 2, 0, new VertexAttribute(Usage.Position, 2, "a_position"));	
 		}
 
 		private void createShader() {
 			// this shader tells opengl where to put things
-			String vertexShader = "";
-			/*vertexShader =  "attribute vec4 a_position;\n"
-					+  "attribute vec4 a_color;\n"
-					+  "attribute vec2 a_texCoord0;\n"
-
-	      + " uniform mat4 u_projTrans;\n"
-
-	      +  "varying vec4 v_color;\n"
-	      +  "varying vec2 v_texCoords;\n"
-
-	      +  "void main() {\n"
-	      +     " v_color = a_color;\n"
-	      +    " v_texCoords = a_texCoord0;\n"
-	      +     " gl_Position = u_projTrans * a_position;\n"
-	      + " }\n";*/
-			// this one tells it what goes in between the points (i.e
-			// colour/texture)
-			vertexShader = "attribute vec4 a_position;    \n" + 
-					//"attribute vec4 a_color;\n" +
-					//"attribute vec2 a_texCoord0;\n" + 
-					"uniform mat4 u_worldView;\n" + 
-					//"varying vec4 v_color;" + 
-					//"varying vec2 v_texCoords;" + 
-					"void main()                  \n" + 
-					"{                            \n" + 
-					//"   v_color = vec4(1, 1, 1, 1); \n" + 
-					//"   v_texCoords = a_texCoord0; \n" + 
-					"   gl_Position =  u_worldView * a_position;  \n"      + 
+			String vertexShader = 
+					"attribute vec4 a_position;    				\n" + 
+					"uniform mat4 u_worldView;					\n" + 
+					"void main()                  				\n" + 
+					"{                            				\n" + 
+					"   gl_Position =  u_worldView * a_position;\n" + 
 					"}" ;
-			String fragmentShader = "#ifdef GL_ES                \n"
-					+ "precision mediump float;    \n"
-					+ "#endif                      \n"
-					+ "void main()                 \n"
-					+ "{                           \n"
-					+ "  gl_FragColor = vec4(1.0,1.0,0.0,1.0);    \n"
+
+			// this one tells it what goes in between the points (i.e
+			// color/texture)
+			String fragmentShader = 
+					  "#ifdef GL_ES                			\n"
+					+ "precision mediump float;    			\n"
+					+ "#endif                      			\n"
+					+ "void main()                 			\n"
+					+ "{                           			\n"
+					+ "  gl_FragColor = vec4(1, 1, 0, 1);   \n"
 					+ "}";
 
-			/*fragmentShader = "#ifdef GL_ES\n"
-					+"precision mediump float;\n"
-					+"#endif\n"
-
-			+"varying vec4 v_color;\n"
-			+"varying vec2 v_texCoords;\n"
-			+"uniform sampler2D u_texture;\n"
-
-			+"void main() {\n"
-			+"	gl_FragColor = v_color * texture2D(u_texture, v_texCoords);\n"
-			+"}\n";
-
-
-			vertexShader = "attribute vec4 a_position;    \n" + 
-					"attribute vec4 a_color;\n" +
-					"attribute vec2 a_texCoord0;\n" + 
-					"uniform mat4 u_worldView;\n" + 
-					"varying vec4 v_color;" + 
-					"varying vec2 v_texCoords;" + 
-					"void main()                  \n" + 
-					"{                            \n" + 
-					"   v_color = vec4(1, 1, 1, 1); \n" + 
-					"   v_texCoords = a_texCoord0; \n" + 
-					"   gl_Position =  u_worldView * a_position;  \n"      + 
-					"}                            \n" ;
-			fragmentShader = "#ifdef GL_ES\n" +
-					"precision mediump float;\n" + 
-					"#endif\n" + 
-					"varying vec4 v_color;\n" + 
-					"varying vec2 v_texCoords;\n" + 
-					"uniform sampler2D u_texture;\n" + 
-					"void main()                                  \n" + 
-					"{                                            \n" + 
-					"  gl_FragColor = v_color * texture2D(u_texture, v_texCoords);\n"+
-					"}";*/
 			// make an actual shader from our strings
 			ShaderProgram.pedantic = false;
 			meshShader = new ShaderProgram(vertexShader, fragmentShader);
@@ -187,7 +147,6 @@ public class PaintingComponent extends Actor {
 
 		@SuppressWarnings("deprecation")
 		public void input(float x, float y) {
-			System.out.println(x + " " + y);
 			unprojectedVertex.set(x,y, 0);
 			x =  unprojectedVertex.x;
 			y =  unprojectedVertex.y;
@@ -197,7 +156,7 @@ public class PaintingComponent extends Actor {
 
 				unprojectedVertex.set(x, y, 0).sub(lastX, lastY, 0).nor();
 				unprojectedVertex.set(-unprojectedVertex.y, unprojectedVertex.x, 0);
-				unprojectedVertex.mul(5);		
+				unprojectedVertex.mul(radius);		
 
 				lineVertices[vertexIndex++] = x + unprojectedVertex.x;
 				lineVertices[vertexIndex++] = y + unprojectedVertex.y;
@@ -212,5 +171,9 @@ public class PaintingComponent extends Actor {
 			}
 		}
 
+	}
+
+	public void setRadius(int radius) {
+		this.radius = radius*.5f;		
 	}
 }
