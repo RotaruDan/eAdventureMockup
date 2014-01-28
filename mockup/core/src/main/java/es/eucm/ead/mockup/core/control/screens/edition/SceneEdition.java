@@ -53,6 +53,7 @@ import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
 import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
 import es.eucm.ead.mockup.core.view.ui.components.edition.AddComponent;
+import es.eucm.ead.mockup.core.view.ui.components.edition.DeletingComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent.Type;
 import es.eucm.ead.mockup.core.view.ui.components.edition.EffectsComponent;
@@ -96,6 +97,11 @@ public class SceneEdition extends AbstractScreen {
 	 */
 	private PaintingComponent paintingComponent;
 	private ButtonGroup buttonGroup;
+	
+	/**
+	 * Used to delete what we previously drawn.
+	 */
+	private DeletingComponent deletingComponent;
 
 	@Override
 	public void create() {
@@ -111,11 +117,12 @@ public class SceneEdition extends AbstractScreen {
 
 		paintingComponent = new PaintingComponent();
 		paintingComponent.setVisible(false);
-		paint = new DrawComponent(paintingComponent, "ic_pencil", "Pintar",
+		paint = new DrawComponent(null, paintingComponent, "ic_pencil", "Pintar",
 				skin, "Herramienta de pincel", Type.BRUSH, 300, 550);
-		delete = new DrawComponent(null, "ic_eraser", "Borrar", skin,
+		deletingComponent = new DeletingComponent(paintingComponent);
+		delete = new DrawComponent(deletingComponent, null, "ic_eraser", "Borrar", skin,
 				"Herramienta de goma", Type.RUBBER, 300, 250);
-		text = new DrawComponent(null, "ic_text", "Texto", skin,
+		text = new DrawComponent(null, null, "ic_text", "Texto", skin,
 				"Herramienta de escribir", Type.TEXT, 300, 550);
 		// change this ic_select icon
 		rectSel = new RectangleSelector();
@@ -166,9 +173,10 @@ public class SceneEdition extends AbstractScreen {
 		editingScene = new Image();
 		editingScene.setScaling(Scaling.fit);
 		editingScene.setBounds(0, 0, stagew, stageh - UIAssets.TOOLBAR_HEIGHT);
-
+		
 		root.addActor(editingScene);
 		root.addActor(paintingComponent);
+		root.addActor(deletingComponent);
 		root.addActor(rectSel);
 		root.addActor(frames);
 
@@ -206,6 +214,7 @@ public class SceneEdition extends AbstractScreen {
 		h = stageh - UIAssets.TOOLBAR_HEIGHT;
 		rectSel.setBounds(x, y, w, h);
 		paintingComponent.setBounds(x, y, w, h);
+		deletingComponent.setBounds(x, y, w, h);
 		if (SCENE_INDEX != null) {
 			editingScene.setDrawable(new TextureRegionDrawable(
 					new TextureRegion(Loading.demoScenes[SCENE_INDEX])));
@@ -231,6 +240,7 @@ public class SceneEdition extends AbstractScreen {
 		root.setVisible(false);
 		rectSel.setVisible(false);
 		paintingComponent.setVisible(false);
+		deletingComponent.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
 		buttonGroup.uncheckAll();
 	}

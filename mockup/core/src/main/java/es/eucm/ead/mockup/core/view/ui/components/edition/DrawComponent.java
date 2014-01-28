@@ -70,12 +70,17 @@ public class DrawComponent {
 	 * This will draw lines.
 	 */
 	private PaintingComponent paintingComponent;
+	
+	/**
+	 * This will delete lines.
+	 */
+	private DeletingComponent deletingComponent;
 
 	public enum Type {
 		BRUSH, RUBBER, TEXT
 	}
 
-	public DrawComponent(final PaintingComponent paintingComponent,
+	public DrawComponent(final DeletingComponent deletingComponent, final PaintingComponent paintingComponent,
 			String imageUp, String name, Skin skin, String description,
 			Type type, float width, float height) {
 		if(type.equals(Type.BRUSH)){
@@ -85,11 +90,17 @@ public class DrawComponent {
 		}
 
 		this.paintingComponent = paintingComponent;
+		this.deletingComponent = deletingComponent;
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin) {
 			@Override
 			public void setChecked(boolean isChecked) {
 				if (paintingComponent != null) {
 					paintingComponent
+					.setTouchable(isChecked ? Touchable.enabled
+							: Touchable.disabled);
+				}
+				if (deletingComponent != null) {
+					deletingComponent
 					.setTouchable(isChecked ? Touchable.enabled
 							: Touchable.disabled);
 				}
@@ -203,6 +214,8 @@ public class DrawComponent {
 			Pixmap.setBlending(b);
 			if (type == Type.BRUSH) {
 				paintingComponent.setRadius(getCurrentRadius());
+			} else if(type.equals(Type.RUBBER)){
+				deletingComponent.setRadius(getCurrentRadius());				
 			}
 			circleSample.setColor(color);
 			int radius = (int) getCurrentRadius();
@@ -258,6 +271,8 @@ public class DrawComponent {
 			super.hide();
 			if (paintingComponent != null)
 				paintingComponent.setVisible(button.isChecked());
+			if (deletingComponent != null)
+				deletingComponent.setVisible(button.isChecked());
 		}
 
 		public float getSize() {
@@ -286,8 +301,12 @@ public class DrawComponent {
 			circleSample.setColor(color);
 			float radius = getCurrentRadius();
 			circleSample.fillCircle(center, center, (int) radius);
-			if(paintingComponent != null)
+			if(paintingComponent != null){
 				paintingComponent.setRadius(radius);
+				paintingComponent.setMeshColor(color);
+			}
+			if (deletingComponent != null)
+				deletingComponent.setRadius(radius);
 			pixTex.draw(circleSample, 0, 0);
 		}
 

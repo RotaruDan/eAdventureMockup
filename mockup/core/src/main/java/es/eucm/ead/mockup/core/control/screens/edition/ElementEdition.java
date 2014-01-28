@@ -43,7 +43,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.ButtonGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Scaling;
 
@@ -53,6 +52,7 @@ import es.eucm.ead.mockup.core.control.screens.Screens;
 import es.eucm.ead.mockup.core.view.UIAssets;
 import es.eucm.ead.mockup.core.view.ui.ToolBar;
 import es.eucm.ead.mockup.core.view.ui.buttons.ToolbarButton;
+import es.eucm.ead.mockup.core.view.ui.components.edition.DeletingComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent.Type;
 import es.eucm.ead.mockup.core.view.ui.components.edition.EffectsComponent;
@@ -95,6 +95,10 @@ public class ElementEdition extends AbstractScreen {
 	 */
 	private PaintingComponent paintingComponent;
 	private ButtonGroup buttonGroup;
+	/**
+	 * Used to delete lines.
+	 */
+	private DeletingComponent deletingComponent;
 
 	@Override
 	public void create() {
@@ -111,11 +115,12 @@ public class ElementEdition extends AbstractScreen {
 
 		paintingComponent = new PaintingComponent();
 		paintingComponent.setVisible(false);
-		paint = new DrawComponent(paintingComponent, "ic_pencil", "Pintar",
+		paint = new DrawComponent(null, paintingComponent, "ic_pencil", "Pintar",
 				skin, "Herramienta de pincel", Type.BRUSH, 350, 550);
-		delete = new DrawComponent(null, "ic_eraser", "Borrar", skin,
+		deletingComponent = new DeletingComponent(paintingComponent);
+		delete = new DrawComponent(deletingComponent, null, "ic_eraser", "Borrar", skin,
 				"Herramienta de goma", Type.RUBBER, 350, 250);
-		text = new DrawComponent(null, "ic_text", "Texto", skin,
+		text = new DrawComponent(null, null, "ic_text", "Texto", skin,
 				"Herramienta de escribir", Type.TEXT, 350, 550);
 
 		rectSel = new RectangleSelector();
@@ -168,6 +173,7 @@ public class ElementEdition extends AbstractScreen {
 
 		root.addActor(editingElement);
 		root.addActor(paintingComponent);
+		root.addActor(deletingComponent);
 		root.addActor(rectSel);
 		root.addActor(frames);
 
@@ -203,6 +209,7 @@ public class ElementEdition extends AbstractScreen {
 		h = stageh - UIAssets.TOOLBAR_HEIGHT;
 		rectSel.setBounds(x, y, w, h);
 		paintingComponent.setBounds(x, y, w, h);
+		deletingComponent.setBounds(x, y, w, h);
 		if (ELEMENT_INDEX != null) {
 			editingElement.setDrawable(new TextureRegionDrawable(
 					new TextureRegion(Loading.demoElements[ELEMENT_INDEX])));
@@ -220,7 +227,7 @@ public class ElementEdition extends AbstractScreen {
 	@Override
 	public void draw() {
 		stage.draw();
-		Table.drawDebug(stage);
+		//Table.drawDebug(stage);
 	}
 
 	@Override
@@ -228,6 +235,7 @@ public class ElementEdition extends AbstractScreen {
 		root.setVisible(false);
 		rectSel.setVisible(false);
 		paintingComponent.setVisible(false);
+		deletingComponent.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
 		buttonGroup.uncheckAll();
 	}

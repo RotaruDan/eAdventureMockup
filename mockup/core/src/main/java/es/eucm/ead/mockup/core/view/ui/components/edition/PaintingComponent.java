@@ -36,6 +36,7 @@
  */
 package es.eucm.ead.mockup.core.view.ui.components.edition;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -46,7 +47,6 @@ import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -83,7 +83,7 @@ public class PaintingComponent extends Actor implements Disposable {
 					mesh.input(screenX, screenY);
 				}
 			}
-			
+
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
@@ -98,7 +98,7 @@ public class PaintingComponent extends Actor implements Disposable {
 	public void draw(Batch batch, float parentAlpha) {
 		mesh.draw(batch, parentAlpha);
 	}
-	
+
 	public void delete(int x, int y, int radius){
 		mesh.delete(x, y, radius);
 	}
@@ -119,7 +119,7 @@ public class PaintingComponent extends Actor implements Disposable {
 	private class MeshHelper implements Disposable {
 		private Mesh mesh;
 		private ShaderProgram meshShader;
-		private static final int MAX_LINES = 1000;
+		private static final int MAX_LINES = 500;
 		private float[] lineVertices;
 		private int vertexIndex = 0;
 		private Vector3 unprojectedVertex = new Vector3();
@@ -127,8 +127,8 @@ public class PaintingComponent extends Actor implements Disposable {
 		private Image showingImage;
 		private Texture showingTexture;
 		private Pixmap showingPixmap;
-		private FrameBuffer mBuf;
 		private final int WIDTH, HEIGHT;
+		private float r = 1f, g = 1f, b = 0f, a = 1f;
 
 		public MeshHelper() {
 			lineVertices = new float[MAX_LINES * 2 * 2];
@@ -144,26 +144,24 @@ public class PaintingComponent extends Actor implements Disposable {
 			showingImage = new Image(texRegion);
 			showingImage.setBounds(0, 0, WIDTH, HEIGHT);
 			showingImage.setOrigin(WIDTH*.5f, stage.getHeight()*.5f);
-			mBuf = new FrameBuffer(Format.RGBA8888, WIDTH, HEIGHT, false);
 		}
 
 		public void delete(int x, int y, int radius) {
 			Blending oldBlending = Pixmap.getBlending();
 			Pixmap.setBlending(Blending.None);
+			showingPixmap.setColor(0f, 0f, 0f, 0f);
 			showingPixmap.fillCircle(x, y, radius);
 			showingTexture.draw(showingPixmap, 0, 0);	
 			Pixmap.setBlending(oldBlending);
 		}
 
 		public void restart(Batch batch) {
-			mBuf.begin();
 			drawMesh(batch);
 			Pixmap pix = ScreenUtils.getFrameBufferPixmap(0, 0, WIDTH, HEIGHT);
-			mBuf.end();
-			showingPixmap.drawPixmap(pix, 0, 0);
-			showingTexture.draw(showingPixmap, 0, 0);		
-			pix.dispose();
-			reset();
+			showingPixmap.dispose();
+			showingPixmap = pix;
+			showingTexture.draw(showingPixmap, 0, 0);	
+			reset();	
 		}
 
 		private void reset() {
@@ -173,25 +171,30 @@ public class PaintingComponent extends Actor implements Disposable {
 
 		public void createMesh() {
 			mesh = new Mesh(true, MAX_LINES * 2, 0, new VertexAttribute(
-					Usage.Position, 2, "a_position"));
+					Usage.Position, 2, "a_position"), new VertexAttribute(
+							Usage.Color, 4, "u_color"));
 		}
 
 		private void createShader() {
 			// this shader tells opengl where to put things
 			String vertexShader = "attribute vec4 a_position;    					\n"
+					+ "uniform vec4 u_color;						\n"
 					+ "uniform mat4 u_worldView;					\n"
+					+ "varying vec4 v_color;						\n"
 					+ "void main()                  				\n"
 					+ "{                            				\n"
+					+ "   v_color = u_color;						\n"
 					+ "   gl_Position =  u_worldView * a_position;	\n" + "}";
 
 			// this one tells it what goes in between the points (i.e
 			// color/texture)
 			String fragmentShader = "#ifdef GL_ES                			\n"
-					+ "precision mediump float;    			\n"
+					+ "precision mediump float;    			\n"	
 					+ "#endif                      			\n"
+					+ "varying vec4 v_color;				\n"			
 					+ "void main()                 			\n"
 					+ "{                           			\n"
-					+ "  gl_FragColor = vec4(1, 1, 0, 1);   \n" + "}";
+					+ "  gl_FragColor = v_color;   \n" + "}";
 
 			// make an actual shader from our strings
 			ShaderProgram.pedantic = false;
@@ -208,11 +211,12 @@ public class PaintingComponent extends Actor implements Disposable {
 			drawMesh(sb);
 			sb.begin();
 		}
-		
+
 		private void drawMesh(Batch sb){
 			meshShader.begin();
 			meshShader
 			.setUniformMatrix("u_worldView", sb.getProjectionMatrix());
+			meshShader.setUniformf("u_color", r, g, b, a);
 			mesh.render(meshShader, GL20.GL_TRIANGLE_STRIP);
 			meshShader.end();
 		}
@@ -220,7 +224,6 @@ public class PaintingComponent extends Actor implements Disposable {
 		public void dispose() {
 			mesh.dispose();
 			meshShader.dispose();
-			mBuf.dispose();
 			showingTexture.dispose();
 			showingPixmap.dispose();
 		}
@@ -251,9 +254,20 @@ public class PaintingComponent extends Actor implements Disposable {
 				lastY = y;
 			}
 		}
+
+		public void setColor(Color c) {
+			r = c.r;
+			g = c.g;
+			b = c.b;
+			a = c.a;			
+		}
 	}
 
 	public void setRadius(float radius) {
 		this.radius = radius * .5f;
+	}
+
+	public void setMeshColor(Color c){
+		mesh.setColor(c);		
 	}
 }
