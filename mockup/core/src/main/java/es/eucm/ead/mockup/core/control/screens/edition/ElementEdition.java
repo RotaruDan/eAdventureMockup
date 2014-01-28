@@ -1,5 +1,5 @@
 /**
- * eAdventure is a research project of the
+in * eAdventure is a research project of the
  *    e-UCM research group.
  *
  *    Copyright 2005-2013 e-UCM research group.
@@ -28,7 +28,7 @@
  *
  *      eAdventure is distributed in the hope that it will be useful,
  *      but WITHOUT ANY WARRANTY; without even the implied warranty of
- *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
  *      GNU Lesser General Public License for more details.
  *
  *      You should have received a copy of the GNU Lesser General Public License
@@ -58,8 +58,8 @@ import es.eucm.ead.mockup.core.view.ui.components.edition.DrawComponent.Type;
 import es.eucm.ead.mockup.core.view.ui.components.edition.EffectsComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.InteractiveComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent;
-import es.eucm.ead.mockup.core.view.ui.components.edition.PaintingComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.OtherComponent.TypeOther;
+import es.eucm.ead.mockup.core.view.ui.components.edition.PaintingComponent;
 import es.eucm.ead.mockup.core.view.ui.components.edition.RectangleSelector;
 
 public class ElementEdition extends AbstractScreen {
@@ -94,11 +94,12 @@ public class ElementEdition extends AbstractScreen {
 	 * Used to draw lines.
 	 */
 	private PaintingComponent paintingComponent;
+	private ButtonGroup buttonGroup;
 
 	@Override
 	public void create() {
 		this.TOOLBAR_ICON_HEIGHT = UIAssets.TOOLBAR_HEIGHT;
-		this.TOOLBAR_ICON_WIDTH = TOOLBAR_ICON_HEIGHT * 1.5f;
+		this.TOOLBAR_ICON_WIDTH = TOOLBAR_ICON_HEIGHT * 1.35f;
 		super.root = new Group();
 		root.setVisible(false);
 
@@ -129,17 +130,26 @@ public class ElementEdition extends AbstractScreen {
 		Button frames = new ImageButton(skin, "ic_hidescenes");
 		frames.setX(AbstractScreen.stagew - frames.getWidth());
 
+		/*Undo & Redo buttons*/
+		Button undo = new ToolbarButton(skin.getDrawable("ic_undo"),  "Deshacer", skin);
+		TextureRegion redoRegion = new TextureRegion(skin.getRegion("ic_undo"));
+		redoRegion.flip(true, false);
+		TextureRegionDrawable redoDrawable = new TextureRegionDrawable(redoRegion);
+		Button redo = new ToolbarButton(redoDrawable,  "Rehacer", skin);
+		
 		// Radio-button functionality
-		new ButtonGroup(move, paint.getButton(), delete.getButton(),
+		buttonGroup = new ButtonGroup(move, paint.getButton(), delete.getButton(),
 				text.getButton(), interac.getButton(), effect.getButton(),
-				more.getButton());
-
+				more.getButton(), undo, redo);
+		
 		// toolBar.debug();
 		Label name = new Label("Edición de elemento", skin);
 		toolBar.add(name)
 				.padLeft(UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 1.1f)
 				.expandX().left();
 		toolBar.defaults().size(TOOLBAR_ICON_HEIGHT).width(TOOLBAR_ICON_WIDTH);
+		toolBar.add(undo);
+		toolBar.add(redo);
 		toolBar.add(move);
 		toolBar.add(paint.getButton());
 		toolBar.add(delete.getButton());
@@ -219,6 +229,7 @@ public class ElementEdition extends AbstractScreen {
 		rectSel.setVisible(false);
 		paintingComponent.setVisible(false);
 		UIAssets.getNavigationGroup().setVisible(false);
+		buttonGroup.uncheckAll();
 	}
 
 	@Override

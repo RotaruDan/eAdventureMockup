@@ -111,7 +111,7 @@ public class Recording extends AbstractScreen {
 
 		recInfoButton = new Table();
 		recInfoButton.setVisible(false);
-		Image recImg = new Image(skin.getRegion("ic_recordoff"));
+		Image recImg = new Image(skin.getRegion("ic_recording"));
 		// TODO personalize toggle-recording in JSON
 		recImg.setTouchable(Touchable.disabled);
 		recLabel = new Label("", skin);

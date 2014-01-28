@@ -122,7 +122,7 @@ public class InteractiveComponent {
 																		// element
 																		// img
 			final Button touch = new Button(skin, "default");
-			touch.add(backImg1).left().expand();
+			touch.add(backImg1).left().padLeft(6f).expand();
 			touch.add(auxLabel1).left().expand();
 
 			Label auxLabel2 = new Label("Rectángulo", skin);
@@ -131,7 +131,7 @@ public class InteractiveComponent {
 																		// element
 																		// img
 			final Button rec = new Button(skin, "default");
-			rec.add(backImg2).left().expand();
+			rec.add(backImg2).left().padLeft(6f).expand();
 			rec.add(auxLabel2).left().expand();
 			rec.addListener(new ClickListener() {
 				@Override
@@ -147,7 +147,7 @@ public class InteractiveComponent {
 																		// element
 																		// img
 			final Button pol = new Button(skin, "default");
-			pol.add(backImg3).left().expand();
+			pol.add(backImg3).padLeft(6f).left().expand();
 			pol.add(auxLabel3).left().expand();
 			// END FIXME
 

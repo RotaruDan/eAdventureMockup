@@ -78,15 +78,20 @@ public class DrawComponent {
 	public DrawComponent(final PaintingComponent paintingComponent,
 			String imageUp, String name, Skin skin, String description,
 			Type type, float width, float height) {
-		this.color = Color.YELLOW;
+		if(type.equals(Type.BRUSH)){
+			this.color = Color.YELLOW;
+		} else {
+			this.color = Color.WHITE;
+		}
+
 		this.paintingComponent = paintingComponent;
 		this.button = new ToolbarButton(skin.getDrawable(imageUp), name, skin) {
 			@Override
 			public void setChecked(boolean isChecked) {
 				if (paintingComponent != null) {
 					paintingComponent
-							.setTouchable(isChecked ? Touchable.enabled
-									: Touchable.disabled);
+					.setTouchable(isChecked ? Touchable.enabled
+							: Touchable.disabled);
 				}
 				super.setChecked(isChecked);
 			}
@@ -140,7 +145,7 @@ public class DrawComponent {
 
 			if (type == Type.TEXT) {
 				tSize += "texto";
-				this.textSample = new Label("AaBbCc...", skin);
+				this.textSample = new Label("Ejemplo...", skin);
 			} else {
 				tSize += "pincel";
 			}
@@ -159,7 +164,7 @@ public class DrawComponent {
 			label.setAlignment(Align.center);
 			label.setFontScale(0.7f);
 
-			slider = new Slider(1, 60, 0.5f, false, skin, "left-horizontal");
+			slider = new Slider(15, 60, 0.5f, false, skin, "left-horizontal");
 			slider.setValue(30);
 			slider.addListener(new InputListener() {
 				@Override
@@ -206,11 +211,10 @@ public class DrawComponent {
 			// textures, TODO reload
 			// onResume (after pause)
 			pixTex.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-			cir = new Image(pixTex);// cir.setScaleX(0.2f);
 
 			add(label);
 			row();
-			add(tSize);
+			add(tSize).padLeft(8f);
 			row();
 			add(slider);
 			row();
@@ -218,15 +222,16 @@ public class DrawComponent {
 			row();
 
 			if (type != Type.TEXT) {
+				cir = new Image(pixTex);
 				add(cir).align(Align.center).expand(false, false).fill(false)
-						.size(60, 60);
+				.size(60, 60);
 			} else {
 				textSample.setColor(color);
-				add(textSample).align(Align.left).size(60, 60);
+				add(textSample).align(Align.left).size(60, 60).padLeft(8f);
 			}
 			if (type != Type.RUBBER) {
 				row();
-				add("Colores:");
+				add("Colores:").padLeft(8f);
 				row();
 				add(gridPanel);
 			}
@@ -281,7 +286,8 @@ public class DrawComponent {
 			circleSample.setColor(color);
 			float radius = getCurrentRadius();
 			circleSample.fillCircle(center, center, (int) radius);
-			paintingComponent.setRadius(radius);
+			if(paintingComponent != null)
+				paintingComponent.setRadius(radius);
 			pixTex.draw(circleSample, 0, 0);
 		}
 
@@ -300,9 +306,9 @@ public class DrawComponent {
 			final int COLS = 4, ROWS = 3;
 			final Color[][] colrs = {
 					{ Color.BLACK, Color.BLUE, Color.CYAN,
-							new Color(.5f, .75f, .32f, 1f) },
-					{ Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK },
-					{ Color.RED, Color.LIGHT_GRAY, Color.YELLOW, Color.WHITE } };
+						new Color(.5f, .75f, .32f, 1f) },
+						{ Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK },
+						{ Color.RED, Color.LIGHT_GRAY, Color.YELLOW, Color.WHITE } };
 			gridPanel = new GridPanel<Actor>(skin, ROWS, COLS, 20);
 			ClickListener colorListener = new ClickListener() {
 				@Override

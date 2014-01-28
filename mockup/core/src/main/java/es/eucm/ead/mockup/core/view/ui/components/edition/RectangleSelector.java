@@ -37,13 +37,15 @@
 package es.eucm.ead.mockup.core.view.ui.components.edition;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 
-import es.eucm.ead.mockup.core.control.screens.Loading;
+import es.eucm.ead.mockup.core.control.screens.AbstractScreen;
 
 /**
  * Fast implementation of a RectangleSelection.
@@ -52,6 +54,9 @@ public class RectangleSelector extends Actor {
 
 	/** TODO FAST implementation for rectangle selection **/
 
+	private static NinePatch recSelection;
+	private Image resizeImage;
+	
 	private final float rRESIZEWH = 50;
 
 	private enum Quadrant {
@@ -70,13 +75,16 @@ public class RectangleSelector extends Actor {
 	float screenw, screenh;
 
 	public RectangleSelector() {
-
+		if(recSelection == null){
+			recSelection = AbstractScreen.skin.getPatch("text_focused");
+		}
 		touch = new Vector3();
 		rHitbox = new Rectangle();
 		rResize = new Rectangle();
 		rResize.setWidth(rRESIZEWH);
 		rResize.setHeight(rRESIZEWH);
-
+		resizeImage = new Image(AbstractScreen.skin.getDrawable("ic_s_diagonal_scale"));
+		resizeImage.setSize(rResize.width, rResize.height);
 		addListener(new InputListener() {
 			private void limitHitBox() {
 				if (rHitbox.x < 0) {
@@ -116,6 +124,7 @@ public class RectangleSelector extends Actor {
 				}
 				rResize.setX(x2);
 				rResize.setY(y2);
+				resizeImage.setPosition(x2, y2);
 			}
 
 			public boolean touchDown(InputEvent event, float screenX,
@@ -243,6 +252,7 @@ public class RectangleSelector extends Actor {
 							rHitbox.set(auxX, auxY, w, h);
 							rResize.setX(x2);
 							rResize.setY(y2);
+							resizeImage.setPosition(x2, y2);
 							toDrag = true;
 						}
 					}
@@ -268,11 +278,10 @@ public class RectangleSelector extends Actor {
 	@Override
 	public void draw(Batch batch, float parentAlpha) {
 		if (drawingNP) {
-			Loading.loadingSel.draw(batch, rHitbox.x, rHitbox.y, rHitbox.width,
+			recSelection.draw(batch, rHitbox.x, rHitbox.y, rHitbox.width,
 					rHitbox.height);
 			if (toDrag) {
-				Loading.loadingSel.draw(batch, rResize.x, rResize.y,
-						rResize.width, rResize.height);
+				resizeImage.draw(batch, parentAlpha);
 			}
 		}
 	}

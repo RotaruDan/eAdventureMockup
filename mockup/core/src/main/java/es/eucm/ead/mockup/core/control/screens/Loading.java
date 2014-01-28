@@ -159,6 +159,7 @@ public class Loading extends AbstractScreen {
 			mockupController.changeTo(Screens.MAIN_MENU);
 
 			UIAssets.addActors();
+
 		}
 	}
 

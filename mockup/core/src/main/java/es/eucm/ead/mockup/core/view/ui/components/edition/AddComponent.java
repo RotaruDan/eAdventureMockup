@@ -104,20 +104,23 @@ public class AddComponent {
 
 			// FIXME *repeated code*
 			Label auxLabel1 = new Label("Último elemento \n editado", skin);
+			auxLabel1.setAlignment(Align.center);
 			auxLabel1.setFontScale(0.7f);
 			final Button touch = new Button(skin, "default");
-			touch.add(auxLabel1).left().expand();
+			touch.add(auxLabel1).expand();
 
 			Label auxLabel2 = new Label("Elemento desde \n galeria", skin);
+			auxLabel2.setAlignment(Align.center);
 			auxLabel2.setFontScale(0.7f);
 			final Button rec = new Button(skin, "default");
-			rec.add(auxLabel2).left().expand();
+			rec.add(auxLabel2).expand();
 
 			Label auxLabel3 = new Label("Elemento desde \n nueva fotografía",
 					skin);
+			auxLabel3.setAlignment(Align.center);
 			auxLabel3.setFontScale(0.7f);
 			final Button pol = new Button(skin, "default");
-			pol.add(auxLabel3).left().expand();
+			pol.add(auxLabel3).expand();
 			// END FIXME
 
 			add(label);
