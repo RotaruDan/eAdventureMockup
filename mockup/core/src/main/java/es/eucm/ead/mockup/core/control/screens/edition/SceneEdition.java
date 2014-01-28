@@ -97,7 +97,7 @@ public class SceneEdition extends AbstractScreen {
 	 */
 	private PaintingComponent paintingComponent;
 	private ButtonGroup buttonGroup;
-	
+
 	/**
 	 * Used to delete what we previously drawn.
 	 */
@@ -117,18 +117,18 @@ public class SceneEdition extends AbstractScreen {
 
 		paintingComponent = new PaintingComponent();
 		paintingComponent.setVisible(false);
-		paint = new DrawComponent(null, paintingComponent, "ic_pencil", "Pintar",
-				skin, "Herramienta de pincel", Type.BRUSH, 300, 550);
+		paint = new DrawComponent(null, paintingComponent, "ic_pencil",
+				"Pintar", skin, "Herramienta de pincel", Type.BRUSH, 300, 550);
 		deletingComponent = new DeletingComponent(paintingComponent);
-		delete = new DrawComponent(deletingComponent, null, "ic_eraser", "Borrar", skin,
-				"Herramienta de goma", Type.RUBBER, 300, 250);
+		delete = new DrawComponent(deletingComponent, null, "ic_eraser",
+				"Borrar", skin, "Herramienta de goma", Type.RUBBER, 300, 250);
 		text = new DrawComponent(null, null, "ic_text", "Texto", skin,
 				"Herramienta de escribir", Type.TEXT, 300, 550);
 		// change this ic_select icon
 		rectSel = new RectangleSelector();
 		rectSel.setVisible(false);
-		interac = new InteractiveComponent(rectSel, "ic_interactivezone", "Zonas", skin,
-				"Añadir zona interactiva", 250, 390);
+		interac = new InteractiveComponent(rectSel, "ic_interactivezone",
+				"Zonas", skin, "Añadir zona interactiva", 250, 390);
 		add = new AddComponent("tree_plus", "Añadir", skin,
 				"Añadir a la escena", 250, 390);
 		effect = new EffectsComponent("ic_effects", "Efectos", skin,
@@ -139,18 +139,21 @@ public class SceneEdition extends AbstractScreen {
 		Button frames = new ImageButton(skin, "ic_hidescenes");
 		frames.setX(AbstractScreen.stagew - frames.getWidth());
 
-		/*Undo & Redo buttons*/
-		Button undo = new ToolbarButton(skin.getDrawable("ic_undo"),  "Deshacer", skin);
+		/* Undo & Redo buttons */
+		Button undo = new ToolbarButton(skin.getDrawable("ic_undo"),
+				"Deshacer", skin);
 		TextureRegion redoRegion = new TextureRegion(skin.getRegion("ic_undo"));
 		redoRegion.flip(true, false);
-		TextureRegionDrawable redoDrawable = new TextureRegionDrawable(redoRegion);
-		Button redo = new ToolbarButton(redoDrawable,  "Rehacer", skin);
+		TextureRegionDrawable redoDrawable = new TextureRegionDrawable(
+				redoRegion);
+		Button redo = new ToolbarButton(redoDrawable, "Rehacer", skin);
 
 		// Radio-button functionality
-		buttonGroup = new ButtonGroup(move, paint.getButton(), delete.getButton(),
-				text.getButton(), interac.getButton(), add.getButton(),
-				effect.getButton(), more.getButton(), undo, redo);
-		
+		buttonGroup = new ButtonGroup(move, paint.getButton(),
+				delete.getButton(), text.getButton(), interac.getButton(),
+				add.getButton(), effect.getButton(), more.getButton(), undo,
+				redo);
+
 		Label name = new Label("Edición de escena", skin);
 		toolBar.add(name)
 				.padLeft(UIAssets.NAVIGATION_BUTTON_WIDTH_HEIGHT * 1.1f)
@@ -173,7 +176,7 @@ public class SceneEdition extends AbstractScreen {
 		editingScene = new Image();
 		editingScene.setScaling(Scaling.fit);
 		editingScene.setBounds(0, 0, stagew, stageh - UIAssets.TOOLBAR_HEIGHT);
-		
+
 		root.addActor(editingScene);
 		root.addActor(paintingComponent);
 		root.addActor(deletingComponent);

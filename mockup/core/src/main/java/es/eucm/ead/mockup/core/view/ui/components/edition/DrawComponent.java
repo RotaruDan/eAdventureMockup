@@ -70,7 +70,7 @@ public class DrawComponent {
 	 * This will draw lines.
 	 */
 	private PaintingComponent paintingComponent;
-	
+
 	/**
 	 * This will delete lines.
 	 */
@@ -80,10 +80,11 @@ public class DrawComponent {
 		BRUSH, RUBBER, TEXT
 	}
 
-	public DrawComponent(final DeletingComponent deletingComponent, final PaintingComponent paintingComponent,
-			String imageUp, String name, Skin skin, String description,
-			Type type, float width, float height) {
-		if(type.equals(Type.BRUSH)){
+	public DrawComponent(final DeletingComponent deletingComponent,
+			final PaintingComponent paintingComponent, String imageUp,
+			String name, Skin skin, String description, Type type, float width,
+			float height) {
+		if (type.equals(Type.BRUSH)) {
 			this.color = Color.YELLOW;
 		} else {
 			this.color = Color.WHITE;
@@ -96,13 +97,13 @@ public class DrawComponent {
 			public void setChecked(boolean isChecked) {
 				if (paintingComponent != null) {
 					paintingComponent
-					.setTouchable(isChecked ? Touchable.enabled
-							: Touchable.disabled);
+							.setTouchable(isChecked ? Touchable.enabled
+									: Touchable.disabled);
 				}
 				if (deletingComponent != null) {
 					deletingComponent
-					.setTouchable(isChecked ? Touchable.enabled
-							: Touchable.disabled);
+							.setTouchable(isChecked ? Touchable.enabled
+									: Touchable.disabled);
 				}
 				super.setChecked(isChecked);
 			}
@@ -214,8 +215,8 @@ public class DrawComponent {
 			Pixmap.setBlending(b);
 			if (type == Type.BRUSH) {
 				paintingComponent.setRadius(getCurrentRadius());
-			} else if(type.equals(Type.RUBBER)){
-				deletingComponent.setRadius(getCurrentRadius());				
+			} else if (type.equals(Type.RUBBER)) {
+				deletingComponent.setRadius(getCurrentRadius());
 			}
 			circleSample.setColor(color);
 			int radius = (int) getCurrentRadius();
@@ -237,7 +238,7 @@ public class DrawComponent {
 			if (type != Type.TEXT) {
 				cir = new Image(pixTex);
 				add(cir).align(Align.center).expand(false, false).fill(false)
-				.size(60, 60);
+						.size(60, 60);
 			} else {
 				textSample.setColor(color);
 				add(textSample).align(Align.left).size(60, 60).padLeft(8f);
@@ -301,7 +302,7 @@ public class DrawComponent {
 			circleSample.setColor(color);
 			float radius = getCurrentRadius();
 			circleSample.fillCircle(center, center, (int) radius);
-			if(paintingComponent != null){
+			if (paintingComponent != null) {
 				paintingComponent.setRadius(radius);
 				paintingComponent.setMeshColor(color);
 			}
@@ -325,9 +326,9 @@ public class DrawComponent {
 			final int COLS = 4, ROWS = 3;
 			final Color[][] colrs = {
 					{ Color.BLACK, Color.BLUE, Color.CYAN,
-						new Color(.5f, .75f, .32f, 1f) },
-						{ Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK },
-						{ Color.RED, Color.LIGHT_GRAY, Color.YELLOW, Color.WHITE } };
+							new Color(.5f, .75f, .32f, 1f) },
+					{ Color.GREEN, Color.MAGENTA, Color.ORANGE, Color.PINK },
+					{ Color.RED, Color.LIGHT_GRAY, Color.YELLOW, Color.WHITE } };
 			gridPanel = new GridPanel<Actor>(skin, ROWS, COLS, 20);
 			ClickListener colorListener = new ClickListener() {
 				@Override

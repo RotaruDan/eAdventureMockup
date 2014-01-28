@@ -79,7 +79,7 @@ public class PaintingComponent extends Actor implements Disposable {
 
 			public void touchDragged(InputEvent event, float screenX,
 					float screenY, int pointer) {
-				if(pointer == 0){
+				if (pointer == 0) {
 					mesh.input(screenX, screenY);
 				}
 			}
@@ -87,7 +87,7 @@ public class PaintingComponent extends Actor implements Disposable {
 			@Override
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
-				if(pointer == 0){
+				if (pointer == 0) {
 					mesh.restart(getStage().getSpriteBatch());
 				}
 			}
@@ -99,7 +99,7 @@ public class PaintingComponent extends Actor implements Disposable {
 		mesh.draw(batch, parentAlpha);
 	}
 
-	public void delete(int x, int y, int radius){
+	public void delete(int x, int y, int radius) {
 		mesh.delete(x, y, radius);
 	}
 
@@ -113,6 +113,7 @@ public class PaintingComponent extends Actor implements Disposable {
 		super.setVisible(visible);
 		if (!visible) {
 			mesh.reset();
+			mesh.flush();
 		}
 	}
 
@@ -135,15 +136,24 @@ public class PaintingComponent extends Actor implements Disposable {
 			createShader();
 			createMesh();
 			Stage stage = AbstractScreen.stage;
-			WIDTH = (int)stage.getWidth();
-			HEIGHT = (int)stage.getHeight();
+			WIDTH = (int) stage.getWidth();
+			HEIGHT = (int) stage.getHeight();
 			showingPixmap = new Pixmap(WIDTH, HEIGHT, Format.RGBA8888);
 			showingTexture = new Texture(WIDTH, HEIGHT, Format.RGBA8888);
 			TextureRegion texRegion = new TextureRegion(showingTexture);
 			texRegion.flip(false, true);
 			showingImage = new Image(texRegion);
 			showingImage.setBounds(0, 0, WIDTH, HEIGHT);
-			showingImage.setOrigin(WIDTH*.5f, stage.getHeight()*.5f);
+			showingImage.setOrigin(WIDTH * .5f, stage.getHeight() * .5f);
+		}
+
+		public void flush() {			
+			Blending oldBlending = Pixmap.getBlending();
+			Pixmap.setBlending(Blending.None);
+			showingPixmap.setColor(0f, 0f, 0f, 0f);
+			showingPixmap.fill();
+			showingTexture.draw(showingPixmap, 0, 0);
+			Pixmap.setBlending(oldBlending);
 		}
 
 		public void delete(int x, int y, int radius) {
@@ -151,17 +161,23 @@ public class PaintingComponent extends Actor implements Disposable {
 			Pixmap.setBlending(Blending.None);
 			showingPixmap.setColor(0f, 0f, 0f, 0f);
 			showingPixmap.fillCircle(x, y, radius);
-			showingTexture.draw(showingPixmap, 0, 0);	
+			showingTexture.draw(showingPixmap, 0, 0);
 			Pixmap.setBlending(oldBlending);
 		}
 
 		public void restart(Batch batch) {
-			drawMesh(batch);
+
+			meshShader.begin();
+			meshShader
+					.setUniformMatrix("u_worldView", getStage().getSpriteBatch().getProjectionMatrix());
+			meshShader.setUniformf("u_color", r, g, b, a);
+			mesh.render(meshShader, GL20.GL_TRIANGLE_STRIP);
 			Pixmap pix = ScreenUtils.getFrameBufferPixmap(0, 0, WIDTH, HEIGHT);
+			meshShader.end();
 			showingPixmap.dispose();
 			showingPixmap = pix;
-			showingTexture.draw(showingPixmap, 0, 0);	
-			reset();	
+			showingTexture.draw(showingPixmap, 0, 0);
+			reset();
 		}
 
 		private void reset() {
@@ -172,7 +188,7 @@ public class PaintingComponent extends Actor implements Disposable {
 		public void createMesh() {
 			mesh = new Mesh(true, MAX_LINES * 2, 0, new VertexAttribute(
 					Usage.Position, 2, "a_position"), new VertexAttribute(
-							Usage.Color, 4, "u_color"));
+					Usage.Color, 4, "u_color"));
 		}
 
 		private void createShader() {
@@ -189,9 +205,9 @@ public class PaintingComponent extends Actor implements Disposable {
 			// this one tells it what goes in between the points (i.e
 			// color/texture)
 			String fragmentShader = "#ifdef GL_ES                			\n"
-					+ "precision mediump float;    			\n"	
+					+ "precision mediump float;    			\n"
 					+ "#endif                      			\n"
-					+ "varying vec4 v_color;				\n"			
+					+ "varying vec4 v_color;				\n"
 					+ "void main()                 			\n"
 					+ "{                           			\n"
 					+ "  gl_FragColor = v_color;   \n" + "}";
@@ -212,10 +228,10 @@ public class PaintingComponent extends Actor implements Disposable {
 			sb.begin();
 		}
 
-		private void drawMesh(Batch sb){
+		private void drawMesh(Batch sb) {
 			meshShader.begin();
 			meshShader
-			.setUniformMatrix("u_worldView", sb.getProjectionMatrix());
+					.setUniformMatrix("u_worldView", sb.getProjectionMatrix());
 			meshShader.setUniformf("u_color", r, g, b, a);
 			mesh.render(meshShader, GL20.GL_TRIANGLE_STRIP);
 			meshShader.end();
@@ -259,7 +275,7 @@ public class PaintingComponent extends Actor implements Disposable {
 			r = c.r;
 			g = c.g;
 			b = c.b;
-			a = c.a;			
+			a = c.a;
 		}
 	}
 
@@ -267,7 +283,7 @@ public class PaintingComponent extends Actor implements Disposable {
 		this.radius = radius * .5f;
 	}
 
-	public void setMeshColor(Color c){
-		mesh.setColor(c);		
+	public void setMeshColor(Color c) {
+		mesh.setColor(c);
 	}
 }

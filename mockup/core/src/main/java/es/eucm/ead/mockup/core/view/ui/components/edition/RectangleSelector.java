@@ -56,7 +56,7 @@ public class RectangleSelector extends Actor {
 
 	private static NinePatch recSelection;
 	private Image resizeImage;
-	
+
 	private final float rRESIZEWH = 50;
 
 	private enum Quadrant {
@@ -75,7 +75,7 @@ public class RectangleSelector extends Actor {
 	float screenw, screenh;
 
 	public RectangleSelector() {
-		if(recSelection == null){
+		if (recSelection == null) {
 			recSelection = AbstractScreen.skin.getPatch("text_focused");
 		}
 		touch = new Vector3();
@@ -83,7 +83,8 @@ public class RectangleSelector extends Actor {
 		rResize = new Rectangle();
 		rResize.setWidth(rRESIZEWH);
 		rResize.setHeight(rRESIZEWH);
-		resizeImage = new Image(AbstractScreen.skin.getDrawable("ic_s_diagonal_scale"));
+		resizeImage = new Image(
+				AbstractScreen.skin.getDrawable("ic_s_diagonal_scale"));
 		resizeImage.setSize(rResize.width, rResize.height);
 		addListener(new InputListener() {
 			private void limitHitBox() {
