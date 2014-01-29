@@ -36,6 +36,7 @@
  */
 package es.eucm.ead.mockup.core.view.ui.components.edition;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
@@ -136,18 +137,17 @@ public class PaintingComponent extends Actor implements Disposable {
 			createShader();
 			createMesh();
 			Stage stage = AbstractScreen.stage;
-			WIDTH = (int) stage.getWidth();
-			HEIGHT = (int) stage.getHeight();
+			WIDTH = (int) Gdx.graphics.getWidth();
+			HEIGHT = (int) Gdx.graphics.getHeight();
 			showingPixmap = new Pixmap(WIDTH, HEIGHT, Format.RGBA8888);
 			showingTexture = new Texture(WIDTH, HEIGHT, Format.RGBA8888);
 			TextureRegion texRegion = new TextureRegion(showingTexture);
 			texRegion.flip(false, true);
 			showingImage = new Image(texRegion);
-			showingImage.setBounds(0, 0, WIDTH, HEIGHT);
-			showingImage.setOrigin(WIDTH * .5f, stage.getHeight() * .5f);
+			showingImage.setBounds(0, 0, stage.getWidth(), stage.getHeight());
 		}
 
-		public void flush() {			
+		public void flush() {
 			Blending oldBlending = Pixmap.getBlending();
 			Pixmap.setBlending(Blending.None);
 			showingPixmap.setColor(0f, 0f, 0f, 0f);
@@ -157,6 +157,10 @@ public class PaintingComponent extends Actor implements Disposable {
 		}
 
 		public void delete(int x, int y, int radius) {
+			Stage stage = AbstractScreen.stage;
+			x = (int)( WIDTH*x/stage.getWidth() );
+			y = (int)( HEIGHT*y/stage.getHeight() );
+			
 			Blending oldBlending = Pixmap.getBlending();
 			Pixmap.setBlending(Blending.None);
 			showingPixmap.setColor(0f, 0f, 0f, 0f);
@@ -168,8 +172,8 @@ public class PaintingComponent extends Actor implements Disposable {
 		public void restart(Batch batch) {
 
 			meshShader.begin();
-			meshShader
-					.setUniformMatrix("u_worldView", getStage().getSpriteBatch().getProjectionMatrix());
+			meshShader.setUniformMatrix("u_worldView", getStage()
+					.getSpriteBatch().getProjectionMatrix());
 			meshShader.setUniformf("u_color", r, g, b, a);
 			mesh.render(meshShader, GL20.GL_TRIANGLE_STRIP);
 			Pixmap pix = ScreenUtils.getFrameBufferPixmap(0, 0, WIDTH, HEIGHT);
