@@ -38,25 +38,16 @@ package es.eucm.ead.engine;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import es.eucm.ead.engine.io.SchemaIO;
 
 public class Engine implements ApplicationListener {
 
-	// -- Engine components
-	public static Assets assets;
-	public static I18N i18n;
-	public static Factory factory;
-	public static SchemaIO schemaIO;
-	public static GameController gameController;
-	public static SceneView sceneView;
-	public static Stage stage;
+	private GameLoop gameLoop;
 
-	public Engine() {
-
+	public GameLoop getGameLoop() {
+		return gameLoop;
 	}
 
 	/**
@@ -72,8 +63,7 @@ public class Engine implements ApplicationListener {
 		Gdx.app.postRunnable(new Runnable() {
 			@Override
 			public void run() {
-				assets.setGamePath(path, internal);
-				gameController.loadGame();
+				gameLoop.runGame(path, internal);
 			}
 		});
 	}
@@ -84,22 +74,12 @@ public class Engine implements ApplicationListener {
 		ShaderProgram.pedantic = false;
 		Gdx.gl.glClearColor(0.2f, 0.2f, 0.2f, 1.0f);
 
-		assets = new Assets(Gdx.files);
-		i18n = new I18N(assets);
-		factory = new Factory();
-		schemaIO = new SchemaIO(assets, factory);
 		// Load bindings
-		FileHandle fileHandle = assets.resolve("bindings.json");
-		factory.loadBindings(fileHandle);
-		schemaIO.loadAlias(fileHandle);
-		sceneView = new SceneView(factory);
-		gameController = new EngineGameController(assets, schemaIO, sceneView);
-
-		stage = new Stage(Gdx.graphics.getWidth(), Gdx.graphics.getHeight(),
-				true);
-		stage.addActor(sceneView);
-
+		Stage stage = new Stage(Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight(), true);
 		Gdx.input.setInputProcessor(stage);
+
+		gameLoop = new EngineGameLoop(stage, new Assets(Gdx.files));
 	}
 
 	@Override
@@ -109,9 +89,7 @@ public class Engine implements ApplicationListener {
 	@Override
 	public void render() {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		gameController.act(Gdx.graphics.getDeltaTime());
-		stage.act();
-		stage.draw();
+		gameLoop.act(Gdx.graphics.getDeltaTime());
 	}
 
 	@Override

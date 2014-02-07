@@ -1,0 +1,23 @@
+{
+    children:[
+        {
+            renderer: {
+                class: image,
+                uri: images/scene2-beach-bg.jpg
+            },
+            behaviors: [
+            {
+                trigger: {
+                    class: touch,
+                    type: press
+                },
+                effect: {
+                    class: goscene,
+                    name: "scene3-beach-turtle"
+                }
+            },
+            ]
+        }
+    ]
+
+}

@@ -45,7 +45,17 @@ package es.eucm.ead.engine;
  */
 public abstract class AbstractEngineObject<T> implements EngineObject<T> {
 
+	protected GameLoop gameLoop;
+
 	private T element;
+
+	public GameLoop getGameLoop() {
+		return gameLoop;
+	}
+
+	public void setGameLoop(GameLoop gameLoop) {
+		this.gameLoop = gameLoop;
+	}
 
 	@Override
 	public final void setSchema(T schemaObject) {
@@ -60,8 +70,7 @@ public abstract class AbstractEngineObject<T> implements EngineObject<T> {
 
 	@Override
 	public void dispose() {
-		Engine.factory.free(this);
-		Engine.factory.free(element);
+		gameLoop.getAssets().free(this);
 	}
 
 }

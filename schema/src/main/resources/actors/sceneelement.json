@@ -6,12 +6,19 @@
             "type": "string",
             "description": "An uri pointing to a file representing the base scene element for this element. This scene element will be loaded first, and its properties will be overriden by the properties defined for this scene element"
         },
-        "actions": {
+        "tags": {
+            "description": "Tags of the scene element. These tags are used to group and identify scene elements.",
+            "type": "array",
             "items": {
-                "$ref": "../actions/action.json"
+                "type": "string"
+            }
+        },
+        "effects": {
+            "items": {
+                "$ref": "../effects/effect.json"
             },
             "type": "array",
-            "description": "Initial actions for the scene element. This actions are automatically executed when the parent scene is loaded"
+            "description": "Initial effects for the scene element. These effects are automatically executed when the parent scene is loaded"
         },
         "children": {
             "items": {

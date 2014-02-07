@@ -41,16 +41,20 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 import es.eucm.ead.engine.Engine;
-import es.eucm.ead.schema.actions.Action;
+import es.eucm.ead.engine.EngineGameLoop;
+import es.eucm.ead.engine.GameLoop;
+import es.eucm.ead.schema.effects.Effect;
 
 public class MockGame {
 
 	private Actor actor;
 
+	private Engine engine;
+
 	private MockApplication application;
 
-	public static void initStatics() {
-		new MockGame();
+	public GameLoop getGameLoop() {
+		return engine.getGameLoop();
 	}
 
 	public MockGame() {
@@ -58,14 +62,21 @@ public class MockGame {
 	}
 
 	public MockGame(String path) {
-		Engine engine = new Engine();
+		engine = new Engine();
 		application = new MockApplication(engine, 800, 600);
 		application.start();
 		engine.setLoadingPath(path, true);
 	}
 
 	public void act() {
-		application.act();
+		act(1);
+	}
+
+	public void act(int loops) {
+		for (int i = 0; i < loops; i++) {
+			application.act();
+			engine.getGameLoop().getAssets().finishLoading();
+		}
 	}
 
 	/**
@@ -74,17 +85,13 @@ public class MockGame {
 	 *         set to #FFFFFFFF
 	 */
 	public Actor getDummyActor() {
-		if (actor == null) {
-			actor = new Actor();
-			Engine.sceneView.getStage().addActor(actor);
-		}
-		return actor;
+		return engine.getGameLoop().getSceneView();
 	}
 
-	public void addActionToDummyActor(Action action) {
+	public void addEffect(Effect effect) {
 		Actor actor = getDummyActor();
-		actor.addAction((com.badlogic.gdx.scenes.scene2d.Action) Engine.factory
-				.getEngineObject(action));
+		actor.addAction((com.badlogic.gdx.scenes.scene2d.Action) getGameLoop()
+				.getAssets().getEngineObject(effect));
 	}
 
 	/**
@@ -110,7 +117,8 @@ public class MockGame {
 	 *            the y coordinate
 	 */
 	public void press(int x, int y) {
-		Engine.stage.touchDown(x, y, 0, Buttons.LEFT);
+		((EngineGameLoop) getGameLoop()).getStage().touchDown(x, y, 0,
+				Buttons.LEFT);
 	}
 
 	/**
@@ -122,7 +130,8 @@ public class MockGame {
 	 *            the y coordinate
 	 */
 	public void release(int x, int y) {
-		Engine.stage.touchUp(x, y, 0, Buttons.LEFT);
+		((EngineGameLoop) getGameLoop()).getStage().touchUp(x, y, 0,
+				Buttons.LEFT);
 	}
 
 	public MockApplication getApplication() {

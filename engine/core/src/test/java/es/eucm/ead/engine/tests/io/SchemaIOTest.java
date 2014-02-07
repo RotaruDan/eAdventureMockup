@@ -36,20 +36,21 @@
  */
 package es.eucm.ead.engine.tests.io;
 
-import es.eucm.ead.engine.Engine;
-import es.eucm.ead.engine.io.SchemaIO;
+import es.eucm.ead.engine.Assets;
 import es.eucm.ead.engine.mock.MockGame;
-import org.junit.BeforeClass;
+import org.junit.Before;
 
 public class SchemaIOTest {
 
-	protected static SchemaIO schemaIO;
+	protected MockGame mockGame;
 
-	@BeforeClass
-	public static void setUpClass() {
-		MockGame.initStatics();
-		Engine.assets.setGamePath("schema", true);
-		schemaIO = Engine.schemaIO;
+	protected Assets assets;
+
+	@Before
+	public void setUp() {
+		mockGame = new MockGame();
+		assets = mockGame.getGameLoop().getAssets();
+		assets.setLoadingPath("schema", true);
 	}
 
 }
